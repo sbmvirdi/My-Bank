@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "281049592075",
+    "firebase_url": "https://bank-f7765.firebaseio.com",
+    "project_id": "bank-f7765",
+    "storage_bucket": "bank-f7765.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:281049592075:android:530b2234edea5e43",
+        "android_client_info": {
+          "package_name": "cf.projectspro.bank"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "281049592075-vjo2406mh6kf3qhhlp455akssm551nsq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cf.projectspro.bank",
+            "certificate_hash": "6f6a003bc65cf30048627b7454459c3a6befa17d"
+          }
+        },
+        {
+          "client_id": "281049592075-289kif15vi3qfmhf71212ci98sh5ea4u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFzoYaLhsEb2cALKaWnQWbnCYPfXh9UP4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "281049592075-289kif15vi3qfmhf71212ci98sh5ea4u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

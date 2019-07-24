@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Money">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="My Bank"
+        android:background="#53D1E0"
+        android:elevation="4dp"
+        android:focusable="auto"
+        android:focusableInTouchMode="true"
+        app:titleTextColor="#ffffff">
+
+
+
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="180dp"
+        android:hint="@string/enter_amount">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/money_value"
+            android:inputType="number"/>
+    </android.support.design.widget.TextInputLayout>
+
+
+    <Button
+        android:id="@+id/process_payment"
+        android:layout_width="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:background="@drawable/corner"
+        android:textColor="#ffffff"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="37dp"
+        android:text="Add Money" />
+
+
+</RelativeLayout>

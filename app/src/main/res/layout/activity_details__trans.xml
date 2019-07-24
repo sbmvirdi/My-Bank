@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".Details_Trans">
+
+
+    <ImageView
+        android:id="@+id/detail_image"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:contentDescription="@string/cd"
+        android:src="@drawable/load" />
+
+    <TextView
+        android:id="@+id/details_from"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="279dp"
+        android:text="To:" />
+
+    <TextView
+        android:id="@+id/detail_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/details_from"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="251dp"
+        android:fontFamily="cursive"
+        android:text="Loading ..."
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_alignLeft="@+id/details_from" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/details_from"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="224dp"
+        android:text="Transaction  ID:"
+        android:layout_alignLeft="@+id/details_from" />
+
+    <TextView
+        android:id="@+id/details_transid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_alignStart="@+id/details_from"
+        android:layout_marginTop="-224dp"
+        android:fontFamily="cursive"
+        android:text="Loading ..."
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_alignLeft="@+id/details_from" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/details_from"
+        android:layout_alignLeft="@+id/details_from"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="163dp"
+        android:text="Amount(INR):" />
+
+    <TextView
+        android:id="@+id/detail_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView6"
+        android:layout_alignStart="@+id/details_from"
+        android:layout_marginTop="-163dp"
+        android:fontFamily="cursive"
+        android:text="Loading ..."
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_alignLeft="@+id/details_from" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/details_from"
+        android:layout_alignLeft="@+id/details_from"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="104dp"
+        android:text="Status:" />
+
+    <TextView
+        android:id="@+id/detail_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView10"
+        android:layout_alignStart="@+id/details_from"
+        android:layout_marginTop="-104dp"
+        android:fontFamily="cursive"
+        android:text="Loading ..."
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_alignLeft="@+id/details_from" />
+</RelativeLayout>
