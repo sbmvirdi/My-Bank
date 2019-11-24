@@ -28,5 +28,5 @@
     <string name="name_tag">Name:</string>
     <string name="enter_amount_inr">Enter Amount(INR)</string>
     <string name="pass_bullet">• • • • • • • • • • • • •</string>
-    <string name="disclaimer">Note:No data is being shared with any third party module.User\'s data is end to end encrypted.</string>
+    <string name="disclaimer">Note: No data is being shared with any third party module.\nUser\'s data is end to end encrypted.</string>
 </resources>

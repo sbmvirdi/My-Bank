@@ -15,6 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".AboutUs"></activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -33,7 +34,11 @@
         <activity android:name=".Signup" />
         <activity android:name=".AdminSettings" />
         <activity android:name=".SendMoney" />
-        <activity android:name=".totransfer"></activity>
+        <activity android:name=".totransfer" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

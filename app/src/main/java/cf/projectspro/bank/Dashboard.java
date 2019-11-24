@@ -6,14 +6,12 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
@@ -24,15 +22,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.smarteist.autoimageslider.SliderLayout;
+import com.smarteist.autoimageslider.IndicatorAnimations;
+import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
-import com.squareup.picasso.Picasso;
-import com.wang.avi.AVLoadingIndicatorView;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import cf.projectspro.bank.R;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,13 +36,10 @@ public class Dashboard extends Fragment {
     private DatabaseReference ref,advertisements;
     private Button addmoney,send;
     private FirebaseAuth mAuth;
-    private SliderLayout sliderLayout;
-    private Button mgetvirtualcard;
-    private TextView mcardnumber,mcardname,mcardamount;
-    private RelativeLayout mvirtualcard;
-    private String uid,adds[]={"https://firebasestorage.googleapis.com/v0/b/bank-f7765.appspot.com/o/Whats-the-Difference-Between-Online-and-Mobile-Banking_1-INARTICLE-e1508438634604-730x323.jpg?alt=media&token=96a9d9bb-d095-4b2a-ae11-e25e2d9d4ffc",
-            "https://firebasestorage.googleapis.com/v0/b/bank-f7765.appspot.com/o/help-how-to-topic.png?alt=media&token=8f1ba57d-c272-48cc-9b5f-9ade10253b57",
-            "https://firebasestorage.googleapis.com/v0/b/bank-f7765.appspot.com/o/BlobPostHeaders_AndroidStackedNotificationsEdit.png?alt=media&token=a24e02cc-d997-4c7c-baef-00e9874b574e"
+    private SliderView sliderLayout;
+    private String uid,adds[]={"https://firebasestorage.googleapis.com/v0/b/bank-f7765.appspot.com/o/one.png?alt=media&token=e9f30af4-9450-4653-b0c0-667b946cb741",
+            "https://firebasestorage.googleapis.com/v0/b/bank-f7765.appspot.com/o/two.png?alt=media&token=2fb8125e-7ce4-4196-88f2-7bcb06164590",
+            "https://firebasestorage.googleapis.com/v0/b/bank-f7765.appspot.com/o/three.png?alt=media&token=86e3da4b-7258-4356-9939-aed3e631e9be"
     };
     private ViewFlipper vf;
     public Dashboard() {
@@ -80,7 +69,7 @@ public class Dashboard extends Fragment {
         send = layout.findViewById(R.id.sendmoneynow);
         amount = layout.findViewById(R.id.Amount);
         sliderLayout = layout.findViewById(R.id.imageSlider);
-        sliderLayout.setIndicatorAnimation(SliderLayout.Animations.FILL); //set indicator animation by using SliderLayout.Animations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+       // sliderLayout.setIndicatorAnimation(SliderView.Animations.FILL); //set indicator animation by using SliderLayout.Animations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         sliderLayout.setScrollTimeInSec(1); //set scroll delay in seconds :
         //mgetvirtualcard = layout.findViewById(R.id.getvirtualcard);
 
@@ -147,13 +136,10 @@ public class Dashboard extends Fragment {
 
             }
         });
-           mgetvirtualcard.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View v) {
-                   Toast.makeText(getContext(), "Feature Under Construction", Toast.LENGTH_SHORT).show();
-               }
-           });
-           setSliderViews();
+
+
+
+          // setSliderViews();
             addmoney.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -176,6 +162,13 @@ public class Dashboard extends Fragment {
                     }
                 }
             });
+
+         SliderAdapterDemo adapterDemo = new SliderAdapterDemo(getContext());
+            sliderLayout.setSliderAdapter(adapterDemo);
+        sliderLayout.startAutoCycle();
+        sliderLayout.setIndicatorAnimation(IndicatorAnimations.WORM);
+        sliderLayout.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        sliderLayout.setScrollTimeInSec(2);
 
         return layout;
     }
@@ -210,25 +203,27 @@ public class Dashboard extends Fragment {
         return false;
     }
 
-    private void setSliderViews() {
-
-        for (int i = 0; i < 3; i++) {
-
-            SliderView sliderView = new SliderView(getContext());
-
-            switch (i) {
-                case 0:
-                    sliderView.setImageUrl(adds[0]);
-                    break;
-                case 1:
-                    sliderView.setImageUrl(adds[1]);
-                    break;
-                case 2:
-                    sliderView.setImageUrl(adds[2]);
-                    break;
-            }
-
-            sliderView.setImageScaleType(ImageView.ScaleType.CENTER_CROP);
-            sliderLayout.addSliderView(sliderView);
-
-        }}}
+//
+//    private void setSliderViews() {
+//
+//        for (int i = 0; i < 3; i++) {
+//
+//            SliderView sliderView = new SliderView(getContext());
+//
+//            switch (i) {
+//                case 0:
+//                    sliderView.setImageUrl(adds[0]);
+//                    break;
+//                case 1:
+//                    sliderView.setImageUrl(adds[1]);
+//                    break;
+//                case 2:
+//                    sliderView.setImageUrl(adds[2]);
+//                    break;
+//            }
+//
+//            sliderView.setImageScaleType(ImageView.ScaleType.CENTER_CROP);
+//            sliderLayout.addSliderView(sliderView);
+//
+//        }}
+       }

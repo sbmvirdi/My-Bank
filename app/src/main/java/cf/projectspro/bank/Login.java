@@ -2,8 +2,8 @@ package cf.projectspro.bank;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -63,11 +63,13 @@ public class Login extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                          if (task.isSuccessful()){
-                             Intent intent = new Intent(Login.this,MainActivity.class);
-                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                             startActivity(intent);
-                             finish();
-                             pd.dismiss();
+                                         Intent intent = new Intent(Login.this,MainActivity.class);
+                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                         startActivity(intent);
+                                         finish();
+                                         pd.dismiss();
+
+
                          }
                          else {
                              Toast.makeText(Login.this, "Incorrect Details", Toast.LENGTH_SHORT).show();

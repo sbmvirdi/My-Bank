@@ -17,6 +17,7 @@
         android:layout_centerVertical="true"
         android:background="@drawable/corner"
         android:text="@string/signout"
+        android:fontFamily="@font/overpass_semibold"
         android:textColor="#ffffff" />
 
     <ImageView
@@ -27,6 +28,18 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
         android:src="@drawable/user" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:fontFamily="@font/overpass_semibold"
+        android:textColor="#000"
+        android:textSize="25sp"
+        android:id="@+id/name_profile"
+        android:layout_below="@id/imageView"
+        android:layout_marginTop="10dp"
+        android:gravity="center"/>
 
     <ImageView
         android:id="@+id/verified"
@@ -40,12 +53,14 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
-        android:fontFamily="serif-monospace"
+        android:gravity="center"
+        android:fontFamily="@font/overpass_semibold"
         android:text="@string/disclaimer"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="12sp"
@@ -53,13 +68,14 @@
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="80dp"
         android:fontFamily="cursive"
-        android:text="Made with            in India"
+        android:paddingLeft="120dp"
+        android:text="Made with             in India"
         android:textSize="15sp" />
 
     <TextView

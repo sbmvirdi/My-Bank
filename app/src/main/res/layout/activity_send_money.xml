@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SendMoney">
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="55dp"
@@ -16,9 +16,9 @@
         app:title="My Bank"
         app:titleTextColor="#ffffff"
         tools:targetApi="lollipop">
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/users_rec"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

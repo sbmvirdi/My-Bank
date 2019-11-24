@@ -2,6 +2,8 @@
 
 <ScrollView
 
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -11,23 +13,21 @@
 
 
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:paddingBottom="10dp"
-    android:layout_height="wrap_content"
+    android:layout_height="600dp"
     >
 
-    <com.smarteist.autoimageslider.SliderLayout
+    <com.smarteist.autoimageslider.SliderView
         android:layout_width="match_parent"
         android:layout_height="180dp"
+
         android:id="@+id/imageSlider"/>
 
     <RelativeLayout
         android:layout_width="340dp"
-        android:layout_height="170dp"
+        android:layout_height="180dp"
         android:layout_alignParentTop="true"
         android:elevation="10dp"
         android:layout_centerHorizontal="true"
@@ -44,11 +44,11 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:padding="2dp"
+            android:layout_marginTop="25dp"
+            android:fontFamily="@font/overpass_semibold"
+            android:paddingLeft="20dp"
             android:text="Name"
-            android:textColor="#ffffff" />
+            android:textColor="#000" />
 
         <TextView
             android:id="@+id/name"
@@ -56,24 +56,23 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView8"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="-10dp"
-            android:fontFamily="cursive"
-            android:gravity="center"
-            android:padding="2dp"
+            android:layout_marginTop="-5dp"
+            android:paddingLeft="20dp"
             android:text="Loading ..."
-            android:textColor="#ffffff"
-            android:textSize="30sp" />
+            android:fontFamily="@font/overpass_semibold"
+            android:textColor="#000"
+            android:textSize="25sp" />
 
         <TextView
             android:id="@+id/textView11"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_marginTop="88dp"
-            android:gravity="center"
-            android:padding="2dp"
+            android:layout_marginTop="108dp"
+            android:paddingLeft="20dp"
             android:text="Amount(INR)"
-            android:textColor="#ffffff" />
+            android:fontFamily="@font/overpass_semibold"
+            android:textColor="#000" />
 
         <TextView
             android:id="@+id/Amount"
@@ -81,11 +80,19 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView11"
             android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:padding="2dp"
+            android:paddingLeft="20dp"
+            android:fontFamily="@font/overpass_semibold"
             android:text="0"
-            android:textColor="#ffffff"
+            android:textColor="#000"
             android:textSize="30sp" />
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="180dp"
+            android:src="@drawable/money"
+            android:scaleType="centerCrop"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true" />
+
     </RelativeLayout>
 
 
@@ -102,7 +109,7 @@
         android:clickable="true"
         android:elevation="2dp"
         android:text="Add Money To Wallet"
-        android:textColor="#ffffff"
+        android:textColor="#fff"
         android:focusable="true"
         android:layout_marginStart="70dp" />
 
@@ -119,7 +126,7 @@
         android:background="@drawable/corner"
         android:clickable="true"
         android:text="Send Money"
-        android:textColor="#ffffff"
+        android:textColor="#fff"
         android:layout_marginStart="70dp" />
 
 

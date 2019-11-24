@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="55dp"
@@ -32,8 +32,8 @@
             android:src="@drawable/admin" />
 
 
-    </android.support.v7.widget.Toolbar>
-    <android.support.design.widget.BottomNavigationView
+    </androidx.appcompat.widget.Toolbar>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
         android:layout_marginBottom="0dp"
         android:orientation="vertical">
 
-        <android.support.v4.view.ViewPager
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/main_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
