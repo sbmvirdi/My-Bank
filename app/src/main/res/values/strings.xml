@@ -29,4 +29,7 @@
     <string name="enter_amount_inr">Enter Amount(INR)</string>
     <string name="pass_bullet">• • • • • • • • • • • • •</string>
     <string name="disclaimer">Note: No data is being shared with any third party module.\nUser\'s data is end to end encrypted.</string>
+    <string name="developer_email">Shubhamvirdic3@gmail.com</string>
+    <string name="developer_name">Shubam Virdi</string>
+    <string name="enter_amount1">Enter Amount</string>
 </resources>

@@ -11,7 +11,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:background="#53D1E0"
+        android:background="#6561f6"
         android:elevation="4dp"
         android:focusable="auto"
         android:focusableInTouchMode="true"
@@ -19,20 +19,39 @@
         app:titleTextColor="#ffffff"
         tools:targetApi="lollipop">
     </androidx.appcompat.widget.Toolbar>
-<com.google.android.material.textfield.TextInputLayout
+<!--<com.google.android.material.textfield.TextInputLayout-->
 
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:layout_marginTop="250dp"
-android:hint="@string/enter_amount_inr">
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_marginTop="250dp"-->
+<!--android:hint="@string/enter_amount_inr">-->
 
-<EditText
-    android:id="@+id/money_to_transfer"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:inputType="number" />
-</com.google.android.material.textfield.TextInputLayout>
+<!--<EditText-->
+<!--    android:id="@+id/money_to_transfer"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:inputType="number" />-->
+<!--</com.google.android.material.textfield.TextInputLayout>-->
 
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:id="@+id/tomoney_layout"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="@string/enter_amount1">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:id="@+id/money_to_transfer"
+            android:inputType="number"
+            android:fontFamily="@font/overpass_semibold"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
     <Button
         android:id="@+id/transfer_money_btn"
         android:layout_width="200dp"

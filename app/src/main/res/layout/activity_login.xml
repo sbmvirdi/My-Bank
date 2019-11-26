@@ -37,42 +37,97 @@
         android:layout_width="340dp"
         android:layout_height="200dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="180dp"
+        android:layout_marginTop="150dp"
         app:cardBackgroundColor="#ffffff"
         app:cardCornerRadius="14dp"
+        android:id="@+id/card_login"
         app:cardElevation="10dp"
         app:contentPadding="20dp">
 
-<com.google.android.material.textfield.TextInputLayout
-    android:layout_width="match_parent"
-    android:layout_marginTop="30dp"
-    android:layout_height="wrap_content">
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/enter_your_email_id" />
-</com.google.android.material.textfield.TextInputLayout>
-
-
-
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_marginTop="90dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/email_layout"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="Enter your Email Address">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/pass"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/enter_your_password"
-                android:inputType="textPassword" />
+                android:id="@+id/email"
+                android:inputType="textEmailAddress"
+                android:fontFamily="@font/overpass_semibold"
+                android:layout_height="wrap_content"/>
+
         </com.google.android.material.textfield.TextInputLayout>
 
-    </androidx.cardview.widget.CardView>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:id="@+id/password_layout"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="Enter Your Password">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:id="@+id/pass"
+            android:inputType="textPassword"
+            android:fontFamily="@font/overpass_semibold"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+<!--<
+    discarded on 26 nov 2019 at 5:19:04 PM
+com.google.android.material.textfield.TextInputLayout-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_marginTop="30dp"-->
+<!--    android:layout_height="wrap_content">-->
+
+<!--    <com.google.android.material.textfield.TextInputEditText-->
+<!--        android:id="@+id/email"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint="@string/enter_your_email_id" />-->
+<!--</com.google.android.material.textfield.TextInputLayout>-->
 
 
+
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_marginTop="90dp"-->
+<!--            android:layout_height="wrap_content">-->
+
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/pass"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="@string/enter_your_password"-->
+<!--                android:inputType="textPassword" />-->
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--    --></androidx.cardview.widget.CardView>
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:text="You cannot have multiple sessions kindly logout from other session!"
+    android:layout_below="@id/card_login"
+    android:layout_marginTop="20dp"
+    android:textSize="15sp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:textColor="#ff0000"
+    android:fontFamily="@font/overpass_semibold"
+    android:id="@+id/multiple_sessions"
+    android:visibility="gone"
+    />
     <!--
         Discarded on  13 Oct at 12:26 AM
 
@@ -89,6 +144,8 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
     </android.support.design.widget.TextInputLayout> -->
+
+
 
     <Button
         android:id="@+id/signup_now"

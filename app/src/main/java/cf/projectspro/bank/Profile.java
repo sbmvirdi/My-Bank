@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,13 +35,14 @@ public class Profile extends Fragment {
     private ImageView verified;
     private TextView nameprofile;
     private String uid,name;
+    private boolean session;
     public Profile() {
         // Required empty public constructor
     }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         layout =  inflater.inflate(R.layout.fragment_profile, container, false);
         signout = layout.findViewById(R.id.signout);
@@ -51,11 +54,21 @@ public class Profile extends Fragment {
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mAuth.signOut();
-                Intent intent = new Intent(getActivity(),Login.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                activity.finish();
+
+                DatabaseReference df = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+                df.child("session").setValue(false).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            mAuth.signOut();
+                            Intent intent = new Intent(getActivity(),Login.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            activity.finish();
+                        }
+                    }
+                });
+
             }
         });
         @SuppressLint("ResourceType") Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(getContext(), R.layout.animation);

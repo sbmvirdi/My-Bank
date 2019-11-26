@@ -9,7 +9,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:background="#53D1E0"
+        android:background="#6561f6"
         android:elevation="4dp"
         android:focusable="auto"
         android:focusableInTouchMode="true"

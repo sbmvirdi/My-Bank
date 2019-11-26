@@ -20,13 +20,15 @@
 
     <TextView
         android:id="@+id/details_from"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
+        android:textSize="20sp"
+        android:fontFamily="@font/overpass_semibold"
         android:layout_marginBottom="279dp"
         android:text="To:" />
 
@@ -34,85 +36,102 @@
         android:id="@+id/detail_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/details_from"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="251dp"
-        android:fontFamily="cursive"
+        android:fontFamily="@font/overpass_semibold"
         android:text="Loading ..."
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="279dp"
+        android:layout_toRightOf="@id/details_from"
         android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_alignLeft="@+id/details_from" />
+        />
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/details_from"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="224dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="250dp"
+        android:textSize="20sp"
+        android:fontFamily="@font/overpass_semibold"
         android:text="Transaction  ID:"
-        android:layout_alignLeft="@+id/details_from" />
+        android:layout_marginStart="10dp" />
 
     <TextView
         android:id="@+id/details_transid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView3"
-        android:layout_alignStart="@+id/details_from"
-        android:layout_marginTop="-224dp"
-        android:fontFamily="cursive"
+        android:layout_toRightOf="@id/textView3"
+        android:layout_marginBottom="250dp"
+        android:layout_alignParentBottom="true"
         android:text="Loading ..."
+        android:layout_marginLeft="10dp"
         android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_alignLeft="@+id/details_from" />
+        android:layout_toEndOf="@id/textView3"
+        android:layout_marginStart="10dp" />
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/details_from"
-        android:layout_alignLeft="@+id/details_from"
+        android:layout_marginLeft="10dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="163dp"
-        android:text="Amount(INR):" />
+        android:layout_marginBottom="220dp"
+        android:textSize="20sp"
+        android:fontFamily="@font/overpass_semibold"
+        android:text="Amount(INR):"
+        android:layout_marginStart="10dp" />
 
     <TextView
         android:id="@+id/detail_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView6"
-        android:layout_alignStart="@+id/details_from"
-        android:layout_marginTop="-163dp"
-        android:fontFamily="cursive"
+        android:layout_toRightOf="@id/textView6"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="220dp"
         android:text="Loading ..."
+        android:layout_marginLeft="10dp"
         android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_alignLeft="@+id/details_from" />
+        android:layout_toEndOf="@id/textView6"
+        android:layout_marginStart="10dp" />
 
     <TextView
         android:id="@+id/textView10"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/details_from"
-        android:layout_alignLeft="@+id/details_from"
+        android:layout_marginLeft="10dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="104dp"
-        android:text="Status:" />
+        android:textSize="20sp"
+        android:fontFamily="@font/overpass_semibold"
+        android:layout_marginBottom="190dp"
+        android:text="Status:"
+        android:layout_marginStart="10dp" />
 
     <TextView
         android:id="@+id/detail_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView10"
-        android:layout_alignStart="@+id/details_from"
-        android:layout_marginTop="-104dp"
-        android:fontFamily="cursive"
+        android:layout_toRightOf="@id/textView10"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="190dp"
+        android:fontFamily="@font/overpass_semibold"
         android:text="Loading ..."
+        android:layout_marginLeft="10dp"
         android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_alignLeft="@+id/details_from" />
+     />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-120dp"
+        android:src="@drawable/ic_wave_admin"/>
 </RelativeLayout>

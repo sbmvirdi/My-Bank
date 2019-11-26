@@ -35,10 +35,10 @@ public class Money extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_money);
-        //couponcode = findViewById(R.id.coupon);
+
         amt = findViewById(R.id.money_value);
         mAuth = FirebaseAuth.getInstance();
-        //ref_to_coupon = FirebaseDatabase.getInstance().getReference().child("coupon");
+
         if(mAuth.getCurrentUser() == null ){
             Intent intent = new Intent(Money.this,Login.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -55,10 +55,9 @@ public class Money extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                  amount_to_add = Long.parseLong(amt.getText().toString().trim());
-               //  CC = couponcode.getText().toString().trim();
-                 /* Coupon code module is to be added in the on click listener */
 
-                if(amount_to_add <= 0){
+
+                if(amount_to_add <= 0 || amount_to_add > 10000){
                     Toast.makeText(Money.this, "Enter Appropriate Amount", Toast.LENGTH_SHORT).show();
                 }
                 else {

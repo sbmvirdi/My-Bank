@@ -3,19 +3,27 @@ package cf.projectspro.bank;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,6 +33,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
+import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,16 +43,14 @@ import com.smarteist.autoimageslider.SliderView;
  */
 public class Dashboard extends Fragment {
     View layout;
-    private TextView name,amount;
+    private TextView name,amount,LoadingText;
+    private ImageView Ad,ads_image;
     private DatabaseReference ref,advertisements;
     private Button addmoney,send;
     private FirebaseAuth mAuth;
     private SliderView sliderLayout;
-    private String uid,adds[]={"https://firebasestorage.googleapis.com/v0/b/bank-f7765.appspot.com/o/one.png?alt=media&token=e9f30af4-9450-4653-b0c0-667b946cb741",
-            "https://firebasestorage.googleapis.com/v0/b/bank-f7765.appspot.com/o/two.png?alt=media&token=2fb8125e-7ce4-4196-88f2-7bcb06164590",
-            "https://firebasestorage.googleapis.com/v0/b/bank-f7765.appspot.com/o/three.png?alt=media&token=86e3da4b-7258-4356-9939-aed3e631e9be"
-    };
-    private ViewFlipper vf;
+    private String uid;
+    private AdView mAdView;
     public Dashboard() {
         // Required empty public constructor
     }
@@ -50,9 +59,15 @@ public class Dashboard extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         // Inflate the layout for this fragment
         mAuth = FirebaseAuth.getInstance();
-        advertisements = FirebaseDatabase.getInstance().getReference().child("advert");
+        advertisements = FirebaseDatabase.getInstance().getReference().child("Advert");
+        advertisements.keepSynced(true);
+
+
+        // checking authentication of the user
         if(mAuth.getCurrentUser() == null ){
             Intent intent = new Intent(getActivity(),Login.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -63,37 +78,30 @@ public class Dashboard extends Fragment {
             uid = mAuth.getCurrentUser().getUid();
         }
 
+        // defining id's
 
         layout =  inflater.inflate(R.layout.fragment_dashboard, container, false);
         name = layout.findViewById(R.id.name);
         send = layout.findViewById(R.id.sendmoneynow);
         amount = layout.findViewById(R.id.Amount);
+        LoadingText = layout.findViewById(R.id.loadingText);
+        Ad = layout.findViewById(R.id.dashboard_ad);
+        ads_image = layout.findViewById(R.id.ads_image);
         sliderLayout = layout.findViewById(R.id.imageSlider);
-       // sliderLayout.setIndicatorAnimation(SliderView.Animations.FILL); //set indicator animation by using SliderLayout.Animations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
-        sliderLayout.setScrollTimeInSec(1); //set scroll delay in seconds :
-        //mgetvirtualcard = layout.findViewById(R.id.getvirtualcard);
+        mAdView = layout.findViewById(R.id.adview);
+
+
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-       /* advertisements.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                adds[0] = (String)dataSnapshot.child("ad1").getValue();
-                adds[1] = (String)dataSnapshot.child("ad2").getValue();
-                adds[2] = (String)dataSnapshot.child("ad3").getValue();
-                adds[3] = (String)dataSnapshot.child("ad4").getValue();
-                //Toast.makeText(getContext(), adds[0], Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
         ref = database.getReference().child("Users").child(uid);
         ref.keepSynced(true);
         addmoney = layout.findViewById(R.id.add_money);
+
+
+        // Value Event Listeners
+
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -101,33 +109,9 @@ public class Dashboard extends Fragment {
                 long Amount = (long) dataSnapshot.child("amount").getValue();
 
 
-               // Toast.makeText(getContext(), ""+newcard, Toast.LENGTH_SHORT).show();
                name.setText(Name);
                amount.setText(Amount+"");
-               /*if (newcard == 1){
-                   mvirtualcard.setVisibility(View.VISIBLE);
-                   mcardname.setVisibility(View.GONE);
-                   mcardamount.setVisibility(View.GONE);
-                   mcardnumber.setText("**** **** **** ****");
-                   mgetvirtualcard.setVisibility(View.VISIBLE);
-                   mvirtualcard.setVisibility(View.VISIBLE);
-               }
-               else if(newcard == 0){
-                   mvirtualcard.setVisibility(View.VISIBLE);
-                   mgetvirtualcard.setVisibility(View.GONE);
-                   mcardamount.setVisibility(View.VISIBLE);
-                   mcardname.setVisibility(View.VISIBLE);
-                   mvirtualcard.setVisibility(View.VISIBLE);
-                   mcardnumber.setVisibility(View.VISIBLE);
-                   // fetching the card details if the user has
-                   // not applied for the card
-                   long cardno =(long) dataSnapshot.child("cardno").getValue();
-                   long credit = (long) dataSnapshot.child("credit").getValue();
-                   mcardnumber.setText(cardno+"");
-                   mcardname.setText(Name);
-                   mcardamount.setText(Amount+"");
 
-               }*/
 
             }
 
@@ -139,7 +123,34 @@ public class Dashboard extends Fragment {
 
 
 
-          // setSliderViews();
+        advertisements.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                String ad_url = (String) dataSnapshot.child("ad_url").getValue();
+                String ad_text = (String) dataSnapshot.child("ad_text").getValue();
+
+
+
+                    Picasso.get().load(ad_url).into(Ad);
+                    LoadingText.setText(ad_text);
+                    LoadingText.setBackgroundResource(R.color.colorPrimaryDark);
+                    ads_image.setImageResource(R.drawable.ads);
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+        // Click Listeners
+
             addmoney.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -163,12 +174,62 @@ public class Dashboard extends Fragment {
                 }
             });
 
-         SliderAdapterDemo adapterDemo = new SliderAdapterDemo(getContext());
-            sliderLayout.setSliderAdapter(adapterDemo);
+        // Sliding View Animation
+
+        SliderAdapterDemo adapterDemo = new SliderAdapterDemo(getContext());
+        sliderLayout.setSliderAdapter(adapterDemo);
         sliderLayout.startAutoCycle();
         sliderLayout.setIndicatorAnimation(IndicatorAnimations.WORM);
         sliderLayout.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
         sliderLayout.setScrollTimeInSec(2);
+
+
+
+
+        //AdMob Implementation
+
+        MobileAds.initialize(getContext());
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
+
+        mAdView.setAdListener(new AdListener(){
+
+
+            @Override
+            public void onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                // Code to be executed when an ad request fails.
+                //Toast.makeText(getContext(), "failed"+errorCode, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdOpened() {
+                // Code to be executed when an ad opens an overlay that
+                // covers the screen.
+            }
+
+            @Override
+            public void onAdClicked() {
+                // Code to be executed when the user clicks on an ad.
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                // Code to be executed when the user has left the app.
+            }
+
+            @Override
+            public void onAdClosed() {
+                // Code to be executed when the user is about to return
+                // to the app after tapping on an ad.
+            }
+        });
+
 
         return layout;
     }
@@ -203,27 +264,5 @@ public class Dashboard extends Fragment {
         return false;
     }
 
-//
-//    private void setSliderViews() {
-//
-//        for (int i = 0; i < 3; i++) {
-//
-//            SliderView sliderView = new SliderView(getContext());
-//
-//            switch (i) {
-//                case 0:
-//                    sliderView.setImageUrl(adds[0]);
-//                    break;
-//                case 1:
-//                    sliderView.setImageUrl(adds[1]);
-//                    break;
-//                case 2:
-//                    sliderView.setImageUrl(adds[2]);
-//                    break;
-//            }
-//
-//            sliderView.setImageScaleType(ImageView.ScaleType.CENTER_CROP);
-//            sliderLayout.addSliderView(sliderView);
-//
-//        }}
+
        }

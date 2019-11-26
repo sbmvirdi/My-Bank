@@ -6,15 +6,15 @@
     android:layout_width="match_parent"
     app:cardUseCompatPadding="true"
     android:orientation="vertical"
-    app:contentPadding="4dp"
+    app:contentPadding="2dp"
     android:padding="4dp"
 
-    android:layout_height="wrap_content"
+    android:layout_height="105dp"
     >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="?android:attr/selectableItemBackground"
         android:padding="4dp">
 
@@ -26,6 +26,7 @@
             android:padding="4dp"
             android:src="@drawable/user" />
 
+
         <TextView
             android:id="@+id/user_name"
             android:layout_width="150dp"
@@ -35,11 +36,11 @@
             android:layout_alignParentRight="true"
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
-            android:gravity="end"
             android:padding="2dp"
-            android:textColor="#000000"
+            android:textColor="#000"
+            android:layout_toRightOf="@id/name_label"
+            android:fontFamily="@font/overpass_semibold"
             android:textSize="20sp"
-            app:fontFamily="cursive"
             tools:text="Loading ..." />
 
 
@@ -55,8 +56,13 @@
             android:layout_marginTop="25dp"
             android:gravity="end"
             android:padding="2dp"
+            android:fontFamily="@font/overpass_semibold"
             android:text="@string/name_tag"
             android:textSize="20sp" />
+
+
+
+
     </RelativeLayout>
 
 

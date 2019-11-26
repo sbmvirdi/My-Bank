@@ -2,6 +2,7 @@ package cf.projectspro.bank;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -27,6 +28,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.Random;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -37,7 +40,8 @@ public class Notifications extends Fragment {
  private Query ref;
  private FirebaseAuth mAuth;
  private String uid;
- private SkeletonScreen sk;
+ private String[] colors = {"#8E44AD","#A9DFBF","#D35400","#922B21","#AAB7B8","#148F77","#AF601A","#21618C"
+ ,"#B9770E","#D68910","#D68910","#8E44AD","#F1C40F"};
  private ShimmerFrameLayout shimmerFrameLayout;
 
 
@@ -63,10 +67,8 @@ public class Notifications extends Fragment {
         // Inflate the layout for this fragment
         layout =  inflater.inflate(R.layout.fragment_notifications, container, false);
         rec = layout.findViewById(R.id.notification_rec);
-        //shimmerFrameLayout = layout.findViewById(R.id.shimmer_view_container);
         rec.setHasFixedSize(true);
 
-//         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
          FirebaseDatabase database = FirebaseDatabase.getInstance();
         ref = database.getReference().child("transactions").child(uid).orderByChild("code");
         ref.keepSynced(true);
@@ -129,6 +131,7 @@ public class Notifications extends Fragment {
     public class notifyHolder extends RecyclerView.ViewHolder {
         View mView;
         ImageView image;
+        TextView bottomStroke;
         TextView to,amount,trans_id;
         String im;
         TextView From_text,currency;
@@ -191,10 +194,12 @@ public class Notifications extends Fragment {
                 From_text.setText("From:");
             }
         }
+
+
     }
 
     public Long timestamp(){
-        Long tsLong = System.currentTimeMillis()/1000;
+        Long tsLong = System.currentTimeMillis();
         return tsLong;
     }
 

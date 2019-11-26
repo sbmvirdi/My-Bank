@@ -26,10 +26,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/dev"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/overpass_semibold"
-        android:textSize="25sp"
-        android:text="Shubam Virdi"
+        android:textSize="20sp"
+        android:text="@string/developer_name"
         android:gravity="center"
         android:textStyle="bold"
         android:id="@+id/namedev"
@@ -42,8 +42,15 @@
         android:layout_marginTop="2dp"
         android:textColor="#000"
         android:fontFamily="@font/overpass_semibold"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:gravity="center"
-        android:text="Shubhamvirdic3@gmail.com"/>
+        android:text="@string/developer_email"/>
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:src="@drawable/ic_wave_admin"
+    android:layout_marginBottom="-120dp"
+    android:layout_alignParentBottom="true"
+    />
 
 </RelativeLayout>

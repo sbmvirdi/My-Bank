@@ -9,30 +9,42 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Login extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private EditText email,password;
     private Button signin,signup_click;
     private ProgressDialog pd;
+    private boolean session;
+    private DatabaseReference df;
+    private TextView multiple_session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         signin = findViewById(R.id.signup_now);
         email = findViewById(R.id.email);
+        multiple_session = findViewById(R.id.multiple_sessions);
         password = findViewById(R.id.pass);
         mAuth = FirebaseAuth.getInstance();
         pd = new ProgressDialog(this);
         pd.setMessage("Please Wait ...");
         pd.hide();
         signup_click = findViewById(R.id.sign_up_screen);
+         df = FirebaseDatabase.getInstance().getReference().child("Users");
         if(mAuth.getCurrentUser() != null){
 
             Intent intent = new Intent(Login.this,MainActivity.class);
@@ -63,11 +75,50 @@ public class Login extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                          if (task.isSuccessful()){
-                                         Intent intent = new Intent(Login.this,MainActivity.class);
-                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                         startActivity(intent);
-                                         finish();
-                                         pd.dismiss();
+
+                           final String uid =  mAuth.getCurrentUser().getUid();
+
+                                df.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                                         session = (boolean) dataSnapshot.child("session").getValue();
+
+
+                                        //Toast.makeText(Login.this, session+" "+uid, Toast.LENGTH_SHORT).show();
+                                         if (session){
+                                             mAuth.signOut();
+                                            // Toast.makeText(Login.this, "You cannot have multiple sessions", Toast.LENGTH_SHORT).show();
+                                             pd.dismiss();
+                                             multiple_session.setVisibility(View.VISIBLE);
+                                             signin.setText("Login");
+                                             signin.setClickable(true);
+                                         }else{
+                                               multiple_session.setVisibility(View.GONE);
+                                             df.child(uid).child("session").setValue(true).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                 @Override
+                                                 public void onComplete(@NonNull Task<Void> task) {
+                                                     if (task.isSuccessful()){
+                                                         Intent intent = new Intent(Login.this,MainActivity.class);
+                                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                         startActivity(intent);
+                                                         finish();
+                                                         pd.dismiss();
+                                                     }
+                                                 }
+                                             });
+
+
+                                         }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+
 
 
                          }
