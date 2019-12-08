@@ -86,6 +86,7 @@ public class Signup extends AppCompatActivity {
                                     ref.child("name").setValue(Name);
                                     ref.child("amount").setValue(0);
                                     ref.child("uid").setValue(uid);
+                                    ref.child("session").setValue(true);
                                     isadmin.setValue(false);
                                     Intent intent = new Intent(Signup.this, MainActivity.class);
                                     startActivity(intent);

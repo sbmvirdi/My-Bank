@@ -51,6 +51,7 @@ public class Dashboard extends Fragment {
     private SliderView sliderLayout;
     private String uid;
     private AdView mAdView;
+    public static char first_letter;
     public Dashboard() {
         // Required empty public constructor
     }
@@ -108,7 +109,7 @@ public class Dashboard extends Fragment {
                 String Name = (String) dataSnapshot.child("name").getValue();
                 long Amount = (long) dataSnapshot.child("amount").getValue();
 
-
+                first_letter = Name.charAt(0);
                name.setText(Name);
                amount.setText(Amount+"");
 

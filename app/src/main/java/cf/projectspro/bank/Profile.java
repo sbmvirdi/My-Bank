@@ -15,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,7 +34,7 @@ public class Profile extends Fragment {
     private Button signout;
     private View layout;
     private FirebaseAuth mAuth;
-    private ImageView verified;
+    private ImageView verified,dp;
     private TextView nameprofile;
     private String uid,name;
     private boolean session;
@@ -51,6 +53,8 @@ public class Profile extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         uid = mAuth.getCurrentUser().getUid();
         verified = layout.findViewById(R.id.verified);
+        dp = layout.findViewById(R.id.imageView);
+
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,6 +92,22 @@ public class Profile extends Fragment {
             }
         });
         verified.startAnimation(hyperspaceJumpAnimation);
+
+        char first = Dashboard.first_letter;
+        //Toast.makeText(activity, first+"", Toast.LENGTH_SHORT).show();
+        if (Character.isAlphabetic(first)){
+            Toast.makeText(activity, first+"", Toast.LENGTH_SHORT).show();
+            int res = getActivity().getResources().getIdentifier("@drawable/"+first,"drawable",getActivity().getPackageName());
+            dp.setImageResource(res);
+        }
+        else{
+            Picasso.get().load(R.drawable.user).into(dp);
+        }
+
+
+        if (dp.getDrawable() == null){
+            Picasso.get().load(R.drawable.user).into(dp);
+        }
          return layout;
     }
 

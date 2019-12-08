@@ -40,8 +40,6 @@ public class Notifications extends Fragment {
  private Query ref;
  private FirebaseAuth mAuth;
  private String uid;
- private String[] colors = {"#8E44AD","#A9DFBF","#D35400","#922B21","#AAB7B8","#148F77","#AF601A","#21618C"
- ,"#B9770E","#D68910","#D68910","#8E44AD","#F1C40F"};
  private ShimmerFrameLayout shimmerFrameLayout;
 
 
@@ -159,6 +157,7 @@ public class Notifications extends Fragment {
 
         void setname(String t){
             to = mView.findViewById(R.id.notify_name);
+            String[] nameeach = t.split("");
             to.setText(t);
         }
 

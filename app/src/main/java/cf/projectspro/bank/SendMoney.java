@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.squareup.picasso.Picasso;
 
 public class SendMoney extends AppCompatActivity {
     private RecyclerView userview;
@@ -47,6 +49,7 @@ public class SendMoney extends AppCompatActivity {
                  holder.setname(model.getname());
                  holder.getamount(model.getamount());
                  holder.getuid(to_uid);
+                 holder.setImage(model.getname());
 
             }
 
@@ -71,6 +74,7 @@ public class SendMoney extends AppCompatActivity {
 
         View mView;
         TextView user;
+        ImageView dp;
         String to_user_uid;
         long to_user_amount;
         String Name;
@@ -98,6 +102,26 @@ public class SendMoney extends AppCompatActivity {
             user = mView.findViewById(R.id.user_name);
             user.setText(name);
             Name = name;
+
+        }
+
+        void setImage(String name){
+            dp = mView.findViewById(R.id.user);
+            name = name.toLowerCase();
+            char _name = name.charAt(0);
+           // Toast.makeText(SendMoney.this, _name+"", Toast.LENGTH_SHORT).show();
+            if (Character.isAlphabetic(_name)){
+                int res = getResources().getIdentifier("@drawable/"+_name,null,getPackageName());
+                dp.setImageResource(res);
+            }
+            else{
+                Picasso.get().load(R.drawable.user).into(dp);
+            }
+
+
+            if (dp.getDrawable() == null){
+                Picasso.get().load(R.drawable.user).into(dp);
+            }
 
         }
 
