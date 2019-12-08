@@ -53,7 +53,7 @@ public class Profile extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         uid = mAuth.getCurrentUser().getUid();
         verified = layout.findViewById(R.id.verified);
-        dp = layout.findViewById(R.id.imageView);
+        dp = layout.findViewById(R.id.image_view);
 
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,8 +96,8 @@ public class Profile extends Fragment {
         char first = Dashboard.first_letter;
         //Toast.makeText(activity, first+"", Toast.LENGTH_SHORT).show();
         if (Character.isAlphabetic(first)){
-            Toast.makeText(activity, first+"", Toast.LENGTH_SHORT).show();
-            int res = getActivity().getResources().getIdentifier("@drawable/"+first,"drawable",getActivity().getPackageName());
+          //  Toast.makeText(activity, first+"", Toast.LENGTH_SHORT).show();
+            int res = getResources().getIdentifier("@drawable/"+first,"drawable",getContext().getPackageName());
             dp.setImageResource(res);
         }
         else{

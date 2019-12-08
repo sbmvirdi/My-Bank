@@ -109,7 +109,7 @@ public class Dashboard extends Fragment {
                 String Name = (String) dataSnapshot.child("name").getValue();
                 long Amount = (long) dataSnapshot.child("amount").getValue();
 
-                first_letter = Name.charAt(0);
+                first_letter = Name.toLowerCase().charAt(0);
                name.setText(Name);
                amount.setText(Amount+"");
 

@@ -21,7 +21,7 @@
         android:textColor="#ffffff" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/image_view"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_alignParentTop="true"
@@ -37,7 +37,7 @@
         android:textColor="#000"
         android:textSize="25sp"
         android:id="@+id/name_profile"
-        android:layout_below="@id/imageView"
+        android:layout_below="@id/image_view"
         android:layout_marginTop="10dp"
         android:gravity="center"/>
 
@@ -45,9 +45,9 @@
         android:id="@+id/verified"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_alignEnd="@+id/imageView"
-        android:layout_alignRight="@+id/imageView"
-        android:layout_alignBottom="@+id/imageView"
+        android:layout_alignEnd="@+id/image_view"
+        android:layout_alignRight="@+id/image_view"
+        android:layout_alignBottom="@+id/image_view"
         android:elevation="10dp"
         android:src="@drawable/verified" />
 
