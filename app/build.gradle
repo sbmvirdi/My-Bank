@@ -6,10 +6,10 @@ android {
     defaultConfig {
         multiDexEnabled true
         applicationId "cf.projectspro.bank"
-        minSdkVersion 19
+        minSdkVersion 23
         targetSdkVersion 29
-        versionCode 12
-        versionName "4.1.4"
+        versionCode 13
+        versionName "4.1.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

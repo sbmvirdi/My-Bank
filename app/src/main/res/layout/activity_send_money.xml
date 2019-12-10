@@ -18,13 +18,29 @@
         tools:targetApi="lollipop">
     </androidx.appcompat.widget.Toolbar>
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/overpass_semibold"
+        android:hint="Search User"
+        android:layout_marginTop="60dp"
+        android:padding="12dp"
+        android:inputType="text"
+        android:textColor="#000"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/searchBar"
+        android:textSize="18sp"
+        android:background="@drawable/border_search"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/users_rec"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="55dp" />
+        android:layout_below="@id/searchBar"
+        android:layout_marginTop="2dp"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

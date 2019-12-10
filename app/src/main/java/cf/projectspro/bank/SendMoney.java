@@ -6,10 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,50 +30,90 @@ public class SendMoney extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private Query ref;
     private String uid;
+    private EditText mSearchBar;
+    private String mSearchString="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_money);
         userview = findViewById(R.id.users_rec);
         mAuth = FirebaseAuth.getInstance();
-        ref = FirebaseDatabase.getInstance().getReference().child("Users").orderByChild("name");
+       // ref = FirebaseDatabase.getInstance().getReference().child("Users").orderByChild("name");
+        ref = FirebaseDatabase.getInstance().getReference().child("Users");
+
         if(mAuth.getCurrentUser() == null){
             Intent intent = new Intent(SendMoney.this,Login.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
         uid = mAuth.getCurrentUser().getUid();
+        mSearchBar = findViewById(R.id.searchBar);
+
+        Refresh("");
+        mSearchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Refresh(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+
+
+
+
+
         userview.setHasFixedSize(true);
         ref.keepSynced(true);
-        FirebaseRecyclerOptions firebaseRecyclerOptions = new FirebaseRecyclerOptions.Builder<users>().setQuery(ref,users.class).build();
-        FirebaseRecyclerAdapter<users,userHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<users, userHolder>(firebaseRecyclerOptions) {
+        userview.setLayoutManager(new LinearLayoutManager(this));
+
+
+
+    }
+
+
+
+    void Refresh(String mSearchString){
+
+        Query firebasequery = ref.orderByChild("name").startAt(mSearchString).endAt(mSearchString + "\uf8ff");
+        FirebaseRecyclerOptions firebaseRecyclerOptions = new FirebaseRecyclerOptions.Builder<users>().setQuery(firebasequery, users.class).build();
+        FirebaseRecyclerAdapter<users, userHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<users, userHolder>(firebaseRecyclerOptions) {
             @Override
             protected void onBindViewHolder(@NonNull userHolder holder, int position, @NonNull users model) {
                 String to_uid = model.getUid();
-                 holder.setname(model.getname());
-                 holder.getamount(model.getamount());
-                 holder.getuid(to_uid);
-                 holder.setImage(model.getname());
-
+                holder.setname(model.getname());
+                holder.getamount(model.getamount());
+                holder.getuid(to_uid);
+                holder.setImage(model.getname());
             }
 
             @NonNull
             @Override
             public userHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View v = LayoutInflater.from(SendMoney.this).inflate(R.layout.user_detail,parent,false);
+                View v = LayoutInflater.from(SendMoney.this).inflate(R.layout.user_detail, parent, false);
                 return new userHolder(v);
             }
         };
-       userview.setLayoutManager(new LinearLayoutManager(this));
-      userview.setAdapter(firebaseRecyclerAdapter);
-      try {
-          firebaseRecyclerAdapter.startListening();
-      }catch (Exception ex){
-          Log.e("EX USER ADAPTER",ex.toString());
-      }
 
+        userview.setAdapter(firebaseRecyclerAdapter);
+        try {
+            firebaseRecyclerAdapter.startListening();
+        } catch (Exception ex) {
+            Log.e("EX USER ADAPTER", ex.toString());
+        }
 
     }
+
     public class userHolder extends RecyclerView.ViewHolder{
 
         View mView;
@@ -82,10 +126,13 @@ public class SendMoney extends AppCompatActivity {
             super(itemView);
             mView = itemView;
 
+
             mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (uid.equals(to_user_uid)){
+
+//                       mView.setVisibility(View.GONE);
                         Toast.makeText(SendMoney.this, "You Can't Send Money To Yourself", Toast.LENGTH_SHORT).show();
                     }else{
                     Intent intent = new Intent(SendMoney.this,totransfer.class);

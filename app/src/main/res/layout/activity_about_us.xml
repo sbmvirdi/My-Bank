@@ -22,6 +22,7 @@
         android:id="@+id/dev"
         />
 
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,6 +42,8 @@
         android:layout_below="@id/namedev"
         android:layout_marginTop="2dp"
         android:textColor="#000"
+        android:id="@+id/emaildev"
+        android:background="@drawable/border_search"
         android:fontFamily="@font/overpass_semibold"
         android:textSize="20sp"
         android:gravity="center"

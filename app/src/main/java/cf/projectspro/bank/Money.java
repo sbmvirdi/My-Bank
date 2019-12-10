@@ -89,7 +89,8 @@ public class Money extends AppCompatActivity {
                                       temp.child("src").setValue(success());
                                       temp.child("status").setValue(true);
                                       temp.child("to").setValue("Self");
-                                      //Toast.makeText(Money.this, imagelink(0), Toast.LENGTH_SHORT).show();
+
+
                                       long tid = timestamp();
                                       temp.child("trans_id").setValue(tid);
                                       temp.child("code").setValue(-tid);

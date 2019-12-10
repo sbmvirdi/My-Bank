@@ -141,10 +141,10 @@
             android:background="#dfdfdf"
             android:id="@+id/ads_image"
             android:scaleType="centerCrop"
-            android:layout_toRightOf="@id/relat"
+            android:layout_toEndOf="@id/relat"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="187dp"
-            android:layout_marginLeft="85dp"/>
+            android:layout_marginStart="85dp"/>
 
         <com.google.android.gms.ads.AdView
             android:layout_width="320dp"

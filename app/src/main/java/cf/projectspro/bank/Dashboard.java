@@ -3,14 +3,12 @@ package cf.projectspro.bank;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +16,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ViewFlipper;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -35,7 +32,6 @@ import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -132,12 +128,10 @@ public class Dashboard extends Fragment {
                 String ad_text = (String) dataSnapshot.child("ad_text").getValue();
 
 
-
                     Picasso.get().load(ad_url).into(Ad);
                     LoadingText.setText(ad_text);
                     LoadingText.setBackgroundResource(R.color.colorPrimaryDark);
                     ads_image.setImageResource(R.drawable.ads);
-
 
             }
 
@@ -156,13 +150,16 @@ public class Dashboard extends Fragment {
                 @Override
                 public void onClick(View view) {
                     if(hasConnection()){
-                   // addmoney.setBackground(getResources().getDrawable(R.drawable.cornerclicked));
+
+
                     add_money_clicked();}
                     else{
                         Toast.makeText(getContext(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
+
+
             send.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
