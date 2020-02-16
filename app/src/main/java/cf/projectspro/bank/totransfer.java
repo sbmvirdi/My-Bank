@@ -143,8 +143,8 @@ public class totransfer extends AppCompatActivity {
                           reference.child("status").setValue(true);
                           reference.child("done_by").setValue(fromuser);
                           reference.child("to").setValue(name);
-                          Toast.makeText(totransfer.this, "Money Transfered!", Toast.LENGTH_SHORT).show();
-                          Intent intent = new Intent(totransfer.this, MainActivity.class);
+//                          Toast.makeText(totransfer.this, "Money Transfered!", Toast.LENGTH_SHORT).show();
+                          Intent intent = new Intent(totransfer.this, payment_processing_screen.class);
                           intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                           startActivity(intent);
                           finish();

@@ -7,16 +7,16 @@
     android:orientation="vertical"
     tools:context=".Profile">
 
-    <!-- TODO: Update blank fragment layout -->
 
     <Button
         android:id="@+id/signout"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         android:background="@drawable/corner"
         android:text="@string/signout"
+        android:layout_below="@id/name_profile"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"
         android:fontFamily="@font/overpass_semibold"
         android:textColor="#ffffff" />
 
@@ -66,17 +66,48 @@
         android:textSize="12sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="match_parent"
+    <TableLayout
+        android:id="@+id/table"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
         android:layout_marginBottom="80dp"
-        android:fontFamily="cursive"
-        android:paddingLeft="120dp"
-        android:text="Made with             in India"
-        android:textSize="15sp" />
+        >
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_gravity="center_horizontal"
+            >
+
+            <TextView android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="Made with"
+                android:fontFamily="@font/ubuntu"
+                android:paddingRight="5dp"
+                android:layout_column="1"/>
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_column="2"
+                android:layout_marginTop="-5dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+
+                android:src="@drawable/love"
+                android:contentDescription="@string/cd" />
+
+
+            <TextView android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="in India"
+                android:fontFamily="@font/ubuntu"
+                android:paddingLeft="5dp"
+                android:layout_column="3"/>
+        </TableRow>
+    </TableLayout>
 
     <TextView
         android:id="@+id/textView7"
@@ -85,19 +116,10 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="60dp"
         android:layout_alignParentBottom="true"
-        android:fontFamily="cursive"
-        android:text="By Shubham Virdi"
+        android:fontFamily="@font/ubuntu"
+        android:text="By Shubam Virdi"
         android:textSize="12sp" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginBottom="70dp"
-       android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
 
-        android:src="@drawable/love"
-        android:contentDescription="@string/cd" />
 
 </RelativeLayout>

@@ -8,8 +8,8 @@ android {
         applicationId "cf.projectspro.bank"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 14
-        versionName "4.1.6"
+        versionCode 16
+        versionName "4.1.8"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -36,6 +36,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation 'com.google.firebase:firebase-database:19.2.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.github.florent37:materialtextfield:1.0.7'
     implementation 'com.google.firebase:firebase-core:17.2.1'
     implementation 'com.ethanhua:skeleton:1.1.1'
