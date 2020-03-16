@@ -69,7 +69,7 @@ public class Money extends AppCompatActivity {
                         Toast.makeText(Money.this, "Enter Appropriate Amount", Toast.LENGTH_SHORT).show();
                     } else {
                         amount_to_add = Long.parseLong(amt.getText().toString().trim());
-                        add_money.setTextColor(getResources().getColor(R.color.colorPrimary));
+                       // add_money.setTextColor(getResources().getColor(R.color.colorPrimary));
                         add_money.setText("Processing ...");
                         add_money.setClickable(false);
                         refamt.addListenerForSingleValueEvent(new ValueEventListener() {

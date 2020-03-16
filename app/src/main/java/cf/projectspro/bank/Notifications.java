@@ -157,7 +157,7 @@ public class Notifications extends Fragment {
 
         void setname(String t){
             to = mView.findViewById(R.id.notify_name);
-            String[] nameeach = t.split("");
+            //String[] nameeach = t.split("");
             to.setText(t);
         }
 

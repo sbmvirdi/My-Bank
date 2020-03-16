@@ -39,7 +39,10 @@
         <activity
             android:name=".Details_Trans"
             android:screenOrientation="portrait" />
-        <activity android:name=".Money" />
+        <activity android:name=".Money"
+            >
+
+        </activity>
         <activity android:name=".Login" />
         <activity android:name=".Signup" />
         <activity android:name=".AdminSettings" />
