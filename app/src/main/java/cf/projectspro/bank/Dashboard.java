@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,10 +28,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -38,6 +43,7 @@ import com.squareup.picasso.Picasso;
  * sbmvirdi
  */
 public class Dashboard extends Fragment {
+    private static final String TAG = MainActivity.class.getSimpleName();
     View layout;
     private TextView name,amount,LoadingText;
     private ImageView Ad,ads_image;
@@ -47,6 +53,7 @@ public class Dashboard extends Fragment {
     private SliderView sliderLayout;
     private String uid;
     private AdView mAdView;
+    private List<SlideModel> SlideList;
     public static char first_letter;
     public Dashboard() {
         // Required empty public constructor
@@ -174,12 +181,32 @@ public class Dashboard extends Fragment {
 
         // Sliding View Animation
 
-        SliderAdapterDemo adapterDemo = new SliderAdapterDemo(getContext());
-        sliderLayout.setSliderAdapter(adapterDemo);
-        sliderLayout.startAutoCycle();
-        sliderLayout.setIndicatorAnimation(IndicatorAnimations.WORM);
-        sliderLayout.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-        sliderLayout.setScrollTimeInSec(2);
+        // Fetching all the slide images from Slides child
+        DatabaseReference SlideRef = database.getReference("Slides");
+        SlideList = new ArrayList<>();
+        SlideRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    SlideModel obj = postSnapshot.getValue(SlideModel.class);
+                    SlideList.add(obj);
+                }
+
+                SliderAdapterDemo adapterDemo = new SliderAdapterDemo(getContext(),SlideList);
+                sliderLayout.setSliderAdapter(adapterDemo);
+                sliderLayout.startAutoCycle();
+                sliderLayout.setIndicatorAnimation(IndicatorAnimations.WORM);
+                sliderLayout.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+                sliderLayout.setScrollTimeInSec(2);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e(TAG+"::","Error Fetching Slides!");
+            }
+        });
+
 
 
 

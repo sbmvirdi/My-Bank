@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +22,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 public class Login extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -100,12 +103,24 @@ public class Login extends AppCompatActivity {
                                                  @Override
                                                  public void onComplete(@NonNull Task<Void> task) {
                                                      if (task.isSuccessful()){
-                                                         Intent intent = new Intent(Login.this,MainActivity.class);
-                                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                                         startActivity(intent);
-                                                         finish();
-                                                         pd.dismiss();
+                                                         // uploading device token to db for fcm
+                                                          FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                                             @Override
+                                                             public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                                                 if (task.isSuccessful()){
+                                                                     df.child(uid).child("device_token").setValue(task.getResult().getToken());
+                                                                     Intent intent = new Intent(Login.this,MainActivity.class);
+                                                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                                     startActivity(intent);
+                                                                     finish();
+                                                                     pd.dismiss();
+                                                                 }else{
+                                                                     Log.e("Login Activity::",task.getException().getMessage()+"");
+                                                                 }
+                                                             }
+                                                         });
                                                      }
+
                                                  }
                                              });
 

@@ -106,6 +106,8 @@ public class Money extends AppCompatActivity {
                                             transblock.child("amount").setValue(amount_to_add);
                                             transblock.child("status").setValue(true);
                                             transblock.child("to").setValue("self");
+                                            transblock.child("fromuid").setValue(uid);
+                                            transblock.child("touid").setValue(uid);
                                             transblock.child("done_by").setValue(name);
 
                                         } else if (!isnetworkAvailabe()) {
@@ -127,6 +129,8 @@ public class Money extends AppCompatActivity {
                                             DatabaseReference transblock = FirebaseDatabase.getInstance().getReference().child("trans_ids").child(String.valueOf(tid));
                                             transblock.child("amount").setValue(amount_to_add);
                                             transblock.child("status").setValue(false);
+                                            transblock.child("fromuid").setValue(uid);
+                                            transblock.child("touid").setValue(uid);
                                             transblock.child("to").setValue("self");
                                         }
                                     }
