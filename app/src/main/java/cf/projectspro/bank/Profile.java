@@ -59,20 +59,11 @@ public class Profile extends Fragment {
             @Override
             public void onClick(View view) {
 
-                DatabaseReference df = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
-                df.child("session").setValue(false).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
-                            mAuth.signOut();
-                            Intent intent = new Intent(getActivity(),Login.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                            activity.finish();
-                        }
-                    }
-                });
-
+                mAuth.signOut();
+                Intent intent = new Intent(getActivity(),Login.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                activity.finish();
             }
         });
         @SuppressLint("ResourceType") Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(getContext(), R.layout.animation);

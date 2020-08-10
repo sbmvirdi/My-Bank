@@ -77,64 +77,24 @@ public class Login extends AppCompatActivity {
                     mAuth.signInWithEmailAndPassword(Email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                         if (task.isSuccessful()){
+                         if (task.isSuccessful()) {
 
-                           final String uid =  mAuth.getCurrentUser().getUid();
-
-                                df.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
-                                         session = (boolean) dataSnapshot.child("session").getValue();
-
-
-                                        //Toast.makeText(Login.this, session+" "+uid, Toast.LENGTH_SHORT).show();
-                                         if (session){
-                                             mAuth.signOut();
-                                            // Toast.makeText(Login.this, "You cannot have multiple sessions", Toast.LENGTH_SHORT).show();
-                                             pd.dismiss();
-                                             multiple_session.setVisibility(View.VISIBLE);
-                                             signin.setText("Login");
-                                             signin.setClickable(true);
-                                         }else{
-                                               multiple_session.setVisibility(View.GONE);
-                                             df.child(uid).child("session").setValue(true).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                 @Override
-                                                 public void onComplete(@NonNull Task<Void> task) {
-                                                     if (task.isSuccessful()){
-                                                         // uploading device token to db for fcm
-                                                          FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                                                             @Override
-                                                             public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                                                                 if (task.isSuccessful()){
-                                                                     df.child(uid).child("device_token").setValue(task.getResult().getToken());
-                                                                     Intent intent = new Intent(Login.this,MainActivity.class);
-                                                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                                                     startActivity(intent);
-                                                                     finish();
-                                                                     pd.dismiss();
-                                                                 }else{
-                                                                     Log.e("Login Activity::",task.getException().getMessage()+"");
-                                                                 }
-                                                             }
-                                                         });
-                                                     }
-
-                                                 }
-                                             });
-
-
-                                         }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                    }
-                                });
-
-
+                             final String uid = mAuth.getCurrentUser().getUid();
+                             FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                 @Override
+                                 public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                     if (task.isSuccessful()) {
+                                         df.child(uid).child("device_token").setValue(task.getResult().getToken());
+                                         Intent intent = new Intent(Login.this, MainActivity.class);
+                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                         startActivity(intent);
+                                         finish();
+                                         pd.dismiss();
+                                     } else {
+                                         Log.e("Login Activity::", task.getException().getMessage() + "");
+                                     }
+                                 }
+                             });
 
                          }
                          else {
