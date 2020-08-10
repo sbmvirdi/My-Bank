@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -93,6 +94,14 @@ public class Dashboard extends Fragment {
         ads_image = layout.findViewById(R.id.ads_image);
         sliderLayout = layout.findViewById(R.id.imageSlider);
         mAdView = layout.findViewById(R.id.adview);
+
+
+        Ad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + getActivity().getPackageName())));
+            }
+        });
 
 
 

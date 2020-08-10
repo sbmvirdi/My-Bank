@@ -4,19 +4,19 @@ apply plugin: 'com.google.firebase.crashlytics'
 
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     defaultConfig {
         multiDexEnabled true
         applicationId "cf.projectspro.bank"
         minSdkVersion 22
-        targetSdkVersion 29
-        versionCode 17
-        versionName "4.1.9"
+        targetSdkVersion 30
+        versionCode 18
+        versionName "4.2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

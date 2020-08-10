@@ -6,52 +6,52 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="40sp"
-        android:text="About Me!"
-        android:fontFamily="@font/overpass_semibold"
-        android:textColor="#000"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/overpass_semibold"
+        android:text="About Me!"
+        android:textColor="#000"
+        android:textSize="35sp" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:src="@drawable/developer"
+        android:id="@+id/dev"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="200dp"
-        android:id="@+id/dev"
-        />
+        android:src="@drawable/developer" />
 
 
     <TextView
+        android:id="@+id/namedev"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/dev"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/overpass_semibold"
-        android:textSize="20sp"
-        android:text="@string/developer_name"
         android:gravity="center"
-        android:textStyle="bold"
-        android:id="@+id/namedev"
-        android:textColor="#000"/>
+        android:text="@string/developer_name"
+        android:textColor="#000"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/emaildev"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/namedev"
         android:layout_marginTop="2dp"
-        android:textColor="#000"
-        android:id="@+id/emaildev"
         android:background="@drawable/border_search"
         android:fontFamily="@font/overpass_semibold"
-        android:textSize="20sp"
         android:gravity="center"
-        android:text="@string/developer_email"/>
+        android:text="@string/developer_email"
+        android:textColor="#000"
+        android:textSize="15sp" />
 <ImageView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:src="@drawable/ic_wave_admin"
+    android:alpha="0.7"
     android:layout_marginBottom="-120dp"
     android:layout_alignParentBottom="true"
     />
