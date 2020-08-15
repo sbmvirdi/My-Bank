@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".payment_processing_screen"></activity>
+        <activity android:name=".payment_processing_screen" />
         <activity
             android:name=".SplashScreen"
             android:theme="@style/AppTheme1">
@@ -27,22 +27,13 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Details_Trans"
             android:screenOrientation="portrait" />
-        <activity android:name=".Money"
-            >
-
-        </activity>
+        <activity
+            android:name=".Money"
+            android:screenOrientation="portrait" />
         <activity android:name=".Login" />
         <activity android:name=".Signup" />
         <activity android:name=".AdminSettings" />
