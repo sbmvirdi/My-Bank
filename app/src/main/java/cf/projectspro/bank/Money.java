@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -27,8 +29,8 @@ import java.util.UUID;
 public class Money extends AppCompatActivity {
     private Button add_money;
     private EditText amt;
-    private DatabaseReference ref,refamt;
-    private long amount_to_add,prevamt,total;
+    private DatabaseReference ref, refamt;
+    private long amount_to_add, prevamt, total;
     private FirebaseAuth mAuth;
     private String uid;
 
@@ -40,13 +42,12 @@ public class Money extends AppCompatActivity {
         amt = findViewById(R.id.money_value);
         mAuth = FirebaseAuth.getInstance();
 
-        if(mAuth.getCurrentUser() == null ){
-            Intent intent = new Intent(Money.this,Login.class);
+        if (mAuth.getCurrentUser() == null) {
+            Intent intent = new Intent(Money.this, Login.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
-        }
-        else {
-            uid=  mAuth.getCurrentUser().getUid();
+        } else {
+            uid = mAuth.getCurrentUser().getUid();
         }
         add_money = findViewById(R.id.process_payment);
         ref = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -57,19 +58,16 @@ public class Money extends AppCompatActivity {
             public void onClick(View view) {
 
 
-
-                if (TextUtils.isEmpty(amt.getText().toString())){
+                if (TextUtils.isEmpty(amt.getText().toString())) {
                     Toast.makeText(Money.this, "Enter Amount", Toast.LENGTH_SHORT).show();
-                }
-
-                else {
-                        amount_to_add = Long.parseLong(amt.getText().toString());
+                } else {
+                    amount_to_add = Long.parseLong(amt.getText().toString());
                     if (amount_to_add <= 0 || amount_to_add > 10000) {
                         amount_to_add = Long.parseLong(amt.getText().toString().trim());
                         Toast.makeText(Money.this, "Enter Appropriate Amount", Toast.LENGTH_SHORT).show();
                     } else {
                         amount_to_add = Long.parseLong(amt.getText().toString().trim());
-                       // add_money.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        // add_money.setTextColor(getResources().getColor(R.color.colorPrimary));
                         add_money.setText("Processing ...");
                         add_money.setClickable(false);
                         refamt.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -159,10 +157,9 @@ public class Money extends AppCompatActivity {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        if( activeNetworkInfo != null && activeNetworkInfo.isConnected()){
-            return  true;
-        }
-        else{
+        if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
+            return true;
+        } else {
             return false;
         }
     }
@@ -171,12 +168,12 @@ public class Money extends AppCompatActivity {
         return "https://firebasestorage.googleapis.com/v0/b/bank-f7765.appspot.com/o/failed.png?alt=media&token=4b6ef20f-5958-4edf-ad6d-279bbee57879";
     }
 
-    public Long timestamp(){
+    public Long timestamp() {
         Long tsLong = System.currentTimeMillis();
         return tsLong;
     }
 
-    private String success(){
+    private String success() {
         return "https://firebasestorage.googleapis.com/v0/b/bank-f7765.appspot.com/o/done.png?alt=media&token=e7920069-13a3-499f-8818-75cb25bc77fb";
     }
 

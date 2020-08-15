@@ -27,14 +27,14 @@ public class AdminSettings extends AppCompatActivity {
         setContentView(R.layout.activity_admin_settings);
 
         mAuth = FirebaseAuth.getInstance();
-        name  = findViewById(R.id.greetings);
+        name = findViewById(R.id.greetings);
 
 
-        if (mAuth.getCurrentUser() == null){
-            Intent i = new Intent(AdminSettings.this,Login.class);
+        if (mAuth.getCurrentUser() == null) {
+            Intent i = new Intent(AdminSettings.this, Login.class);
             startActivity(i);
             finish();
-        }else{
+        } else {
 
             uid = mAuth.getCurrentUser().getUid();
         }
@@ -44,9 +44,9 @@ public class AdminSettings extends AppCompatActivity {
         greeting.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String names  = (String) dataSnapshot.child("name").getValue();
+                String names = (String) dataSnapshot.child("name").getValue();
                 String[] _names = names.split(" ");
-                name.setText("Hello "+_names[0]+"!");
+                name.setText("Hello " + _names[0] + "!");
             }
 
             @Override
@@ -54,7 +54,6 @@ public class AdminSettings extends AppCompatActivity {
 
             }
         });
-
 
 
     }

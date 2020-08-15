@@ -2,6 +2,7 @@ package cf.projectspro.bank;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -9,6 +10,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,15 +26,15 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
-  private ViewPager mViewPager;
-  private ViewPagerAdapter mViewPagerAdapter;
-  private MenuItem prevMenuItem;
-  private ImageView admin;
-  private Toolbar toolbar;
-  private FirebaseAuth mAuth;
-  private boolean isadmin;
-  private DatabaseReference ref;
-  private String uid;
+    private ViewPager mViewPager;
+    private ViewPagerAdapter mViewPagerAdapter;
+    private MenuItem prevMenuItem;
+    private ImageView admin;
+    private Toolbar toolbar;
+    private FirebaseAuth mAuth;
+    private boolean isadmin;
+    private DatabaseReference ref;
+    private String uid;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -63,22 +65,21 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         ref = FirebaseDatabase.getInstance().getReference().child("uids");
         admin = findViewById(R.id.settings);
-       // mAuth.signOut();
+        // mAuth.signOut();
         admin.setVisibility(View.GONE);
-        if(mAuth.getCurrentUser() == null){
-            Intent intent = new Intent(MainActivity.this,Login.class);
+        if (mAuth.getCurrentUser() == null) {
+            Intent intent = new Intent(MainActivity.this, Login.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             finish();
-        }
-        else{
+        } else {
             uid = mAuth.getCurrentUser().getUid();
             //Toast.makeText(this, uid, Toast.LENGTH_SHORT).show();
             ref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     isadmin = (boolean) dataSnapshot.child(uid).getValue();
-                    if(isadmin){
+                    if (isadmin) {
                         admin.setVisibility(View.VISIBLE);
                     }
                 }
@@ -100,9 +101,9 @@ public class MainActivity extends AppCompatActivity {
         admin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isadmin){
-                Intent intent = new Intent(MainActivity.this,AdminSettings.class);
-                startActivity(intent);
+                if (isadmin) {
+                    Intent intent = new Intent(MainActivity.this, AdminSettings.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -120,9 +121,7 @@ public class MainActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 if (prevMenuItem != null) {
                     prevMenuItem.setChecked(false);
-                }
-                else
-                {
+                } else {
                     navigation.getMenu().getItem(0).setChecked(false);
                 }
 
@@ -139,15 +138,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_ab,menu);
+        getMenuInflater().inflate(R.menu.menu_ab, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.aboutus: Intent i = new Intent(MainActivity.this,AboutUs.class);
-            startActivity(i);
+        switch (item.getItemId()) {
+            case R.id.aboutus:
+                Intent i = new Intent(MainActivity.this, AboutUs.class);
+                startActivity(i);
                 break;
 
         }

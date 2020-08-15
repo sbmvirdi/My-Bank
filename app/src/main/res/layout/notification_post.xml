@@ -32,10 +32,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="120dp"
             android:layout_marginLeft="120dp"
+            android:fontFamily="@font/overpass_semibold"
             android:padding="2dp"
             android:textColor="#000000"
             android:textSize="18sp"
-            android:fontFamily="@font/overpass_semibold"
             tools:text="@string/name" />
 
         <TextView
@@ -45,8 +45,8 @@
             android:layout_marginTop="60dp"
             android:layout_marginEnd="30dp"
             android:layout_marginRight="30dp"
-            android:gravity="end"
             android:fontFamily="@font/overpass_semibold"
+            android:gravity="end"
             android:padding="2dp"
             android:textColor="@color/colorPrimary"
             android:textStyle="bold"
@@ -76,8 +76,8 @@
             android:layout_marginStart="164dp"
             android:layout_marginLeft="164dp"
             android:layout_marginTop="38dp"
-            android:text="@string/loading"
             android:fontFamily="@font/overpass_semibold"
+            android:text="@string/loading"
             android:textSize="10sp" />
 
         <TextView
@@ -87,10 +87,10 @@
             android:layout_marginTop="60dp"
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
+            android:fontFamily="@font/overpass_semibold"
             android:gravity="end"
             android:padding="2dp"
             android:text="@string/currency"
-            android:fontFamily="@font/overpass_semibold"
             android:textColor="@color/colorPrimary"
             android:textStyle="bold" />
 
@@ -104,9 +104,9 @@
             android:layout_marginStart="0dp"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="2dp"
+            android:fontFamily="@font/overpass_semibold"
             android:gravity="end"
             android:padding="2dp"
-            android:fontFamily="@font/overpass_semibold"
             android:text="To:" />
     </RelativeLayout>
 

@@ -24,7 +24,7 @@ public class SliderAdapterDemo extends SliderViewAdapter<SliderAdapterDemo.Slide
 
     @Override
     public SliderAdapterDemo.SliderVH onCreateViewHolder(ViewGroup parent) {
-        View inflate = LayoutInflater.from(context).inflate(R.layout.slider_image, parent,false);
+        View inflate = LayoutInflater.from(context).inflate(R.layout.slider_image, parent, false);
         return new SliderVH(inflate);
     }
 
@@ -57,7 +57,7 @@ public class SliderAdapterDemo extends SliderViewAdapter<SliderAdapterDemo.Slide
     }
 
 
-    class SliderVH extends SliderViewAdapter.ViewHolder{
+    class SliderVH extends SliderViewAdapter.ViewHolder {
         ImageView img;
 
         public SliderVH(View itemView) {
@@ -65,7 +65,7 @@ public class SliderAdapterDemo extends SliderViewAdapter<SliderAdapterDemo.Slide
             img = itemView.findViewById(R.id.slider_img);
         }
 
-        private void setData(String image){
+        private void setData(String image) {
             Picasso.get().load(image).placeholder(R.drawable.sliderplaceholder).into(img);
         }
     }

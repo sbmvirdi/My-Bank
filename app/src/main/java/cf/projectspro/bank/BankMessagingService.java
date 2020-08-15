@@ -21,12 +21,12 @@ public class BankMessagingService extends FirebaseMessagingService {
     public void onNewToken(@NonNull String s) {
         super.onNewToken(s);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        if (mAuth.getCurrentUser()!=null){
+        if (mAuth.getCurrentUser() != null) {
             String uid = mAuth.getCurrentUser().getUid();
             DatabaseReference db = FirebaseDatabase.getInstance().getReference(uid).child("device_token");
             db.setValue(s);
-        }else{
-            Log.e("BMS::","Failed to Update the Token");
+        } else {
+            Log.e("BMS::", "Failed to Update the Token");
         }
     }
 

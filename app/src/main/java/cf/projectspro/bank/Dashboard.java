@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
@@ -46,16 +47,17 @@ import java.util.List;
 public class Dashboard extends Fragment {
     private static final String TAG = MainActivity.class.getSimpleName();
     View layout;
-    private TextView name,amount,LoadingText;
-    private ImageView Ad,ads_image;
-    private DatabaseReference ref,advertisements;
-    private Button addmoney,send;
+    private TextView name, amount, LoadingText;
+    private ImageView Ad, ads_image;
+    private DatabaseReference ref, advertisements;
+    private Button addmoney, send;
     private FirebaseAuth mAuth;
     private SliderView sliderLayout;
     private String uid;
     private AdView mAdView;
     private List<SlideModel> SlideList;
     public static char first_letter;
+
     public Dashboard() {
         // Required empty public constructor
     }
@@ -73,19 +75,19 @@ public class Dashboard extends Fragment {
 
 
         // checking authentication of the user
-        if(mAuth.getCurrentUser() == null ){
-            Intent intent = new Intent(getActivity(),Login.class);
+        if (mAuth.getCurrentUser() == null) {
+            Intent intent = new Intent(getActivity(), Login.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             getActivity().finish();
 
-        }else {
+        } else {
             uid = mAuth.getCurrentUser().getUid();
         }
 
         // defining id's
 
-        layout =  inflater.inflate(R.layout.fragment_dashboard, container, false);
+        layout = inflater.inflate(R.layout.fragment_dashboard, container, false);
         name = layout.findViewById(R.id.name);
         send = layout.findViewById(R.id.sendmoneynow);
         amount = layout.findViewById(R.id.Amount);
@@ -94,15 +96,6 @@ public class Dashboard extends Fragment {
         ads_image = layout.findViewById(R.id.ads_image);
         sliderLayout = layout.findViewById(R.id.imageSlider);
         mAdView = layout.findViewById(R.id.adview);
-
-
-        Ad.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + getActivity().getPackageName())));
-            }
-        });
-
 
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -122,8 +115,8 @@ public class Dashboard extends Fragment {
                 long Amount = (long) dataSnapshot.child("amount").getValue();
 
                 first_letter = Name.toLowerCase().charAt(0);
-               name.setText(Name);
-               amount.setText(Amount+"");
+                name.setText(Name);
+                amount.setText(Amount + "");
 
 
             }
@@ -133,7 +126,6 @@ public class Dashboard extends Fragment {
 
             }
         });
-
 
 
         advertisements.addValueEventListener(new ValueEventListener() {
@@ -144,10 +136,10 @@ public class Dashboard extends Fragment {
                 String ad_text = (String) dataSnapshot.child("ad_text").getValue();
 
 
-                    Picasso.get().load(ad_url).into(Ad);
-                    LoadingText.setText(ad_text);
-                    LoadingText.setBackgroundResource(R.color.colorPrimaryDark);
-                    ads_image.setImageResource(R.drawable.ads);
+                Picasso.get().load(ad_url).into(Ad);
+                LoadingText.setText(ad_text);
+                LoadingText.setBackgroundResource(R.color.colorPrimaryDark);
+                ads_image.setImageResource(R.drawable.ads);
 
             }
 
@@ -158,35 +150,33 @@ public class Dashboard extends Fragment {
         });
 
 
-
-
         // Click Listeners
 
-            addmoney.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(hasConnection()){
+        addmoney.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (hasConnection()) {
 
 
-                    add_money_clicked();}
-                    else{
-                        Toast.makeText(getContext(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
-                    }
+                    add_money_clicked();
+                } else {
+                    Toast.makeText(getContext(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
                 }
-            });
+            }
+        });
 
 
-            send.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (hasConnection()){
-                    Intent intent = new Intent(getContext(),SendMoney.class);
-                    startActivity(intent); }
-                    else{
-                        Toast.makeText(getContext(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
-                    }
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (hasConnection()) {
+                    Intent intent = new Intent(getContext(), SendMoney.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getContext(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
                 }
-            });
+            }
+        });
 
         // Sliding View Animation
 
@@ -196,12 +186,12 @@ public class Dashboard extends Fragment {
         SlideRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     SlideModel obj = postSnapshot.getValue(SlideModel.class);
                     SlideList.add(obj);
                 }
 
-                SliderAdapterDemo adapterDemo = new SliderAdapterDemo(getContext(),SlideList);
+                SliderAdapterDemo adapterDemo = new SliderAdapterDemo(getContext(), SlideList);
                 sliderLayout.setSliderAdapter(adapterDemo);
                 sliderLayout.startAutoCycle();
                 sliderLayout.setIndicatorAnimation(IndicatorAnimations.WORM);
@@ -212,12 +202,9 @@ public class Dashboard extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e(TAG+"::","Error Fetching Slides!");
+                Log.e(TAG + "::", "Error Fetching Slides!");
             }
         });
-
-
-
 
 
         //AdMob Implementation
@@ -227,7 +214,7 @@ public class Dashboard extends Fragment {
         mAdView.loadAd(adRequest);
 
 
-        mAdView.setAdListener(new AdListener(){
+        mAdView.setAdListener(new AdListener() {
 
 
             @Override
@@ -269,7 +256,7 @@ public class Dashboard extends Fragment {
     }
 
     private void add_money_clicked() {
-        Intent intent = new Intent(getActivity(),Money.class);
+        Intent intent = new Intent(getActivity(), Money.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
 
@@ -299,4 +286,4 @@ public class Dashboard extends Fragment {
     }
 
 
-       }
+}

@@ -1,9 +1,12 @@
 package cf.projectspro.bank;
 
 import android.content.Intent;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,18 +34,19 @@ public class SendMoney extends AppCompatActivity {
     private Query ref;
     private String uid;
     private EditText mSearchBar;
-    private String mSearchString="";
+    private String mSearchString = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_money);
         userview = findViewById(R.id.users_rec);
         mAuth = FirebaseAuth.getInstance();
-       // ref = FirebaseDatabase.getInstance().getReference().child("Users").orderByChild("name");
+        // ref = FirebaseDatabase.getInstance().getReference().child("Users").orderByChild("name");
         ref = FirebaseDatabase.getInstance().getReference().child("Users");
 
-        if(mAuth.getCurrentUser() == null){
-            Intent intent = new Intent(SendMoney.this,Login.class);
+        if (mAuth.getCurrentUser() == null) {
+            Intent intent = new Intent(SendMoney.this, Login.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
@@ -68,22 +72,15 @@ public class SendMoney extends AppCompatActivity {
         });
 
 
-
-
-
-
-
         userview.setHasFixedSize(true);
         ref.keepSynced(true);
         userview.setLayoutManager(new LinearLayoutManager(this));
 
 
-
     }
 
 
-
-    void Refresh(String mSearchString){
+    void Refresh(String mSearchString) {
 
         Query firebasequery = ref.orderByChild("name").startAt(mSearchString).endAt(mSearchString + "\uf8ff");
         FirebaseRecyclerOptions firebaseRecyclerOptions = new FirebaseRecyclerOptions.Builder<users>().setQuery(firebasequery, users.class).build();
@@ -114,7 +111,7 @@ public class SendMoney extends AppCompatActivity {
 
     }
 
-    public class userHolder extends RecyclerView.ViewHolder{
+    public class userHolder extends RecyclerView.ViewHolder {
 
         View mView;
         TextView user;
@@ -122,6 +119,7 @@ public class SendMoney extends AppCompatActivity {
         String to_user_uid;
         long to_user_amount;
         String Name;
+
         public userHolder(final View itemView) {
             super(itemView);
             mView = itemView;
@@ -130,53 +128,53 @@ public class SendMoney extends AppCompatActivity {
             mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (uid.equals(to_user_uid)){
+                    if (uid.equals(to_user_uid)) {
 
 //                       mView.setVisibility(View.GONE);
                         Toast.makeText(SendMoney.this, "You Can't Send Money To Yourself", Toast.LENGTH_SHORT).show();
-                    }else{
-                    Intent intent = new Intent(SendMoney.this,totransfer.class);
-                    intent.putExtra("to_user_uid",to_user_uid);
-                    intent.putExtra("to_user_amount",to_user_amount);
-                    intent.putExtra("name",Name);
-                    startActivity(intent);}
+                    } else {
+                        Intent intent = new Intent(SendMoney.this, totransfer.class);
+                        intent.putExtra("to_user_uid", to_user_uid);
+                        intent.putExtra("to_user_amount", to_user_amount);
+                        intent.putExtra("name", Name);
+                        startActivity(intent);
+                    }
                 }
             });
         }
 
 
-        void setname(String name){
+        void setname(String name) {
             user = mView.findViewById(R.id.user_name);
             user.setText(name);
             Name = name;
 
         }
 
-        void setImage(String name){
+        void setImage(String name) {
             dp = mView.findViewById(R.id.user);
             name = name.toLowerCase();
             char _name = name.charAt(0);
-           // Toast.makeText(SendMoney.this, _name+"", Toast.LENGTH_SHORT).show();
-            if (Character.isAlphabetic(_name)){
-                int res = getResources().getIdentifier("@drawable/"+_name,null,getPackageName());
+            // Toast.makeText(SendMoney.this, _name+"", Toast.LENGTH_SHORT).show();
+            if (Character.isAlphabetic(_name)) {
+                int res = getResources().getIdentifier("@drawable/" + _name, null, getPackageName());
                 dp.setImageResource(res);
-            }
-            else{
+            } else {
                 Picasso.get().load(R.drawable.user).into(dp);
             }
 
 
-            if (dp.getDrawable() == null){
+            if (dp.getDrawable() == null) {
                 Picasso.get().load(R.drawable.user).into(dp);
             }
 
         }
 
-        void getuid(String uid){
-           to_user_uid = uid;
+        void getuid(String uid) {
+            to_user_uid = uid;
         }
 
-        void getamount(long amount){
+        void getamount(long amount) {
             to_user_amount = amount;
 
         }

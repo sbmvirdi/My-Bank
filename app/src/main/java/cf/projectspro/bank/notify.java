@@ -3,12 +3,12 @@ package cf.projectspro.bank;
 import java.lang.ref.SoftReference;
 
 public class notify {
-   private String src,to;
-   private long trans_id;
-   private long amount;
-   private boolean status,from;
+    private String src, to;
+    private long trans_id;
+    private long amount;
+    private boolean status, from;
 
-    public notify(long amount, String src, String to,long trans_id,boolean status,boolean from) {
+    public notify(long amount, String src, String to, long trans_id, boolean status, boolean from) {
         this.amount = amount;
         this.src = src;
         this.to = to;
@@ -17,7 +17,8 @@ public class notify {
         this.from = from;
 
     }
-    public notify(){
+
+    public notify() {
 
     }
 
@@ -37,9 +38,9 @@ public class notify {
         return status;
     }
 
-    public long gettrans_id(){
+    public long gettrans_id() {
         return trans_id;
-  }
+    }
 
     public boolean isFrom() {
         return from;

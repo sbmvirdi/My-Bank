@@ -15,10 +15,10 @@ import android.widget.TextView;
 import java.util.HashMap;
 
 public class payment_processing_screen extends AppCompatActivity {
-    private RelativeLayout deduct,transfer,success;
-    private TextView paymentstatus,_paymentstatus,_paymentstatusfinal;
-    private ProgressBar step1,step2;
-    private ImageView step1image,step2image;
+    private RelativeLayout deduct, transfer, success;
+    private TextView paymentstatus, _paymentstatus, _paymentstatusfinal;
+    private ProgressBar step1, step2;
+    private ImageView step1image, step2image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,44 +32,44 @@ public class payment_processing_screen extends AppCompatActivity {
         _paymentstatusfinal = findViewById(R.id._paymentstatusfinal);
         step1image = findViewById(R.id.step1);
         step2image = findViewById(R.id.step2);
-        deduct  = findViewById(R.id.deduct);
-        transfer  = findViewById(R.id.transfer);
-        success  = findViewById(R.id.success);
+        deduct = findViewById(R.id.deduct);
+        transfer = findViewById(R.id.transfer);
+        success = findViewById(R.id.success);
 
 
         deduct.setVisibility(View.VISIBLE);
         transfer.setVisibility(View.INVISIBLE);
         success.setVisibility(View.INVISIBLE);
 
-       new Handler().postDelayed(new Runnable() {
-           @Override
-           public void run() {
-               step1.setVisibility(View.INVISIBLE);
-               step1image.setVisibility(View.VISIBLE);
-               paymentstatus.setTextColor(Color.parseColor("#62D4BE"));
-               transfer.setVisibility(View.VISIBLE);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                step1.setVisibility(View.INVISIBLE);
+                step1image.setVisibility(View.VISIBLE);
+                paymentstatus.setTextColor(Color.parseColor("#62D4BE"));
+                transfer.setVisibility(View.VISIBLE);
 
-               new Handler().postDelayed(new Runnable() {
-                   @Override
-                   public void run() {
-                       step2.setVisibility(View.INVISIBLE);
-                       step2image.setVisibility(View.VISIBLE);
-                       _paymentstatus.setTextColor(Color.parseColor("#62D4BE"));
-                       success.setVisibility(View.VISIBLE);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        step2.setVisibility(View.INVISIBLE);
+                        step2image.setVisibility(View.VISIBLE);
+                        _paymentstatus.setTextColor(Color.parseColor("#62D4BE"));
+                        success.setVisibility(View.VISIBLE);
 
-                       new Handler().postDelayed(new Runnable() {
-                           @Override
-                           public void run() {
-                               Intent i = new Intent(payment_processing_screen.this,MainActivity.class);
-                               startActivity(i);
-                               finish();
-                           }
-                       },2000);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent i = new Intent(payment_processing_screen.this, MainActivity.class);
+                                startActivity(i);
+                                finish();
+                            }
+                        }, 2000);
 
-                   }
-               },2000);
-           }
-       },2000);
+                    }
+                }, 2000);
+            }
+        }, 2000);
 
     }
 

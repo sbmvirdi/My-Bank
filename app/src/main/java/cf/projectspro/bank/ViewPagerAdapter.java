@@ -5,13 +5,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 /*
-* class created  by shubam virdi
-* No Rights to reproduce,edit from unknown sources
-* Social Stack Inc.
-* All rights reserverd.
-*
-* */
-class ViewPagerAdapter  extends FragmentPagerAdapter {
+ * class created  by shubam virdi
+ * No Rights to reproduce,edit from unknown sources
+ * Social Stack Dev.
+ * All rights reserved.
+ *
+ * */
+class ViewPagerAdapter extends FragmentPagerAdapter {
     public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -19,12 +19,12 @@ class ViewPagerAdapter  extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position) {
-            case 0: Dashboard dashboard = new Dashboard();
-                return dashboard;
-            case 1: Notifications notifications = new Notifications();
-                return notifications;
-            case 2:Profile profile = new Profile();
-                return profile;
+            case 0:
+                return new Dashboard();
+            case 1:
+                return new Notifications();
+            case 2:
+                return new Profile();
             default:
                 return null;
         }

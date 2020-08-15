@@ -25,16 +25,15 @@ public class AboutUs extends AppCompatActivity {
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setData(Uri.parse("mailto:"));
                 i.setType("text/plain");
-                i.putExtra(Intent.EXTRA_EMAIL,new String[]{"shubhamvirdic3@gmail.com"});
-                i.putExtra(Intent.EXTRA_SUBJECT,"Mail to Developer");
+                i.putExtra(Intent.EXTRA_EMAIL, new String[]{"shubhamvirdic3@gmail.com"});
+                i.putExtra(Intent.EXTRA_SUBJECT, "Mail to Developer");
 
                 try {
-                    startActivity(Intent.createChooser(i,"sendmail"));
+                    startActivity(Intent.createChooser(i, "sendmail"));
                     finish();
-                }catch (Exception e){
+                } catch (Exception e) {
                     Toast.makeText(AboutUs.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-
 
 
             }

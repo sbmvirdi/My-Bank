@@ -1,7 +1,7 @@
 package cf.projectspro.bank;
 
-public class users  {
-    private String name,uid;
+public class users {
+    private String name, uid;
     private long amount;
 
     public users(String name, String uid, long amount) {

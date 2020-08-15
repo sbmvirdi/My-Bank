@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -23,8 +24,8 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
 public class Signup extends AppCompatActivity {
-    private EditText name,email,pass;
-    private Button signup,login;
+    private EditText name, email, pass;
+    private Button signup, login;
     private FirebaseAuth mAuth;
     private String uid;
     private ProgressDialog pd;
@@ -45,7 +46,7 @@ public class Signup extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Signup.this,Login.class);
+                Intent intent = new Intent(Signup.this, Login.class);
                 startActivity(intent);
                 finish();
             }
@@ -63,19 +64,18 @@ public class Signup extends AppCompatActivity {
 
 
     private void signup_the_user() {
-         pd.show();
+        pd.show();
         final String Name = name.getText().toString().trim();
         final String Pass = pass.getText().toString().trim();
         final String Email = email.getText().toString().trim();
 
-       // Toast.makeText(this, Email+" "+pass, Toast.LENGTH_SHORT).show();
-        if (!TextUtils.isEmpty(Name) && !TextUtils.isEmpty(Email) && !TextUtils.isEmpty(Pass) && Pass.length() >6) {
+        // Toast.makeText(this, Email+" "+pass, Toast.LENGTH_SHORT).show();
+        if (!TextUtils.isEmpty(Name) && !TextUtils.isEmpty(Email) && !TextUtils.isEmpty(Pass) && Pass.length() > 6) {
 
 
             if (!Email.contains("@") && !Email.contains(".")) {
                 Toast.makeText(this, "Enter valid email!", Toast.LENGTH_SHORT).show();
-            }
-            else{
+            } else {
                 mAuth.createUserWithEmailAndPassword(Email, Pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -90,7 +90,7 @@ public class Signup extends AppCompatActivity {
                                         FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                                             @Override
                                             public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                                                if (task.isSuccessful()){
+                                                if (task.isSuccessful()) {
                                                     uid = mAuth.getCurrentUser().getUid();
 
                                                     // Toast.makeText(Signup.this, "" + uid, Toast.LENGTH_SHORT).show();
@@ -109,9 +109,8 @@ public class Signup extends AppCompatActivity {
                                                     startActivity(intent);
                                                     finish();
                                                     pd.dismiss();
-                                                }
-                                                else{
-                                                    Log.e("Sign Up Activity::",task.getException().getMessage()+"");
+                                                } else {
+                                                    Log.e("Sign Up Activity::", task.getException().getMessage() + "");
                                                 }
                                             }
                                         });
@@ -135,8 +134,8 @@ public class Signup extends AppCompatActivity {
 
                     }
                 });
-        }
-        }else {
+            }
+        } else {
             Toast.makeText(this, "Fill All Details With Password Length Greater Than 6", Toast.LENGTH_SHORT).show();
             pd.dismiss();
         }

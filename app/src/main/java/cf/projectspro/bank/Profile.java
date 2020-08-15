@@ -5,8 +5,10 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,10 +36,11 @@ public class Profile extends Fragment {
     private Button signout;
     private View layout;
     private FirebaseAuth mAuth;
-    private ImageView verified,dp;
+    private ImageView verified, dp;
     private TextView nameprofile;
-    private String uid,name;
+    private String uid, name;
     private boolean session;
+
     public Profile() {
         // Required empty public constructor
     }
@@ -46,7 +49,7 @@ public class Profile extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        layout =  inflater.inflate(R.layout.fragment_profile, container, false);
+        layout = inflater.inflate(R.layout.fragment_profile, container, false);
         signout = layout.findViewById(R.id.signout);
         nameprofile = layout.findViewById(R.id.name_profile);
         final Activity activity = getActivity();
@@ -60,7 +63,7 @@ public class Profile extends Fragment {
             public void onClick(View view) {
 
                 mAuth.signOut();
-                Intent intent = new Intent(getActivity(),Login.class);
+                Intent intent = new Intent(getActivity(), Login.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 activity.finish();
@@ -69,7 +72,7 @@ public class Profile extends Fragment {
         @SuppressLint("ResourceType") Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(getContext(), R.layout.animation);
         // Inflate the layout for this fragment
 
-        DatabaseReference df  = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+        DatabaseReference df = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
         df.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -86,20 +89,19 @@ public class Profile extends Fragment {
 
         char first = Dashboard.first_letter;
         //Toast.makeText(activity, first+"", Toast.LENGTH_SHORT).show();
-        if (Character.isAlphabetic(first)){
-          //  Toast.makeText(activity, first+"", Toast.LENGTH_SHORT).show();
-            int res = getResources().getIdentifier("@drawable/"+first,"drawable",getContext().getPackageName());
+        if (Character.isAlphabetic(first)) {
+            //  Toast.makeText(activity, first+"", Toast.LENGTH_SHORT).show();
+            int res = getResources().getIdentifier("@drawable/" + first, "drawable", getContext().getPackageName());
             dp.setImageResource(res);
-        }
-        else{
+        } else {
             Picasso.get().load(R.drawable.user).into(dp);
         }
 
 
-        if (dp.getDrawable() == null){
+        if (dp.getDrawable() == null) {
             Picasso.get().load(R.drawable.user).into(dp);
         }
-         return layout;
+        return layout;
     }
 
 }
