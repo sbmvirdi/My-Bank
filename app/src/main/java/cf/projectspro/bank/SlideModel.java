@@ -1,7 +1,10 @@
 package cf.projectspro.bank;
 
+import androidx.annotation.Keep;
+
+@Keep
 public class SlideModel {
-    private String image;
+    public String image;
 
     public SlideModel(String image) {
         this.image = image;

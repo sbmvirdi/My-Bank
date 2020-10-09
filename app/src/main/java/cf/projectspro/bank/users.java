@@ -1,8 +1,11 @@
 package cf.projectspro.bank;
 
+import androidx.annotation.Keep;
+
+@Keep
 public class users {
-    private String name, uid;
-    private long amount;
+    public String name, uid;
+    public long amount;
 
     public users(String name, String uid, long amount) {
         this.name = name;
