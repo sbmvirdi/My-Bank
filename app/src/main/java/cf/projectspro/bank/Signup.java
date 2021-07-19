@@ -20,8 +20,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 
 public class Signup extends AppCompatActivity {
     private EditText name, email, pass;
@@ -86,35 +84,23 @@ public class Signup extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
 
-                                        // uploading device token to db for fcm
-                                        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                                                if (task.isSuccessful()) {
-                                                    uid = mAuth.getCurrentUser().getUid();
+                                        uid = mAuth.getCurrentUser().getUid();
 
-                                                    // Toast.makeText(Signup.this, "" + uid, Toast.LENGTH_SHORT).show();
+                                        // Toast.makeText(Signup.this, "" + uid, Toast.LENGTH_SHORT).show();
 
-                                                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
-                                                    DatabaseReference isadmin = FirebaseDatabase.getInstance().getReference().child("uids").child(uid);
-                                                    isadmin.setValue(false);
-                                                    ref.child("name").setValue(Name);
-                                                    ref.child("amount").setValue(0);
-                                                    ref.child("uid").setValue(uid);
-                                                    ref.child("session").setValue(true);
-                                                    ref.child("device_token").setValue(task.getResult().getToken());
-                                                    isadmin.setValue(false);
+                                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+                                        DatabaseReference isadmin = FirebaseDatabase.getInstance().getReference().child("uids").child(uid);
+                                        isadmin.setValue(false);
+                                        ref.child("name").setValue(Name);
+                                        ref.child("amount").setValue(0);
+                                        ref.child("uid").setValue(uid);
+                                        ref.child("session").setValue(true);
+                                        isadmin.setValue(false);
 
-                                                    Intent intent = new Intent(Signup.this, MainActivity.class);
-                                                    startActivity(intent);
-                                                    finish();
-                                                    pd.dismiss();
-                                                } else {
-                                                    Log.e("Sign Up Activity::", task.getException().getMessage() + "");
-                                                }
-                                            }
-                                        });
-
+                                        Intent intent = new Intent(Signup.this, MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                        pd.dismiss();
 
                                     } else {
 

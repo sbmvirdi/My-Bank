@@ -11,15 +11,15 @@
         android:fontFamily="@font/overpass_semibold"
         android:text="About Me!"
         android:textColor="#000"
-        android:textSize="35sp" />
+        android:textSize="25sp" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/dev"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="200dp"
-        android:src="@drawable/developer" />
+        android:src="@drawable/s" />
 
 
     <TextView

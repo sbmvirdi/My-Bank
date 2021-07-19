@@ -30,7 +30,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -222,11 +221,6 @@ public class Dashboard extends Fragment {
                 // Code to be executed when an ad finishes loading.
             }
 
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                // Code to be executed when an ad request fails.
-                //Toast.makeText(getContext(), "failed"+errorCode, Toast.LENGTH_SHORT).show();
-            }
 
             @Override
             public void onAdOpened() {
@@ -239,10 +233,6 @@ public class Dashboard extends Fragment {
                 // Code to be executed when the user clicks on an ad.
             }
 
-            @Override
-            public void onAdLeftApplication() {
-                // Code to be executed when the user has left the app.
-            }
 
             @Override
             public void onAdClosed() {

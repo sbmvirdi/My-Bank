@@ -19,13 +19,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
+
 
 public class Login extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -82,21 +78,23 @@ public class Login extends AppCompatActivity {
                             if (task.isSuccessful()) {
 
                                 final String uid = mAuth.getCurrentUser().getUid();
-                                FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                                        if (task.isSuccessful()) {
-                                            df.child(uid).child("device_token").setValue(task.getResult().getToken());
-                                            Intent intent = new Intent(Login.this, MainActivity.class);
-                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                            startActivity(intent);
-                                            finish();
-                                            pd.dismiss();
-                                        } else {
-                                            Log.e("Login Activity::", task.getException().getMessage() + "");
-                                        }
-                                    }
-                                });
+//                                FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+//                                    @Override
+//                                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+//                                        if (task.isSuccessful()) {
+//                                            df.child(uid).child("device_token").setValue(task.getResult().getToken());
+//
+//                                        } else {
+//                                            Log.e("Login Activity::", task.getException().getMessage() + "");
+//                                        }
+//                                    }
+//                                });
+
+                                Intent intent = new Intent(Login.this, MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                finish();
+                                pd.dismiss();
 
                             } else {
                                 Toast.makeText(Login.this, "Incorrect Details", Toast.LENGTH_SHORT).show();

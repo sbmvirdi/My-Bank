@@ -119,6 +119,7 @@
         android:layout_marginTop="600dp"
         android:background="@drawable/corner"
         android:text="signup"
+        app:backgroundTint="@color/colorPrimary"
         android:textColor="#ffffff" />
 
     <TextView
@@ -138,6 +139,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/corner"
         android:text="login "
+        app:backgroundTint="@color/colorPrimary"
         android:textColor="#ffffff" />
 
     </RelativeLayout>

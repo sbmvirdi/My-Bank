@@ -105,7 +105,7 @@
 
 
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/signup_now"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="200dp"
@@ -114,6 +114,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="121dp"
         android:background="@drawable/corner"
+        app:backgroundTint="@color/colorPrimary"
         android:text="Login"
         android:textColor="#ffffff" />
 
@@ -134,6 +135,7 @@
         android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true"
         android:background="@drawable/corner"
+        app:backgroundTint="@color/colorPrimary"
         android:text="Sign up"
         android:textColor="#ffffff" />
 

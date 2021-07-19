@@ -75,6 +75,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/corner"
         android:textColor="#ffffff"
+        app:backgroundTint="@color/colorPrimary"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="37dp"
         android:text="Add Money" />
