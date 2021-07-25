@@ -7,11 +7,11 @@
         android:fromXScale="1.0"
         android:toXScale="1.4"
         android:fromYScale="1.0"
-        android:toYScale="1.4"
+        android:toYScale="1.3"
         android:pivotX="50%"
         android:pivotY="50%"
         android:fillAfter="false"
-        android:duration="700" />
+        android:duration="900" />
     <set android:interpolator="@android:anim/decelerate_interpolator">
 
         <rotate

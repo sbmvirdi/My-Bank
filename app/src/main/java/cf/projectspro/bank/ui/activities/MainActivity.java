@@ -1,4 +1,4 @@
-package cf.projectspro.bank;
+package cf.projectspro.bank.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +23,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import cf.projectspro.bank.R;
+import cf.projectspro.bank.ui.adapters.ViewPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
