@@ -25,6 +25,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -70,6 +74,9 @@ dependencies {
     //Wave ripple
     implementation 'com.skyfishjy.ripplebackground:library:1.0.1'
 
+
+    //Step View
+    implementation 'com.shuhart.stepview:stepview:1.5.1'
 
 
     testImplementation 'junit:junit:4.12'

@@ -37,7 +37,7 @@ public class Details_Trans extends AppCompatActivity {
         String im = bundle.getString("image");
         boolean status = bundle.getBoolean("status");
         boolean from_stat = bundle.getBoolean("from_status");
-        @SuppressLint("ResourceType") Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(this, R.layout.animation);
+        @SuppressLint("ResourceType") Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(this, R.anim.animation);
 
 
         if (!TextUtils.isEmpty(to)) {

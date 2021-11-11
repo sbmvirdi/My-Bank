@@ -8,13 +8,29 @@
     tools:context=".ui.activities.payment_processing_screen">
 
     <ImageView
+        android:id="@+id/placeholder"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:scaleType="centerCrop"
-        android:id="@+id/placeholder"
-        android:src="@drawable/payment"
-        />
+        android:src="@drawable/payment" />
+
+
+    <com.shuhart.stepview.StepView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/placeholder"
+        android:padding="16dp"
+        app:sv_selectedCircleColor="@color/colorPrimary"
+        app:sv_selectedTextColor="@color/colorPrimary"
+        app:sv_selectedStepNumberColor="@color/white"
+        app:sv_stepLineWidth="1dp"
+        app:sv_stepPadding="4dp"
+        app:sv_doneCircleColor="#469a5d"
+        app:sv_doneTextColor="#469a5d"
+        app:sv_doneStepMarkColor="@color/white"
+        app:sv_nextTextColor="#d3d3d3"
+        android:id="@+id/transactionSteps"/>
 
 </RelativeLayout>

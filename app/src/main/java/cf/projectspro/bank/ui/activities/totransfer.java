@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.UUID;
 
 import cf.projectspro.bank.R;
+import cf.projectspro.bank.databinding.ActivityTotransferBinding;
 import cf.projectspro.bank.viewModels.MoneyTransferViewModel;
 
 public class totransfer extends AppCompatActivity {
@@ -37,11 +39,14 @@ public class totransfer extends AppCompatActivity {
     private String uid;
     private String name, fromuser, touser;
     long to_user_amount, totalfrom, totalto, from_user_amount, to_user_prev;
+    private ActivityTotransferBinding activityTotransferBinding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_totransfer);
+        activityTotransferBinding = ActivityTotransferBinding.inflate(LayoutInflater.from(this));
+        setContentView(activityTotransferBinding.getRoot());
         Bundle bundle = getIntent().getExtras();
         to_user_amount = bundle.getLong("to_user_amount");
         to_user_uid = bundle.getString("to_user_uid");
@@ -64,19 +69,22 @@ public class totransfer extends AppCompatActivity {
 //            Log.e("ToTransfer", "getStatus(): "+status);
 //        });
 
+
         sendmoney.setOnClickListener(v->{
-//            if (!TextUtils.isEmpty(amount.getText().toString().trim())){
-//                viewModel.sendMoney(uid,to_user_uid,Integer.parseInt(amount.getText().toString()));
-//            }else{
-//                Toast.makeText(totransfer.this, "Enter Appropriate Amount", Toast.LENGTH_SHORT).show();
-//            }
-            Intent sendMoneyIntent = new Intent(this,payment_processing_screen.class);
-            sendMoneyIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            sendMoneyIntent.putExtra("senderUid",uid);
-            sendMoneyIntent.putExtra("receiverUid",to_user_uid);
-            sendMoneyIntent.putExtra("name",name);
-            startActivity(sendMoneyIntent);
-            finish();
+
+            // checking if user has entered the correct amount to proceed to transaction
+            if (!TextUtils.isEmpty(amount.getText().toString().trim())){
+                Intent sendMoneyIntent = new Intent(this, payment_processing_screen.class);
+                sendMoneyIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                sendMoneyIntent.putExtra("senderUid", uid);
+                sendMoneyIntent.putExtra("receiverUid", to_user_uid);
+                sendMoneyIntent.putExtra("name", name);
+                sendMoneyIntent.putExtra("amount",amount.getText().toString().trim());
+                startActivity(sendMoneyIntent);
+                finish();
+            }else {
+                Toast.makeText(totransfer.this, "Enter Appropriate Amount", Toast.LENGTH_SHORT).show();
+            }
         });
 
     }

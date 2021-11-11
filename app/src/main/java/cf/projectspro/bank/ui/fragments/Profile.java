@@ -70,7 +70,7 @@ public class Profile extends Fragment {
                 activity.finish();
             }
         });
-        @SuppressLint("ResourceType") Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(getContext(), R.layout.animation);
+        @SuppressLint("ResourceType") Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.animation);
         // Inflate the layout for this fragment
 
         DatabaseReference df = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
