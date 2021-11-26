@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -245,6 +246,23 @@ public class MyBankRepo {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 loadData.onDataLoaded(null);
+            }
+        });
+    }
+
+
+    /**
+     * function to send password reset email
+     * @param userEmail email id of the user
+     */
+    public void sendUserPasswordResetEmail(String userEmail,LoadData<Boolean> loadData){
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth.sendPasswordResetEmail(userEmail).addOnCompleteListener(task->{
+            if (task.isSuccessful()){
+                loadData.onDataLoaded(true);
+            }else{
+                Log.d(TAG, "sendUserPasswordResetEmail: "+task.getException().toString());
+                loadData.onDataLoaded(false);
             }
         });
     }

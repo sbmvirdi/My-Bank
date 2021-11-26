@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/background.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_forgot_password.xml" value="0.2502757784273642" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.39512061734198545" />
         <entry key="app/src/main/res/layout/activity_payment_processing_screen.xml" value="0.41903345881928117" />
         <entry key="app/src/main/res/layout/activity_totransfer.xml" value="0.1" />
         <entry key="app/src/main/res/layout/animation.xml" value="0.11666666666666667" />
@@ -57,7 +59,7 @@
       </value>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_15" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

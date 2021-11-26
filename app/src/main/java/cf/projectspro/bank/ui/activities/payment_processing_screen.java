@@ -52,7 +52,7 @@ public class payment_processing_screen extends AppCompatActivity {
                         paymentProcessingScreenBinding.transactionSteps.done(true);
                         paymentProcessingScreenBinding.transactionSteps.go(status, true);
                     }
-                }, 2000);
+                }, 4000);
         });
 
         paymentProcessingScreenBinding.transactionSteps.setSteps(new ArrayList<String>() {{
