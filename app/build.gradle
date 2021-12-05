@@ -25,7 +25,7 @@ android {
         defaultConfig {
             multiDexEnabled true
             applicationId "cf.projectspro.bank"
-            minSdkVersion 16
+            minSdkVersion 19
             targetSdkVersion 30
             versionCode code
             versionName "4.2.0." + code
