@@ -1,11 +1,10 @@
-package cf.projectspro.bank;
+package cf.projectspro.bank.ui.fragments;
 
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -37,6 +36,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cf.projectspro.bank.R;
+import cf.projectspro.bank.ui.activities.SendMoney;
+import cf.projectspro.bank.ui.modelClasses.SlideModel;
+import cf.projectspro.bank.ui.adapters.SliderAdapterDemo;
+import cf.projectspro.bank.ui.activities.Login;
+import cf.projectspro.bank.ui.activities.MainActivity;
+import cf.projectspro.bank.ui.activities.Money;
 
 
 /**

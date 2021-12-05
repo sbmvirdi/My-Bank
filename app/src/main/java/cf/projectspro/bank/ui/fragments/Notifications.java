@@ -1,8 +1,7 @@
-package cf.projectspro.bank;
+package cf.projectspro.bank.ui.fragments;
 
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ethanhua.skeleton.SkeletonScreen;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -30,7 +28,10 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.util.Random;
+import cf.projectspro.bank.R;
+import cf.projectspro.bank.ui.modelClasses.notify;
+import cf.projectspro.bank.ui.activities.Details_Trans;
+import cf.projectspro.bank.ui.activities.Login;
 
 /**
  * A simple {@link Fragment} subclass.

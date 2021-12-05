@@ -1,4 +1,4 @@
-package cf.projectspro.bank;
+package cf.projectspro.bank.ui.modelClasses;
 
 import java.lang.ref.SoftReference;
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login">
+    tools:context=".ui.activities.Login">
 
 
     <androidx.cardview.widget.CardView
@@ -84,6 +84,19 @@
             android:layout_height="wrap_content"/>
 
     </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Forgot Password?"
+            android:layout_marginLeft="5dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:fontFamily="@font/overpass_semibold"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginRight="5dp"
+            android:id="@+id/forgotPassword"
+            android:layout_marginTop="190dp"
+            />
 
 </androidx.cardview.widget.CardView>
 

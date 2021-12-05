@@ -1,8 +1,12 @@
-package cf.projectspro.bank;
+package cf.projectspro.bank.ui.adapters;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+
+import cf.projectspro.bank.ui.fragments.Dashboard;
+import cf.projectspro.bank.ui.fragments.Notifications;
+import cf.projectspro.bank.ui.fragments.Profile;
 
 /*
  * class created  by shubam virdi
@@ -11,7 +15,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
  * All rights reserved.
  *
  * */
-class ViewPagerAdapter extends FragmentPagerAdapter {
+public class ViewPagerAdapter extends FragmentPagerAdapter {
     public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
     }

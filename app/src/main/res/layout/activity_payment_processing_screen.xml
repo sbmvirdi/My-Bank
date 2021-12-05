@@ -5,120 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
-    tools:context=".payment_processing_screen">
+    tools:context=".ui.activities.payment_processing_screen">
 
     <ImageView
+        android:id="@+id/placeholder"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:scaleType="centerCrop"
-        android:id="@+id/placeholder"
-        android:src="@drawable/payment"
-        />
+        android:src="@drawable/payment" />
 
 
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:padding="2dp"
-        android:id="@+id/deduct"
-        android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/placeholder"
-        android:layout_height="wrap_content">
-    <ProgressBar
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="3dp"
-        android:id="@+id/paymentprogress"
-        />
-
-        <ImageView
-            android:id="@+id/step1"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="3dp"
-            android:src="@drawable/successtransfer"
-            android:visibility="invisible"
-
-            />
-
-
-
-    <TextView
-        android:layout_width="wrap_content"
+    <com.shuhart.stepview.StepView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/paymentstatus"
-        android:text="Deducting Money from your account   "
-        android:fontFamily="@font/ubuntu"
-        android:layout_toRightOf="@id/step1"
-        android:padding="6dp"
-        android:textColor="#6C61F6"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:padding="2dp"
-        android:id="@+id/transfer"
-        android:layout_marginTop="5dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/deduct"
-        android:layout_height="wrap_content">
-        <ProgressBar
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="3dp"
-            android:id="@+id/_paymentprogress"
-            />
-
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="3dp"
-            android:id="@+id/step2"
-            android:src="@drawable/successtransfer"
-            android:visibility="invisible"
-
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/_paymentstatus"
-            android:text="Transfering money to recipient's bank"
-            android:fontFamily="@font/ubuntu"
-            android:layout_toRightOf="@id/step2"
-            android:padding="6dp"
-            android:textColor="#6C61F6"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:padding="2dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:id="@+id/success"
-        android:layout_marginTop="5dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/transfer"
-        android:layout_height="wrap_content">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/_paymentstatusfinal"
-            android:text="Successful"
-            android:fontFamily="@font/ubuntu"
-            android:padding="6dp"
-            android:textColor="#fff"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:background="@drawable/successtransferbg"/>
-
-    </RelativeLayout>
+        android:layout_below="@+id/placeholder"
+        android:padding="16dp"
+        app:sv_selectedCircleColor="@color/colorPrimary"
+        app:sv_selectedTextColor="@color/colorPrimary"
+        app:sv_selectedStepNumberColor="@color/white"
+        app:sv_stepLineWidth="1dp"
+        app:sv_stepPadding="4dp"
+        app:sv_doneCircleColor="#469a5d"
+        app:sv_doneTextColor="#469a5d"
+        app:sv_doneStepMarkColor="@color/white"
+        app:sv_nextTextColor="#d3d3d3"
+        android:id="@+id/transactionSteps"/>
 
 </RelativeLayout>

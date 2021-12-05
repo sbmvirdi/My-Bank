@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".totransfer">
+    tools:context=".ui.activities.totransfer">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -71,7 +71,7 @@
         android:layout_marginTop="70dp"
         android:layout_marginRight="-70dp"
         app:cardCornerRadius="20dp"
-        >
+        android:layout_alignParentRight="true">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -94,7 +94,8 @@
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginEnd="70dp"
                 android:layout_marginTop="0dp"
-                app:layout_constraintBottom_toBottomOf="@id/guideline"/>
+                app:layout_constraintBottom_toBottomOf="@id/guideline"
+                android:layout_marginRight="70dp" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:layout_width="match_parent"

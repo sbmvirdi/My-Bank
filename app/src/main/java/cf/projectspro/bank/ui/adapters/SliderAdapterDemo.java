@@ -1,4 +1,4 @@
-package cf.projectspro.bank;
+package cf.projectspro.bank.ui.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,9 @@ import com.smarteist.autoimageslider.SliderViewAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import cf.projectspro.bank.R;
+import cf.projectspro.bank.ui.modelClasses.SlideModel;
 
 public class SliderAdapterDemo extends SliderViewAdapter<SliderAdapterDemo.SliderVH> {
 

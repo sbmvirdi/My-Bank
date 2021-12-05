@@ -1,4 +1,4 @@
-package cf.projectspro.bank;
+package cf.projectspro.bank.ui.activities;
 
 import android.annotation.SuppressLint;
 
@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+
+import cf.projectspro.bank.R;
 
 public class Details_Trans extends AppCompatActivity {
     private TextView To, Amount, Status, Trans_id, From;
@@ -35,7 +37,7 @@ public class Details_Trans extends AppCompatActivity {
         String im = bundle.getString("image");
         boolean status = bundle.getBoolean("status");
         boolean from_stat = bundle.getBoolean("from_status");
-        @SuppressLint("ResourceType") Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(this, R.layout.animation);
+        @SuppressLint("ResourceType") Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(this, R.anim.animation);
 
 
         if (!TextUtils.isEmpty(to)) {
