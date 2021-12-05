@@ -25,9 +25,14 @@ jobs:
       run: ./gradlew build
     - name: Generate an APK 
       run: ./gradlew assembleDebug
-    - name: Save Generated APK
-      uses: ShaunLWM/action-release-debugapk@master
-      env:
-       GITHUB_TOKEN: ${{ secrets.TOKEN }}
-       APP_FOLDER: app
-       RELEASE_TITLE: Latest Build
+    - name: Upload APK
+      uses: actions/upload-artifact@v1
+      with:
+        name: Latest Build
+        path: app/build/outputs/apk/debug/app-debug.apk
+#     - name: Save Generated APK
+#       uses: ShaunLWM/action-release-debugapk@master
+#       env:
+#        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+#        APP_FOLDER: app
+#        RELEASE_TITLE: Latest Build
