@@ -1,19 +1,48 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'com.google.firebase.firebase-perf'
 
 
 android {
+
     compileSdkVersion 30
-    defaultConfig {
-        multiDexEnabled true
-        applicationId "cf.projectspro.bank"
-        minSdkVersion 16
-        targetSdkVersion 30
-        versionCode 19
-        versionName "4.2.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    def versionProp = file('version.properties')
+    if (versionProp.canRead()) {
+
+        // Get properties from version.properties
+        Properties versionProps = new Properties()
+        versionProps.load(new FileInputStream(versionProp))
+
+        // Increase versionCode
+        def code = versionProps['VERSION_CODE'].toInteger() + 1
+
+        // Write new versionCode to version.properties
+        versionProps['VERSION_CODE'] = code.toString()
+        versionProps.store(versionProp.newWriter(), null)
+
+        defaultConfig {
+            multiDexEnabled true
+            applicationId "cf.projectspro.bank"
+            minSdkVersion 16
+            targetSdkVersion 30
+            versionCode code
+            versionName "4.2.0." + code
+            testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        }
+    } else {
+        throw new GradleException("Could not read version.properties!")
     }
+
+    signingConfigs {
+        release {
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
+
     buildTypes {
         release {
             minifyEnabled true

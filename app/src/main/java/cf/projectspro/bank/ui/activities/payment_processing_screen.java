@@ -42,17 +42,24 @@ public class payment_processing_screen extends AppCompatActivity {
 
         // validation status of the transaction to perform certain action
         viewModel.getStatus().observe(this, status -> {
-                new Handler(getMainLooper()).postDelayed(() -> {
+
                     Log.e("ToTransfer", "getStatus(): "+status);
                     if (status >=3){
-                        Intent mainScreenIntent = new Intent(this,MainActivity.class);
-                        startActivity(mainScreenIntent);
-                        finish();
-                    }else {
+                        paymentProcessingScreenBinding.transactionSteps.done(true);
+
+                        new Handler(getMainLooper()).postDelayed(()->{
+                            Intent mainScreenIntent = new Intent(this,MainActivity.class);
+                            startActivity(mainScreenIntent);
+                            finish();
+                        },2000);
+
+
+                    }
+                    else {
                         paymentProcessingScreenBinding.transactionSteps.done(true);
                         paymentProcessingScreenBinding.transactionSteps.go(status, true);
                     }
-                }, 4000);
+
         });
 
         paymentProcessingScreenBinding.transactionSteps.setSteps(new ArrayList<String>() {{
@@ -80,6 +87,6 @@ public class payment_processing_screen extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
+        // can't go back while transaction is in progress
     }
 }

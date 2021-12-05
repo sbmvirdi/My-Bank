@@ -9,6 +9,7 @@
         <entry key="app/src/main/res/layout/activity_payment_processing_screen.xml" value="0.41903345881928117" />
         <entry key="app/src/main/res/layout/activity_totransfer.xml" value="0.1" />
         <entry key="app/src/main/res/layout/animation.xml" value="0.11666666666666667" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.17119565217391305" />
         <entry key="app/src/main/res/layout/transaction_progress_row.xml" value="0.11666666666666667" />
       </map>
     </option>
@@ -59,7 +60,7 @@
       </value>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_15" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_15_PREVIEW" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
