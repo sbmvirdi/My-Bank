@@ -19,7 +19,8 @@
         <activity android:name=".ui.activities.payment_processing_screen" />
         <activity
             android:name=".ui.activities.SplashScreen"
-            android:theme="@style/AppTheme1">
+            android:theme="@style/AppTheme1"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import cf.projectspro.bank.R;
@@ -35,6 +37,7 @@ public class Details_Trans extends AppCompatActivity {
         String trans_id = bundle.getString("trans_id");
         String amount = bundle.getString("amount");
         String im = bundle.getString("image");
+        Log.d(Details_Trans.class.getSimpleName(), "im:"+im);
         boolean status = bundle.getBoolean("status");
         boolean from_stat = bundle.getBoolean("from_status");
         @SuppressLint("ResourceType") Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(this, R.anim.animation);
@@ -49,7 +52,7 @@ public class Details_Trans extends AppCompatActivity {
         }
 
         if (!TextUtils.isEmpty(im)) {
-            Picasso.get().load(im).into(img);
+            Glide.with(this).load(im).into(img);
         }
 
         if (!TextUtils.isEmpty(trans_id)) {
