@@ -19,6 +19,10 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
+    - name: Make Gradle executable
+      run: chmod +x ./gradlew
+    - name: Build Release APK
+      run: ./gradlew assembleRelease
     - uses: r0adkll/sign-android-release@v1
       name: Sign app APK
       id: sign_app
