@@ -1,59 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/overpass_semibold"
-        android:text="About Me!"
-        android:textColor="#000"
-        android:textSize="25sp" />
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/dev"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="200dp"
-        android:src="@drawable/s" />
-
-
-    <TextView
-        android:id="@+id/namedev"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/dev"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/overpass_semibold"
-        android:gravity="center"
-        android:text="@string/developer_name"
-        android:textColor="#000"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/emaildev"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/namedev"
-        android:layout_marginTop="2dp"
-        android:background="@drawable/border_search"
-        android:fontFamily="@font/overpass_semibold"
-        android:gravity="center"
-        android:text="@string/developer_email"
-        android:textColor="#000"
-        android:textSize="15sp" />
-<ImageView
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:src="@drawable/ic_wave_admin"
-    android:alpha="0.7"
-    android:layout_marginBottom="-120dp"
-    android:layout_alignParentBottom="true"
-    />
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-</RelativeLayout>
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_splash3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/logo"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My Bank"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="#373737"
+        android:id="@+id/appname"
+        android:fontFamily="@font/overpass_semibold"
+        android:layout_marginTop="20dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Version name"
+        android:textSize="18sp"
+        android:id="@+id/versionname"
+        app:layout_constraintTop_toBottomOf="@id/appname"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="#373737"
+        android:fontFamily="@font/overpass_semibold"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Build"
+        android:textSize="16sp"
+        android:id="@+id/buildcode"
+        app:layout_constraintTop_toBottomOf="@id/versionname"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="#373737"
+        android:fontFamily="@font/overpass_semibold"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

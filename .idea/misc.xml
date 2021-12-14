@@ -4,11 +4,16 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/background.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/corner.xml" value="0.265625" />
+        <entry key="app/src/main/res/drawable/corner_grey.xml" value="0.10989583333333333" />
+        <entry key="app/src/main/res/drawable/splash.xml" value="0.11145833333333334" />
+        <entry key="app/src/main/res/layout/activity_about_us.xml" value="0.3926247288503254" />
         <entry key="app/src/main/res/layout/activity_forgot_password.xml" value="0.2502757784273642" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.39512061734198545" />
         <entry key="app/src/main/res/layout/activity_payment_processing_screen.xml" value="0.41903345881928117" />
-        <entry key="app/src/main/res/layout/activity_totransfer.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_totransfer.xml" value="0.2896159100095747" />
         <entry key="app/src/main/res/layout/animation.xml" value="0.11666666666666667" />
+        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.16666666666666666" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.17119565217391305" />
         <entry key="app/src/main/res/layout/transaction_progress_row.xml" value="0.11666666666666667" />
       </map>
@@ -60,7 +65,7 @@
       </value>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_15_PREVIEW" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_15" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
