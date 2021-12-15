@@ -43,7 +43,7 @@ jobs:
       with:
        serviceAccountJson: service_account.json
        packageName: cf.projectspro.bank
-       releaseFile: app/build/outputs/apk/release
+       releaseFile: app/build/outputs/apk/release/app-release-unsigned-signed.apk
        track: beta
        whatsNewDirectory: whatsNewDirectory/
 
