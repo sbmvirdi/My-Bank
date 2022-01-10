@@ -12,24 +12,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.squareup.picasso.Picasso;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cf.projectspro.bank.R;
-import cf.projectspro.bank.ui.modelClasses.users;
+import cf.projectspro.bank.ui.adapters.UserAdapter;
+import cf.projectspro.bank.ui.modelClasses.User;
 
 public class SendMoney extends AppCompatActivity {
     private RecyclerView userview;
@@ -86,100 +83,27 @@ public class SendMoney extends AppCompatActivity {
     void Refresh(String mSearchString) {
 
         Query firebasequery = ref.orderByChild("name").startAt(mSearchString).endAt(mSearchString + "\uf8ff");
-        FirebaseRecyclerOptions firebaseRecyclerOptions = new FirebaseRecyclerOptions.Builder<users>().setQuery(firebasequery, users.class).build();
-        FirebaseRecyclerAdapter<users, userHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<users, userHolder>(firebaseRecyclerOptions) {
+
+        firebasequery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            protected void onBindViewHolder(@NonNull userHolder holder, int position, @NonNull users model) {
-                String to_uid = model.getUid();
-                holder.setname(model.getname());
-                holder.getamount(model.getamount());
-                holder.getuid(to_uid);
-                holder.setImage(model.getname());
-            }
-
-            @NonNull
-            @Override
-            public userHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View v = LayoutInflater.from(SendMoney.this).inflate(R.layout.user_detail, parent, false);
-                return new userHolder(v);
-            }
-        };
-
-        userview.setAdapter(firebaseRecyclerAdapter);
-        try {
-            firebaseRecyclerAdapter.startListening();
-        } catch (Exception ex) {
-            Log.e("EX USER ADAPTER", ex.toString());
-        }
-
-    }
-
-    public class userHolder extends RecyclerView.ViewHolder {
-
-        View mView;
-        TextView user;
-        ImageView dp;
-        String to_user_uid;
-        long to_user_amount;
-        String Name;
-
-        public userHolder(final View itemView) {
-            super(itemView);
-            mView = itemView;
-
-
-            mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (uid.equals(to_user_uid)) {
-
-//                       mView.setVisibility(View.GONE);
-                        Toast.makeText(SendMoney.this, "You Can't Send Money To Yourself", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Intent intent = new Intent(SendMoney.this, totransfer.class);
-                        intent.putExtra("to_user_uid", to_user_uid);
-                        intent.putExtra("to_user_amount", to_user_amount);
-                        intent.putExtra("name", Name);
-                        startActivity(intent);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<User> usersList = new ArrayList<>();
+                for (DataSnapshot userSnapshot:snapshot.getChildren()){
+                    User user = userSnapshot.getValue(User.class);
+                    if (!user.uid.equals(uid)){
+                        usersList.add(user);
                     }
+
+                    userview.setAdapter(new UserAdapter(usersList,SendMoney.this));
                 }
-            });
-        }
-
-
-        void setname(String name) {
-            user = mView.findViewById(R.id.user_name);
-            user.setText(name);
-            Name = name;
-
-        }
-
-        void setImage(String name) {
-            dp = mView.findViewById(R.id.user);
-            name = name.toLowerCase();
-            char _name = name.charAt(0);
-            // Toast.makeText(SendMoney.this, _name+"", Toast.LENGTH_SHORT).show();
-            if (Character.isAlphabetic(_name)) {
-                int res = getResources().getIdentifier("@drawable/" + _name, null, getPackageName());
-                dp.setImageResource(res);
-            } else {
-                Picasso.get().load(R.drawable.user).into(dp);
             }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-            if (dp.getDrawable() == null) {
-                Picasso.get().load(R.drawable.user).into(dp);
             }
+        });
 
-        }
-
-        void getuid(String uid) {
-            to_user_uid = uid;
-        }
-
-        void getamount(long amount) {
-            to_user_amount = amount;
-
-        }
     }
+
 }

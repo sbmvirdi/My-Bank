@@ -1,7 +1,6 @@
 package cf.projectspro.bank.ui.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.graphics.Color;
@@ -9,10 +8,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
 
 import cf.projectspro.bank.databinding.ActivityForgotPasswordBinding;
-import cf.projectspro.bank.viewModels.ForgotPasswordViewModel;
+import cf.projectspro.bank.ui.viewModels.ForgotPasswordViewModel;
 
 public class ForgotPassword extends AppCompatActivity {
     ActivityForgotPasswordBinding activityForgotPasswordBinding;

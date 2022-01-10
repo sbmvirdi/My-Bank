@@ -4,25 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import com.shuhart.stepview.StepView;
 
 import java.util.ArrayList;
 
-import cf.projectspro.bank.R;
 import cf.projectspro.bank.databinding.ActivityPaymentProcessingScreenBinding;
-import cf.projectspro.bank.repository.MyBankRepo;
-import cf.projectspro.bank.viewModels.MoneyTransferViewModel;
+import cf.projectspro.bank.ui.viewModels.MoneyTransferViewModel;
 
 public class payment_processing_screen extends AppCompatActivity {
 

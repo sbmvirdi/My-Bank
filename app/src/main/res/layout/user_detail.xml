@@ -52,9 +52,9 @@
             android:layout_marginStart="0dp"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="25dp"
+            android:fontFamily="@font/overpass_semibold"
             android:gravity="end"
             android:padding="2dp"
-            android:fontFamily="@font/overpass_semibold"
             android:text="@string/name_tag"
             android:textSize="20sp" />
 

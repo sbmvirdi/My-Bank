@@ -1,4 +1,4 @@
-package cf.projectspro.bank.viewModels;
+package cf.projectspro.bank.ui.viewModels;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

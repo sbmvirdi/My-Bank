@@ -32,11 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private ViewPagerAdapter mViewPagerAdapter;
     private MenuItem prevMenuItem;
-    private ImageView admin;
     private Toolbar toolbar;
     private FirebaseAuth mAuth;
-    private boolean isadmin;
-    private DatabaseReference ref;
     private String uid;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -65,11 +62,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mAuth = FirebaseAuth.getInstance();
-        ref = FirebaseDatabase.getInstance().getReference().child("uids");
-        admin = findViewById(R.id.settings);
-        // mAuth.signOut();
-        admin.setVisibility(View.GONE);
+
         if (mAuth.getCurrentUser() == null) {
             Intent intent = new Intent(MainActivity.this, Login.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -77,22 +72,6 @@ public class MainActivity extends AppCompatActivity {
             finish();
         } else {
             uid = mAuth.getCurrentUser().getUid();
-            //Toast.makeText(this, uid, Toast.LENGTH_SHORT).show();
-            ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    isadmin = (boolean) dataSnapshot.child(uid).getValue();
-                    if (isadmin) {
-                        admin.setVisibility(View.VISIBLE);
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText(MainActivity.this, "Database Error!", Toast.LENGTH_SHORT).show();
-                }
-            });
-
         }
 
         final BottomNavigationView navigation = findViewById(R.id.navigation);
@@ -101,15 +80,6 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.setAdapter(mViewPagerAdapter);
 
 
-        admin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isadmin) {
-                    Intent intent = new Intent(MainActivity.this, AdminSettings.class);
-                    startActivity(intent);
-                }
-            }
-        });
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -152,15 +122,13 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this, AboutUs.class);
                 startActivity(i);
                 break;
-
         }
-
 
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
+
     }
 }

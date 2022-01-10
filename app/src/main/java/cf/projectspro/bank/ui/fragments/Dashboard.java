@@ -40,7 +40,7 @@ import java.util.List;
 import cf.projectspro.bank.R;
 import cf.projectspro.bank.ui.activities.SendMoney;
 import cf.projectspro.bank.ui.modelClasses.SlideModel;
-import cf.projectspro.bank.ui.adapters.SliderAdapterDemo;
+import cf.projectspro.bank.ui.adapters.SliderIntroAdapter;
 import cf.projectspro.bank.ui.activities.Login;
 import cf.projectspro.bank.ui.activities.MainActivity;
 import cf.projectspro.bank.ui.activities.Money;
@@ -197,7 +197,7 @@ public class Dashboard extends Fragment {
                     SlideList.add(obj);
                 }
 
-                SliderAdapterDemo adapterDemo = new SliderAdapterDemo(getContext(), SlideList);
+                SliderIntroAdapter adapterDemo = new SliderIntroAdapter(getContext(), SlideList);
                 sliderLayout.setSliderAdapter(adapterDemo);
                 sliderLayout.startAutoCycle();
                 sliderLayout.setIndicatorAnimation(IndicatorAnimations.WORM);
