@@ -17,8 +17,11 @@ import java.util.Map;
 import java.util.UUID;
 
 import cf.projectspro.bank.interfaces.LoadData;
-import cf.projectspro.bank.ui.modelClasses.users;
+import cf.projectspro.bank.ui.modelClasses.User;
 
+/**
+ * Repository to process database queries
+ */
 public class MyBankRepo {
     private static final String TAG = MyBankRepo.class.getSimpleName();
     private static MyBankRepo instance;
@@ -105,7 +108,7 @@ public class MyBankRepo {
      * @param receiver receiver user
      * @param amount amount to be sent
      */
-    private void writeFailedTransactionLogs(users sender, users receiver, int amount) {
+    private void writeFailedTransactionLogs(User sender, User receiver, int amount) {
 
         Map<String,Object> senderLog = new HashMap<>();
         String senderRandom = UUID.randomUUID().toString();
@@ -140,7 +143,7 @@ public class MyBankRepo {
      * @param receiver receiver user
      * @param amount amount to be sent
      */
-    private void writeSuccessTransactionLogs(users sender, users receiver, int amount) {
+    private void writeSuccessTransactionLogs(User sender, User receiver, int amount) {
 
         Map<String,Object> senderLog = new HashMap<>();
         String senderRandom = UUID.randomUUID().toString();
@@ -193,7 +196,7 @@ public class MyBankRepo {
      * @param amount amount to be sent
      * @param loadData returning the status
      */
-    private void initiateTransactionBetweenUsers(users sender, users receiver, MutableLiveData<Integer> status, int amount, LoadData<Boolean> loadData) {
+    private void initiateTransactionBetweenUsers(User sender, User receiver, MutableLiveData<Integer> status, int amount, LoadData<Boolean> loadData) {
         DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
         updateUserAmounts(sender, receiver, amount);
@@ -218,7 +221,7 @@ public class MyBankRepo {
 
     }
 
-    public void updateUserAmounts(users sender, users receiver, int amount) {
+    public void updateUserAmounts(User sender, User receiver, int amount) {
         sender.amount -= amount;
         receiver.amount += amount;
     }
@@ -230,16 +233,16 @@ public class MyBankRepo {
      * @param amount amount to be sent
      * @return boolean represening feasibly
      */
-    public boolean isTransactionFeasible(users user, int amount) {
+    public boolean isTransactionFeasible(User user, int amount) {
         return amount > 0 && amount <= user.amount;
     }
 
-    public void getUserFromDatabaseByUid(String uid,LoadData<users> loadData){
+    public void getUserFromDatabaseByUid(String uid,LoadData<User> loadData){
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users");
         userRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                users user = snapshot.getValue(users.class);
+                User user = snapshot.getValue(User.class);
                 loadData.onDataLoaded(user);
             }
 

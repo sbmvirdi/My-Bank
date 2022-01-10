@@ -1,20 +1,18 @@
 package cf.projectspro.bank;
 
-import androidx.lifecycle.MutableLiveData;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import cf.projectspro.bank.repository.MyBankRepo;
-import cf.projectspro.bank.ui.modelClasses.users;
+import cf.projectspro.bank.ui.modelClasses.User;
 
 @RunWith(JUnit4.class)
 public class Transaction {
 
-    users sender = new users("Shubam Virdi","abc",100);
-    users receiver = new users("Harshit","bcd",100);
+    User sender = new User("Shubam Virdi","abc",100);
+    User receiver = new User("Harshit","bcd",100);
     int amountToBeSent = 10;
     int expectedAmount = 90;
 

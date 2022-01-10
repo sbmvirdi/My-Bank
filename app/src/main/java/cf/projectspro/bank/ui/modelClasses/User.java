@@ -3,17 +3,17 @@ package cf.projectspro.bank.ui.modelClasses;
 import androidx.annotation.Keep;
 
 @Keep
-public class users {
+public class User {
     public String name, uid;
     public long amount;
 
-    public users(String name, String uid, long amount) {
+    public User(String name, String uid, long amount) {
         this.name = name;
         this.uid = uid;
         this.amount = amount;
     }
 
-    public users() {
+    public User() {
     }
 
     public String getname() {
