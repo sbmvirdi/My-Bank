@@ -1,12 +1,15 @@
 package cf.projectspro.bank.ui.modelClasses;
 
+import androidx.annotation.Keep;
+
 import java.lang.ref.SoftReference;
 
+@Keep
 public class notify {
-    private String src, to;
-    private long trans_id;
-    private long amount;
-    private boolean status, from;
+    public String src, to;
+    public long trans_id;
+    public long amount;
+    public boolean status, from;
 
     public notify(long amount, String src, String to, long trans_id, boolean status, boolean from) {
         this.amount = amount;
