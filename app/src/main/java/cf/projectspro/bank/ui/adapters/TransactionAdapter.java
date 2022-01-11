@@ -14,15 +14,15 @@ import java.util.List;
 
 import cf.projectspro.bank.R;
 import cf.projectspro.bank.databinding.NotificationPostBinding;
-import cf.projectspro.bank.ui.activities.Details_Trans;
-import cf.projectspro.bank.ui.modelClasses.Notification;
+import cf.projectspro.bank.ui.activities.TransactionDetail;
+import cf.projectspro.bank.ui.modelClasses.Transaction;
 
-public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder> {
+public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.NotificationViewHolder> {
 
-    private List<Notification> mList;
+    private List<Transaction> mList;
     private Context mContext;
 
-    public NotificationAdapter(List<Notification> mList, Context mContext) {
+    public TransactionAdapter(List<Transaction> mList, Context mContext) {
         this.mList = mList;
         this.mContext = mContext;
     }
@@ -51,7 +51,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             this.binding = binding;
         }
 
-        public void bind(Notification model) {
+        public void bind(Transaction model) {
 
 
             binding.notifyAmount.setText(String.valueOf(model.amount));
@@ -73,7 +73,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
             binding.getRoot().setOnClickListener(view -> {
 
-                Intent intent = new Intent(mContext, Details_Trans.class);
+                Intent intent = new Intent(mContext, TransactionDetail.class);
                 intent.putExtra("to", model.to);
                 intent.putExtra("trans_id", String.valueOf(model.trans_id));
                 intent.putExtra("amount", String.valueOf(model.amount));

@@ -54,7 +54,7 @@ public class totransfer extends AppCompatActivity {
 
             // checking if user has entered the correct amount to proceed to transaction
             if (!TextUtils.isEmpty(amount.getText().toString().trim())){
-                Intent sendMoneyIntent = new Intent(this, payment_processing_screen.class);
+                Intent sendMoneyIntent = new Intent(this, PaymentProcessingScreen.class);
                 sendMoneyIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 sendMoneyIntent.putExtra("senderUid", uid);
                 sendMoneyIntent.putExtra("receiverUid", to_user_uid);

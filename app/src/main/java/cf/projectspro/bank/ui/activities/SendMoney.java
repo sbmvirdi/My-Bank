@@ -7,11 +7,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.widget.EditText;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,25 +28,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cf.projectspro.bank.R;
+import cf.projectspro.bank.databinding.ActivitySendMoneyBinding;
 import cf.projectspro.bank.ui.adapters.UserAdapter;
 import cf.projectspro.bank.ui.modelClasses.User;
+import cf.projectspro.bank.ui.viewModels.SendMoneyViewModel;
 
 public class SendMoney extends AppCompatActivity {
-    private RecyclerView userview;
     private FirebaseAuth mAuth;
-    private Query ref;
     private String uid;
     private EditText mSearchBar;
     private String mSearchString = "";
+    private SendMoneyViewModel viewModel;
+    private ActivitySendMoneyBinding binding;
+    public static final String TAG = SendMoney.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_send_money);
-        userview = findViewById(R.id.users_rec);
+        binding = ActivitySendMoneyBinding.inflate(LayoutInflater.from(this));
+        setContentView(binding.getRoot());
         mAuth = FirebaseAuth.getInstance();
-        // ref = FirebaseDatabase.getInstance().getReference().child("Users").orderByChild("name");
-        ref = FirebaseDatabase.getInstance().getReference().child("Users");
 
         if (mAuth.getCurrentUser() == null) {
             Intent intent = new Intent(SendMoney.this, Login.class);
@@ -52,6 +56,8 @@ public class SendMoney extends AppCompatActivity {
         }
         uid = mAuth.getCurrentUser().getUid();
         mSearchBar = findViewById(R.id.searchBar);
+
+        viewModel = new ViewModelProvider(this).get(SendMoneyViewModel.class);
 
         Refresh("");
         mSearchBar.addTextChangedListener(new TextWatcher() {
@@ -62,48 +68,32 @@ public class SendMoney extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Refresh(s.toString());
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                Refresh(s.toString());
             }
         });
 
 
-        userview.setHasFixedSize(true);
-        ref.keepSynced(true);
-        userview.setLayoutManager(new LinearLayoutManager(this));
+        binding.usersRec.setHasFixedSize(true);
+        binding.usersRec.setLayoutManager(new LinearLayoutManager(this));
 
+        viewModel.getUserList().observe(this,users -> {
+            if (users==null || users.isEmpty()){
+                Log.e(TAG, "getUserList: observe: users list empty");
+            }else{
+                binding.usersRec.setAdapter(new UserAdapter(users,this));
+            }
+        });
 
     }
 
 
     void Refresh(String mSearchString) {
-
-        Query firebasequery = ref.orderByChild("name").startAt(mSearchString).endAt(mSearchString + "\uf8ff");
-
-        firebasequery.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<User> usersList = new ArrayList<>();
-                for (DataSnapshot userSnapshot:snapshot.getChildren()){
-                    User user = userSnapshot.getValue(User.class);
-                    if (!user.uid.equals(uid)){
-                        usersList.add(user);
-                    }
-
-                    userview.setAdapter(new UserAdapter(usersList,SendMoney.this));
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
+        viewModel.getUsers(uid,mSearchString);
     }
 
 }

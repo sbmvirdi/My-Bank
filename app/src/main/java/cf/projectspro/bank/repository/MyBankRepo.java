@@ -10,13 +10,19 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import cf.projectspro.bank.interfaces.LoadData;
+import cf.projectspro.bank.ui.activities.SendMoney;
+import cf.projectspro.bank.ui.adapters.UserAdapter;
+import cf.projectspro.bank.ui.modelClasses.Transaction;
 import cf.projectspro.bank.ui.modelClasses.User;
 
 /**
@@ -268,6 +274,84 @@ public class MyBankRepo {
                 loadData.onDataLoaded(false);
             }
         });
+    }
+
+    /**
+     * function to get users list
+     * @param uid uid of the caller
+     * @param mSearchString name keyword to be searched
+     * @param loadData to return list of users
+     */
+    public void getUserList(String uid,String mSearchString,LoadData<List<User>> loadData){
+        Query usersRef = FirebaseDatabase.getInstance().getReference().child("Users").orderByChild("name");
+
+        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<User> usersList = new ArrayList<>();
+                for (DataSnapshot userSnapshot:snapshot.getChildren()){
+                    User user = userSnapshot.getValue(User.class);
+                    assert user != null;
+                    if (user.name.contains(mSearchString)) {
+                        if (!user.uid.equals(uid)) {
+                            usersList.add(user);
+                        }
+                    }
+                    loadData.onDataLoaded(usersList);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                loadData.onDataLoaded(null);
+            }
+        });
+    }
+    /**
+     * function to get transactions of the user
+     * @param uid uid of the user
+     * @param loadData to send back list of transaction
+     */
+    public void getNotificationOfUserByUid(String uid,LoadData<List<Transaction>> loadData){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        Query ref = database.getReference().child("transactions").child(uid).orderByChild("code");
+        ref.keepSynced(true);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<Transaction> notifies = new ArrayList<>();
+                for (DataSnapshot dataSnapshot:snapshot.getChildren()) {
+                    notifies.add(dataSnapshot.getValue(Transaction.class));
+                }
+                loadData.onDataLoaded(notifies);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, "onCancelled:"+error.toString());
+                loadData.onDataLoaded(null);
+            }
+        });
+    }
+
+    /**
+     * function to verify if the user has verified email
+     * @param loadData to return boolean for user verified
+     */
+    public void isUserVerified(LoadData<Boolean> loadData){
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        if (mAuth.getCurrentUser()!= null){
+
+            if (mAuth.getCurrentUser().isEmailVerified()){
+                loadData.onDataLoaded(true);
+            }else{
+                loadData.onDataLoaded(false);
+            }
+
+        }else{
+            loadData.onDataLoaded(false);
+        }
+
     }
 
     private String failed() {
