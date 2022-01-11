@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -20,10 +21,12 @@ import cf.projectspro.bank.ui.viewModels.LoginViewModel;
 
 
 public class Login extends AppCompatActivity {
+
     private FirebaseAuth mAuth;
     private ProgressDialog loginProgressDialog;
     private ActivityLoginBinding binding;
     private LoginViewModel viewModel;
+    public static final String TAG = Login.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +38,7 @@ public class Login extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        loginProgressDialog = new ProgressDialog(this);
-        loginProgressDialog.setMessage("Please Wait ...");
+        initializeProgressDialog();
         hideLoginProgressDialog();
 
         if (mAuth.getCurrentUser() != null) {
@@ -60,8 +62,8 @@ public class Login extends AppCompatActivity {
         });
 
         viewModel.getLoginStatus().observe(this,success->{
+            Log.e(TAG, "onCreate: success:"+success);
             if (success){
-
                 Intent intent = new Intent(Login.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 dismissLoginProgressDialog();
@@ -82,8 +84,8 @@ public class Login extends AppCompatActivity {
             binding.login.setText("Logging In ...");
             binding.login.setClickable(false);
 
-            if (!TextUtils.isEmpty(binding.email.toString().trim()) && !TextUtils.isEmpty(binding.pass.toString().trim())) {
-                viewModel.loginUserWithEmailAndPassword(binding.email.toString().trim(),binding.pass.toString().trim());
+            if (!TextUtils.isEmpty(binding.email.getText().toString().trim()) && !TextUtils.isEmpty(binding.pass.getText().toString().trim())) {
+                viewModel.loginUserWithEmailAndPassword(binding.email.getText().toString().trim(),binding.pass.getText().toString().trim());
             } else {
                 binding.login.setText("Login");
                 binding.login.setClickable(true);
@@ -92,6 +94,11 @@ public class Login extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void initializeProgressDialog() {
+        loginProgressDialog = new ProgressDialog(this);
+        loginProgressDialog.setMessage("Please Wait ...");
     }
 
     public void showLoginProgressDialog(){

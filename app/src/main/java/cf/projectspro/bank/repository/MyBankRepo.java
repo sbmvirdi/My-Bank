@@ -406,14 +406,87 @@ public class MyBankRepo {
         });
     }
 
+    /**
+     * function to login user
+     * @param email email of the user
+     * @param password password of the user
+     * @param loadData to return status of login
+     */
     public void loginUserWithEmailAndPassword(String email,String password,LoadData<Boolean> loadData){
+        Log.e(TAG, "loginUserWithEmailAndPassword: email and pass:"+email+","+password);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
            if (task.isSuccessful()){
                loadData.onDataLoaded(true);
            }else {
+               Log.e(TAG, "loginUserWithEmailAndPassword: error:"+task.getException().getMessage());
                loadData.onDataLoaded(false);
            }
+        });
+    }
+
+
+    /**
+     * function to signup the user
+     * @param name name of the user
+     * @param email email of the user
+     * @param password password of the user
+     * @param loadData return the status of the signup process
+     */
+    public void signUpUserWithEmailAndPassword(String name,String email,String password,LoadData<Boolean> loadData){
+        Log.e(TAG, "signUpUserWithEmailAndPassword: called");
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(signUpTask->{
+            Log.e(TAG, "signUpUserWithEmailAndPassword: signing up");
+            if (signUpTask.isSuccessful()){
+                loginUserWithEmailAndPassword(email,password,success->{
+                    if (success){
+                        if (mAuth.getCurrentUser()!=null) {
+                            writeInitialUserData(mAuth.getCurrentUser().getUid(),name,written->{
+                                if (written){
+                                    Log.e(TAG, "signUpUserWithEmailAndPassword: signup completed");
+                                    loadData.onDataLoaded(true);
+                                }
+                            });
+                        }else{
+                            loadData.onDataLoaded(false);
+                            Log.e(TAG, "signUpUserWithEmailAndPassword: signed up: logged in: current user null");
+                        }
+                    }else{
+                        loadData.onDataLoaded(false);
+                        Log.e(TAG, "signUpUserWithEmailAndPassword: signed up :failed login");
+                    }
+                });
+            }else{
+                Log.e(TAG, "signUpUserWithEmailAndPassword: sign up failed:"+signUpTask.getException().getMessage());
+                loadData.onDataLoaded(false);
+            }
+        });
+    }
+
+
+    /**
+     * function to write the initial database records of the user
+     * @param uid uid of the newly created user
+     * @param name name of the user
+     * @param loadData to return status of database write
+     */
+    public void writeInitialUserData(String uid,String name,LoadData<Boolean> loadData){
+
+        Log.e(TAG, "writeInitialUserData: called:uid"+uid);
+        Map<String,Object> userInitialData = new HashMap<>();
+        userInitialData.put("uid",uid);
+        userInitialData.put("amount",0);
+        userInitialData.put("name",name);
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child(uid).setValue(userInitialData).addOnCompleteListener(task->{
+            if (task.isSuccessful()){
+                Log.e(TAG, "writeInitialUserData: success");
+                loadData.onDataLoaded(true);
+            }else{
+                Log.e(TAG, "writeInitialUserData: failed");
+                loadData.onDataLoaded(false);
+            }
         });
     }
 
