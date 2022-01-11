@@ -43,7 +43,7 @@ import cf.projectspro.bank.ui.modelClasses.SlideModel;
 import cf.projectspro.bank.ui.adapters.SliderIntroAdapter;
 import cf.projectspro.bank.ui.activities.Login;
 import cf.projectspro.bank.ui.activities.MainActivity;
-import cf.projectspro.bank.ui.activities.Money;
+import cf.projectspro.bank.ui.activities.SelfCreditMoney;
 
 
 /**
@@ -253,7 +253,7 @@ public class Dashboard extends Fragment {
     }
 
     private void add_money_clicked() {
-        Intent intent = new Intent(getActivity(), Money.class);
+        Intent intent = new Intent(getActivity(), SelfCreditMoney.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
 
