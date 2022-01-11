@@ -56,18 +56,16 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/money_layout"
-        android:text="10,000 can be credited at one time!"
-        android:fontFamily="@font/overpass_semibold"
-        android:textColor="#6561f6"
-        android:textSize="15sp"
-        android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
-        />
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/overpass_semibold"
+        android:text="1,000 can be credited at one time!"
+        android:textColor="#6561f6"
+        android:textSize="15sp" />
     <Button
         android:id="@+id/process_payment"
         android:layout_width="200dp"

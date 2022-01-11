@@ -32,6 +32,7 @@ public class Signup extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_signup);
         name = findViewById(R.id.name_signup);
         email = findViewById(R.id.email_signup);
@@ -63,6 +64,7 @@ public class Signup extends AppCompatActivity {
 
 
     private void signup_the_user() {
+
         pd.show();
         final String Name = name.getText().toString().trim();
         final String Pass = pass.getText().toString().trim();
@@ -75,51 +77,45 @@ public class Signup extends AppCompatActivity {
             if (!Email.contains("@") && !Email.contains(".")) {
                 Toast.makeText(this, "Enter valid email!", Toast.LENGTH_SHORT).show();
             } else {
-                mAuth.createUserWithEmailAndPassword(Email, Pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(Signup.this, "Successful", Toast.LENGTH_SHORT).show();
-                            mAuth.signInWithEmailAndPassword(Email, Pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
+                mAuth.createUserWithEmailAndPassword(Email, Pass).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(Signup.this, "Successful", Toast.LENGTH_SHORT).show();
+                        mAuth.signInWithEmailAndPassword(Email, Pass).addOnCompleteListener(task1 -> {
+                            if (task1.isSuccessful()) {
 
-                                        uid = mAuth.getCurrentUser().getUid();
+                                uid = mAuth.getCurrentUser().getUid();
 
-                                        // Toast.makeText(Signup.this, "" + uid, Toast.LENGTH_SHORT).show();
+                                // Toast.makeText(Signup.this, "" + uid, Toast.LENGTH_SHORT).show();
 
-                                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
-                                        DatabaseReference isadmin = FirebaseDatabase.getInstance().getReference().child("uids").child(uid);
-                                        isadmin.setValue(false);
-                                        ref.child("name").setValue(Name);
-                                        ref.child("amount").setValue(0);
-                                        ref.child("uid").setValue(uid);
-                                        ref.child("session").setValue(true);
-                                        isadmin.setValue(false);
+                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+                                DatabaseReference isadmin = FirebaseDatabase.getInstance().getReference().child("uids").child(uid);
+                                isadmin.setValue(false);
+                                ref.child("name").setValue(Name);
+                                ref.child("amount").setValue(0);
+                                ref.child("uid").setValue(uid);
+                                ref.child("session").setValue(true);
+                                isadmin.setValue(false);
 
-                                        Intent intent = new Intent(Signup.this, MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
-                                        pd.dismiss();
+                                Intent intent = new Intent(Signup.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                                pd.dismiss();
 
-                                    } else {
+                            } else {
 
-                                        Intent intent = new Intent(Signup.this, Login.class);
-                                        startActivity(intent);
-                                        finish();
-                                        pd.dismiss();
-                                    }
-                                }
-                            });
+                                Intent intent = new Intent(Signup.this, Login.class);
+                                startActivity(intent);
+                                finish();
+                                pd.dismiss();
+                            }
+                        });
 
 
-                        } else {
-                            Toast.makeText(Signup.this, "Sign up Failed", Toast.LENGTH_SHORT).show();
-                            pd.dismiss();
-                        }
-
+                    } else {
+                        Toast.makeText(Signup.this, "Sign up Failed", Toast.LENGTH_SHORT).show();
+                        pd.dismiss();
                     }
+
                 });
             }
         } else {

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.Details_Trans">
+    tools:context=".ui.activities.TransactionDetail">
 
 
     <ImageView
@@ -16,7 +16,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
         android:contentDescription="@string/cd"
-        android:src="@drawable/load" />
+        android:src="@drawable/successtransferbg" />
 
     <TextView
         android:id="@+id/details_from"

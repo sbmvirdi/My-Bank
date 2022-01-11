@@ -24,7 +24,7 @@
             android:layout_height="80dp"
             android:contentDescription="@string/cd"
             android:padding="4dp"
-            android:src="@drawable/load" />
+            android:src="@drawable/successtransferbg" />
 
         <TextView
             android:id="@+id/notify_name"

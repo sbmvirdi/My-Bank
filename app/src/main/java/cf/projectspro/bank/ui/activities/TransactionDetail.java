@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso;
 import cf.projectspro.bank.R;
 import cf.projectspro.bank.databinding.ActivityDetailsTransBinding;
 
-public class Details_Trans extends AppCompatActivity {
+public class TransactionDetail extends AppCompatActivity {
 
 
     @Override

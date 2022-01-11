@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import cf.projectspro.bank.databinding.ActivityPaymentProcessingScreenBinding;
 import cf.projectspro.bank.ui.viewModels.MoneyTransferViewModel;
 
-public class payment_processing_screen extends AppCompatActivity {
+public class PaymentProcessingScreen extends AppCompatActivity {
 
     private String senderUid,receiverUid,name;
     private int amount;
