@@ -36,7 +36,7 @@
             android:name=".ui.activities.TransactionDetail"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activities.Money"
+            android:name=".ui.activities.SelfCreditMoney"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.activities.Login" />
         <activity android:name=".ui.activities.Signup" />
