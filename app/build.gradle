@@ -17,17 +17,37 @@ android {
         // Increase versionCode
         def code = versionProps['VERSION_CODE'].toInteger() + 1
 
+        def major = versionProps['MAJOR'].toInteger()
+        def minor = versionProps['MINOR'].toInteger()
+        def patch = versionProps['PATCH'].toInteger() + 1
+
+        if (minor == 9 && patch == 100){
+            // if minor has reached 9 and patch is less than 99 increment the major
+            major += 1
+            minor = 0
+            patch = 0
+        }else if (patch == 100){
+            // if patch reaches 99 and about to be 100
+            // reset the patch and increment the minor
+            minor += 1
+            patch = 0
+        }
+
+
         // Write new versionCode to version.properties
         versionProps['VERSION_CODE'] = code.toString()
+        versionProps['MAJOR'] = major.toString()
+        versionProps['MINOR'] = minor.toString()
+        versionProps['PATCH'] = patch.toString()
         versionProps.store(versionProp.newWriter(), null)
 
         defaultConfig {
             multiDexEnabled true
             applicationId "cf.projectspro.bank"
             minSdkVersion 19
-            targetSdkVersion 31
+            targetSdkVersion 32
             versionCode code
-            versionName "4.2.0." + code
+            versionName major + "." + minor + "." + patch
             testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         }
     } else {
