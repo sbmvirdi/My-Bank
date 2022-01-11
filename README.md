@@ -1,7 +1,7 @@
 # My Bank
 #### Banking Application in Android
 [![Android CI with Gradle](https://github.com/sbmvirdi/My-Bank/actions/workflows/build_and_deploy.yml/badge.svg?branch=master&event=release)](https://github.com/sbmvirdi/My-Bank/actions/workflows/build_and_deploy.yml)
-[![Android Gradle Build](https://github.com/sbmvirdi/My-Bank/actions/workflows/build_gradle.yml/badge.svg)](https://github.com/sbmvirdi/My-Bank/actions/workflows/build_gradle.yml)
+[![Android Gradle Build](https://github.com/sbmvirdi/My-Bank/actions/workflows/build_gradle.yml/badge.svg?branch=main)](https://github.com/sbmvirdi/My-Bank/actions/workflows/build_gradle.yml)
 ## Features
 1. Sign in/Sign up
 2. Send Money / Receive Money

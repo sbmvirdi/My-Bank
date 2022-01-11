@@ -1,11 +1,13 @@
 package cf.projectspro.bank.repository;
 
 import android.util.Log;
+import android.util.StateSet;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,6 +42,14 @@ public class MyBankRepo {
     public static final Integer STATUS_FAILED_INSUFFICIENT_FUNDS=4;
     private static final Integer STATUS_FAILED_RECIPIENT_SIDE = 5;
     private static final Integer STATUS_FAILED_SENDER_SIDE = 6;
+
+
+
+    // status of self credit
+    public static final Integer STATUS_SELF_CREDIT_INITIATED = 200;
+    public static final Integer STATUS_SELF_CREDIT_AMOUNT_CREDITED = 201;
+    public static final Integer STATUS_SELF_CREDIT_SUCCESS = 202;
+    public static final Integer STATUS_SELF_CREDIT_FAILED = 203;
 
     private MyBankRepo(){
 
@@ -109,6 +119,136 @@ public class MyBankRepo {
     }
 
     /**
+     * function to credit money to own account
+     * @param uid uid of the user
+     * @param amount amount to be credited
+     * @param status status tracking of the transaction
+     */
+    public void creditSelfAccount(String uid,long amount,MutableLiveData<Integer> status){
+
+        status.setValue(STATUS_SELF_CREDIT_INITIATED);
+        getUserFromDatabaseByUid(uid,user->{
+            // getting the details of the user
+            Log.e(TAG, "creditSelfAccount: inside user");
+            if (user!=null){
+                Log.e(TAG, "creditSelfAccount: user not null");
+                initiateSelfCredit(user,amount,status,success->{
+                    if (success){
+                        Log.e(TAG, "creditSelfAccount: success");
+                        status.setValue(STATUS_SELF_CREDIT_SUCCESS);
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     * function to initiate the transaction for self credit
+     * @param user user who initiated the transaction
+     * @param amount amount to be credited
+     * @param status status tracking of the payment
+     * @param loadData to track status of transaction
+     */
+    private void initiateSelfCredit(User user,long amount,MutableLiveData<Integer> status,LoadData<Boolean> loadData){
+
+        updateUserSelfCreditAccount(user,amount);
+
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("Users");
+        usersRef.child(user.uid).setValue(user).addOnCompleteListener(task->
+        {
+           if (task.isSuccessful()){
+               status.setValue(STATUS_SELF_CREDIT_AMOUNT_CREDITED);
+               writeSuccessSelfCreditLogs(user,amount);
+               loadData.onDataLoaded(true);
+           }else{
+               writeFailedSelfCreditLogs(user,amount);
+               status.setValue(STATUS_SELF_CREDIT_FAILED);
+               loadData.onDataLoaded(false);
+           }
+        });
+
+
+    }
+
+    /**
+     * function to write success logs to the user
+     * @param user user who initiated the transaction
+     * @param amount amount to be credited
+     */
+    private void writeSuccessSelfCreditLogs(User user, long amount) {
+
+        Map<String,Object> userLog = new HashMap<>();
+        String userRandom = UUID.randomUUID().toString();
+        DatabaseReference senderRef = FirebaseDatabase.getInstance().getReference().child("transactions").child(user.uid).child(userRandom);
+
+        long time = timestamp();
+        userLog.put("amount",amount);
+        userLog.put("code",-time);
+        userLog.put("from",false);
+        userLog.put("src",success());
+        userLog.put("status",true);
+        userLog.put("to","Self");
+        userLog.put("trans_id",time);
+        senderRef.setValue(userLog);
+
+        DatabaseReference adminRef = FirebaseDatabase.getInstance().getReference().child("trans_ids").child(String.valueOf(time));
+        HashMap<String,Object> adminLog = new HashMap<>();
+
+        adminLog.put("amount",amount);
+        adminLog.put("status",true);
+        adminLog.put("done_by",user.name);
+        adminLog.put("to","Self");
+        adminLog.put("touid",user.uid);
+        adminLog.put("fromuid",user.uid);
+
+        adminRef.setValue(adminLog);
+
+    }
+
+    /**
+     * function to write failed self credit logs for user
+     * @param user user who initiated the transaction
+     * @param amount amount to be credited
+     */
+    private void writeFailedSelfCreditLogs(User user, long amount) {
+
+        Map<String,Object> userLog = new HashMap<>();
+        String userRandom = UUID.randomUUID().toString();
+        DatabaseReference senderRef = FirebaseDatabase.getInstance().getReference().child("transactions").child(user.uid).child(userRandom);
+
+        long time = timestamp();
+        userLog.put("amount",amount);
+        userLog.put("code",-time);
+        userLog.put("from",false);
+        userLog.put("src",failed());
+        userLog.put("status",failed());
+        userLog.put("to","Self");
+        userLog.put("trans_id",time);
+        senderRef.setValue(userLog);
+
+        DatabaseReference adminRef = FirebaseDatabase.getInstance().getReference().child("trans_ids").child(String.valueOf(time));
+        HashMap<String,Object> adminLog = new HashMap<>();
+
+        adminLog.put("amount",amount);
+        adminLog.put("status",true);
+        adminLog.put("done_by",user.name);
+        adminLog.put("fromuid",user.uid);
+        adminLog.put("touid",user.uid);
+        adminLog.put("to","Self");
+
+        adminRef.setValue(adminLog);
+    }
+
+    /**
+     * function to calculate the user amount
+     * @param user user who initiated the transaction
+     * @param amount amount to be credited
+     */
+    private void updateUserSelfCreditAccount(User user, long amount) {
+        user.amount+=amount;
+    }
+
+    /**
      * function to write transaction logs when the transaction has failed
      * @param sender sender user
      * @param receiver receiver user
@@ -136,6 +276,8 @@ public class MyBankRepo {
         adminLog.put("amount",amount);
         adminLog.put("status",true);
         adminLog.put("done_by",sender.name);
+        adminLog.put("fromuid",sender.uid);
+        adminLog.put("touid",receiver.uid);
         adminLog.put("to",receiver.name);
 
         adminRef.setValue(adminLog);
@@ -243,6 +385,11 @@ public class MyBankRepo {
         return amount > 0 && amount <= user.amount;
     }
 
+    /**
+     * function to get users from database
+     * @param uid uid of the user calling function
+     * @param loadData to return the list of users
+     */
     public void getUserFromDatabaseByUid(String uid,LoadData<User> loadData){
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users");
         userRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -255,6 +402,90 @@ public class MyBankRepo {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 loadData.onDataLoaded(null);
+            }
+        });
+    }
+
+    /**
+     * function to login user
+     * @param email email of the user
+     * @param password password of the user
+     * @param loadData to return status of login
+     */
+    public void loginUserWithEmailAndPassword(String email,String password,LoadData<Boolean> loadData){
+        Log.e(TAG, "loginUserWithEmailAndPassword: email and pass:"+email+","+password);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
+           if (task.isSuccessful()){
+               loadData.onDataLoaded(true);
+           }else {
+               Log.e(TAG, "loginUserWithEmailAndPassword: error:"+task.getException().getMessage());
+               loadData.onDataLoaded(false);
+           }
+        });
+    }
+
+
+    /**
+     * function to signup the user
+     * @param name name of the user
+     * @param email email of the user
+     * @param password password of the user
+     * @param loadData return the status of the signup process
+     */
+    public void signUpUserWithEmailAndPassword(String name,String email,String password,LoadData<Boolean> loadData){
+        Log.e(TAG, "signUpUserWithEmailAndPassword: called");
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(signUpTask->{
+            Log.e(TAG, "signUpUserWithEmailAndPassword: signing up");
+            if (signUpTask.isSuccessful()){
+                loginUserWithEmailAndPassword(email,password,success->{
+                    if (success){
+                        if (mAuth.getCurrentUser()!=null) {
+                            writeInitialUserData(mAuth.getCurrentUser().getUid(),name,written->{
+                                if (written){
+                                    Log.e(TAG, "signUpUserWithEmailAndPassword: signup completed");
+                                    loadData.onDataLoaded(true);
+                                }
+                            });
+                        }else{
+                            loadData.onDataLoaded(false);
+                            Log.e(TAG, "signUpUserWithEmailAndPassword: signed up: logged in: current user null");
+                        }
+                    }else{
+                        loadData.onDataLoaded(false);
+                        Log.e(TAG, "signUpUserWithEmailAndPassword: signed up :failed login");
+                    }
+                });
+            }else{
+                Log.e(TAG, "signUpUserWithEmailAndPassword: sign up failed:"+signUpTask.getException().getMessage());
+                loadData.onDataLoaded(false);
+            }
+        });
+    }
+
+
+    /**
+     * function to write the initial database records of the user
+     * @param uid uid of the newly created user
+     * @param name name of the user
+     * @param loadData to return status of database write
+     */
+    public void writeInitialUserData(String uid,String name,LoadData<Boolean> loadData){
+
+        Log.e(TAG, "writeInitialUserData: called:uid"+uid);
+        Map<String,Object> userInitialData = new HashMap<>();
+        userInitialData.put("uid",uid);
+        userInitialData.put("amount",0);
+        userInitialData.put("name",name);
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child(uid).setValue(userInitialData).addOnCompleteListener(task->{
+            if (task.isSuccessful()){
+                Log.e(TAG, "writeInitialUserData: success");
+                loadData.onDataLoaded(true);
+            }else{
+                Log.e(TAG, "writeInitialUserData: failed");
+                loadData.onDataLoaded(false);
             }
         });
     }

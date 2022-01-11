@@ -117,9 +117,8 @@
     />
 
 
-
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/signup_now"
+        android:id="@+id/login"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
@@ -127,29 +126,29 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="121dp"
         android:background="@drawable/corner"
-        app:backgroundTint="@color/colorPrimary"
         android:text="Login"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"
+        app:backgroundTint="@color/colorPrimary" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/signup_now"
+        android:layout_below="@+id/login"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="-121dp"
         android:text="OR" />
 
     <Button
-        android:id="@+id/sign_up_screen"
+        android:id="@+id/signup"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true"
         android:background="@drawable/corner"
-        app:backgroundTint="@color/colorPrimary"
         android:text="Sign up"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"
+        app:backgroundTint="@color/colorPrimary" />
 
 </RelativeLayout>
