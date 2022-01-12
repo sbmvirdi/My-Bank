@@ -7,8 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,20 +30,21 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import cf.projectspro.bank.R;
+import cf.projectspro.bank.databinding.FragmentProfileBinding;
 import cf.projectspro.bank.ui.activities.Login;
 import cf.projectspro.bank.ui.fragments.Dashboard;
+import cf.projectspro.bank.ui.viewModels.ProfileFragmentViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class Profile extends Fragment {
-    private Button signout;
-    private View layout;
+
     private FirebaseAuth mAuth;
-    private ImageView verified, dp;
-    private TextView nameprofile;
-    private String uid, name;
-    private boolean session;
+    private String uid;
+    private FragmentProfileBinding binding;
+    private ProfileFragmentViewModel viewModel;
+    public static final String TAG = Profile.class.getSimpleName();
 
     public Profile() {
         // Required empty public constructor
@@ -48,61 +52,70 @@ public class Profile extends Fragment {
 
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        layout = inflater.inflate(R.layout.fragment_profile, container, false);
-        signout = layout.findViewById(R.id.signout);
-        nameprofile = layout.findViewById(R.id.name_profile);
-        final Activity activity = getActivity();
-        mAuth = FirebaseAuth.getInstance();
-        uid = mAuth.getCurrentUser().getUid();
-        verified = layout.findViewById(R.id.verified);
-        dp = layout.findViewById(R.id.image_view);
-
-        signout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                mAuth.signOut();
-                Intent intent = new Intent(getActivity(), Login.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                activity.finish();
-            }
-        });
-        @SuppressLint("ResourceType") Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.animation);
-        // Inflate the layout for this fragment
-
-        DatabaseReference df = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
-        df.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                name = (String) dataSnapshot.child("name").getValue();
-                nameprofile.setText(name);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        verified.startAnimation(hyperspaceJumpAnimation);
-
-        char first = Dashboard.first_letter;
-        //Toast.makeText(activity, first+"", Toast.LENGTH_SHORT).show();
-        if (Character.isAlphabetic(first)) {
-            //  Toast.makeText(activity, first+"", Toast.LENGTH_SHORT).show();
-            int res = getResources().getIdentifier("@drawable/" + first, "drawable", getContext().getPackageName());
-            dp.setImageResource(res);
-        } else {
-            Picasso.get().load(R.drawable.user).into(dp);
-        }
-
-
-        if (dp.getDrawable() == null) {
-            Picasso.get().load(R.drawable.user).into(dp);
-        }
-        return layout;
+        binding = FragmentProfileBinding.inflate(LayoutInflater.from(requireContext()),container,false);
+        return binding.getRoot();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        viewModel = new ViewModelProvider(this).get(ProfileFragmentViewModel.class);
+        mAuth = FirebaseAuth.getInstance();
+
+        if (mAuth.getCurrentUser()!=null){
+            uid = mAuth.getCurrentUser().getUid();
+        }else {
+            navigateToLoginPage();
+        }
+
+        binding.signout.setOnClickListener(view1 -> {
+            mAuth.signOut();
+            navigateToLoginPage();
+        });
+
+        @SuppressLint("ResourceType")
+        Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.animation);
+
+        viewModel.loadNameOfUser(uid);
+        viewModel.getUserName().observe(getViewLifecycleOwner(),name->{
+            Log.e(TAG, "getNameOfUser:Name:"+name);
+            binding.nameProfile.setText(name);
+        });
+
+
+        viewModel.loadUserVerified();
+        viewModel.getIsUserVerified().observe(getViewLifecycleOwner(),verified->{
+            Log.e(TAG, "onViewCreated: getIsUserVerified:verified:"+verified);
+            if (verified){
+                binding.verified.setImageResource(R.drawable.verified);
+            }else{
+                binding.verified.setImageResource(R.drawable.failed);
+            }
+        });
+
+        binding.verified.startAnimation(hyperspaceJumpAnimation);
+
+        char first = Dashboard.firstLetter;
+        if (Character.isAlphabetic(first)) {
+            int res = getResources().getIdentifier("@drawable/" + first, "drawable", getContext().getPackageName());
+            binding.dp.setImageResource(res);
+        } else {
+            Picasso.get().load(R.drawable.user).into(binding.dp);
+        }
+
+        if (binding.dp.getDrawable() == null) {
+            Picasso.get().load(R.drawable.user).into(binding.dp);
+        }
+
+    }
+
+    private void navigateToLoginPage() {
+        Intent intent = new Intent(getActivity(), Login.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        getActivity().finish();
+    }
 }

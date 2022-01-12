@@ -14,6 +14,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.smarteist.autoimageslider.IndicatorAnimations;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,9 +24,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import cf.projectspro.bank.R;
 import cf.projectspro.bank.interfaces.LoadData;
 import cf.projectspro.bank.ui.activities.SendMoney;
+import cf.projectspro.bank.ui.adapters.SliderIntroAdapter;
 import cf.projectspro.bank.ui.adapters.UserAdapter;
+import cf.projectspro.bank.ui.modelClasses.Promotion;
+import cf.projectspro.bank.ui.modelClasses.SlideModel;
 import cf.projectspro.bank.ui.modelClasses.Transaction;
 import cf.projectspro.bank.ui.modelClasses.User;
 
@@ -538,6 +545,106 @@ public class MyBankRepo {
             }
         });
     }
+
+
+    /**
+     * function to get the user name by uid
+     * @param uid uid of the user
+     * @param loadData to return name of the user
+     */
+    public void getUserNameByUid(String uid, LoadData<String> loadData){
+        FirebaseDatabase.getInstance().getReference().child("Users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String name = (String) snapshot.child("name").getValue();
+                Log.e(TAG, "onDataChange: getUserNameByUid:Name:"+name);
+                loadData.onDataLoaded(name);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, "onCancelled: error fetching user name:"+error.getMessage());
+                loadData.onDataLoaded(null);
+            }
+        });
+    }
+
+
+    /**
+     * function to get promotional data
+     * @param loadData to return promotional data
+     */
+    public void getPromotionData(LoadData<Promotion> loadData){
+        FirebaseDatabase.getInstance().getReference().child("Advert").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Promotion promotion = dataSnapshot.getValue(Promotion.class);
+                if (promotion!=null){
+                    loadData.onDataLoaded(promotion);
+                }else{
+                    loadData.onDataLoaded(null);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled: getPromotionData:"+databaseError.getMessage());
+                loadData.onDataLoaded(null);
+            }
+        });
+    }
+
+
+    /**
+     * function to get slides for dashboard
+     * @param loadData to return back slides
+     */
+    public void getSliderData(LoadData<List<SlideModel>> loadData){
+        FirebaseDatabase.getInstance().getReference().child("Slides").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<SlideModel> slideModelList = new ArrayList<>();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    SlideModel obj = postSnapshot.getValue(SlideModel.class);
+                    slideModelList.add(obj);
+                }
+                loadData.onDataLoaded(slideModelList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                loadData.onDataLoaded(null);
+                Log.e(TAG, "onCancelled:Error Fetching Slides:"+databaseError.getMessage());
+            }
+        });
+
+    }
+
+
+    /**
+     * function to get the user by uid
+     * @param uid uid of the user
+     * @param loadData to return back the user
+     */
+    public void getUserByUid(String uid, LoadData<User> loadData){
+        FirebaseDatabase.getInstance().getReference().child("Users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+                Log.e(TAG, "onDataChange: getUserByUid:user:"+user);
+                loadData.onDataLoaded(user);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, "onCancelled: error fetching user:"+error.getMessage());
+                loadData.onDataLoaded(null);
+            }
+        });
+    }
+
+
+
     /**
      * function to get transactions of the user
      * @param uid uid of the user

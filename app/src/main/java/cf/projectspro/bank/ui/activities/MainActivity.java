@@ -117,11 +117,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.aboutus:
-                Intent i = new Intent(MainActivity.this, AboutUs.class);
-                startActivity(i);
-                break;
+        if (item.getItemId() == R.id.aboutus) {
+            Intent i = new Intent(MainActivity.this, AboutUs.class);
+            startActivity(i);
         }
 
         return super.onOptionsItemSelected(item);

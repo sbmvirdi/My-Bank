@@ -117,14 +117,14 @@
         android:textSize="18sp"
         android:fontFamily="@font/overpass_semibold"/>
 
-    <ImageView
-        android:layout_width="250dp"
-        android:layout_height="140dp"
-        android:id="@+id/dashboard_ad"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/loadingText"
-        android:background="@drawable/loading_text"
-        android:layout_marginTop="20dp"/>
+        <ImageView
+            android:id="@+id/dashboard_ad"
+            android:layout_width="250dp"
+            android:layout_height="140dp"
+            android:layout_below="@id/loadingText"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/loading_text" />
 
 
 
@@ -146,24 +146,7 @@
             android:layout_marginTop="187dp"
             android:layout_marginStart="85dp"/>
 
-        <com.google.android.gms.ads.AdView
-            android:layout_width="320dp"
-            android:layout_height="50dp"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/adview"
-            android:layout_below="@id/dashboard_ad"
-            android:layout_marginTop="20dp"
-            ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-3451872773610798/5757006752">
-
-        </com.google.android.gms.ads.AdView>
-
-
     </RelativeLayout>
-
-
-
-
 
 
     <Button
@@ -173,33 +156,34 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginStart="70dp"
         android:layout_marginLeft="70dp"
         android:layout_marginTop="200dp"
         android:background="@drawable/corner"
+        app:backgroundTint="@color/money_button_state"
         android:clickable="true"
         android:elevation="2dp"
-        app:backgroundTint="@color/colorPrimary"
+        android:focusable="true"
         android:text="Add Money To Wallet"
         android:textColor="#fff"
-        android:focusable="true"
-        android:layout_marginStart="70dp" />
+        />
 
     <Button
         android:id="@+id/sendmoneynow"
-        android:elevation="2dp"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginStart="70dp"
         android:layout_marginLeft="70dp"
-        app:backgroundTint="@color/colorPrimary"
         android:layout_marginTop="255dp"
         android:background="@drawable/corner"
+        app:backgroundTint="@color/money_button_state"
         android:clickable="true"
+        android:elevation="2dp"
         android:text="Send Money"
-        android:textColor="#fff"
-        android:layout_marginStart="70dp" />
+        android:textColor="#fff" />
 
 
 

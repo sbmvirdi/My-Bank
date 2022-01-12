@@ -22,7 +22,7 @@
         android:textColor="#ffffff" />
 
     <ImageView
-        android:id="@+id/image_view"
+        android:id="@+id/dp"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_alignParentTop="true"
@@ -31,24 +31,24 @@
         android:src="@drawable/user" />
 
     <TextView
+        android:id="@+id/name_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Name"
-        android:fontFamily="@font/overpass_semibold"
-        android:textColor="#000"
-        android:textSize="25sp"
-        android:id="@+id/name_profile"
-        android:layout_below="@id/image_view"
+        android:layout_below="@id/dp"
         android:layout_marginTop="10dp"
-        android:gravity="center"/>
+        android:fontFamily="@font/overpass_semibold"
+        android:gravity="center"
+        android:text="Name"
+        android:textColor="#000"
+        android:textSize="25sp" />
 
     <ImageView
         android:id="@+id/verified"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_alignEnd="@+id/image_view"
-        android:layout_alignRight="@+id/image_view"
-        android:layout_alignBottom="@+id/image_view"
+        android:layout_alignEnd="@+id/dp"
+        android:layout_alignRight="@+id/dp"
+        android:layout_alignBottom="@+id/dp"
         android:elevation="10dp"
         android:src="@drawable/verified" />
 
