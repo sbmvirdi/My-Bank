@@ -20,6 +20,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -90,10 +91,24 @@ public class Profile extends Fragment {
         viewModel.getIsUserVerified().observe(getViewLifecycleOwner(),verified->{
             Log.e(TAG, "onViewCreated: getIsUserVerified:verified:"+verified);
             if (verified){
+                binding.disclaimer.setVisibility(View.GONE);
+                binding.verifyEmail.setVisibility(View.GONE);
                 binding.verified.setImageResource(R.drawable.verified);
             }else{
+                binding.disclaimer.setVisibility(View.VISIBLE);
+                binding.verifyEmail.setVisibility(View.VISIBLE);
                 binding.verified.setImageResource(R.drawable.failed);
             }
+        });
+
+        binding.verifyEmail.setOnClickListener(view1 -> {
+            viewModel.verifyEmail(success->{
+                if (success){
+                    Toast.makeText(requireContext(), "Email sent successfully!", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(requireContext(), "failed to sent email for verification!", Toast.LENGTH_SHORT).show();
+                }
+            });
         });
 
         binding.verified.startAnimation(hyperspaceJumpAnimation);

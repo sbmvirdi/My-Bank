@@ -36,4 +36,10 @@ public class ProfileFragmentViewModel extends ViewModel {
     public LiveData<Boolean> getIsUserVerified() {
         return isUserVerified;
     }
+
+    public void verifyEmail(LoadData<Boolean> loadData) {
+        mRepo.verifyUserEmail(verified->{
+           loadData.onDataLoaded(true);
+        });
+    }
 }

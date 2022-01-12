@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="10dp"
     tools:context=".ui.fragments.Profile">
 
 
@@ -12,14 +13,14 @@
         android:id="@+id/signout"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/corner"
-        android:text="@string/signout"
-        app:backgroundTint="@color/colorPrimary"
-        android:layout_below="@id/name_profile"
-        android:layout_marginTop="50dp"
+        android:layout_below="@id/verifyEmail"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/corner"
         android:fontFamily="@font/overpass_semibold"
-        android:textColor="#ffffff" />
+        android:text="@string/signout"
+        android:textColor="#ffffff"
+        app:backgroundTint="@color/colorPrimary" />
 
     <ImageView
         android:id="@+id/dp"
@@ -41,6 +42,33 @@
         android:text="Name"
         android:textColor="#000"
         android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/disclaimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name_profile"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/disclaimer_bg"
+        android:padding="10dp"
+        android:visibility="gone"
+        android:text="Note: You haven't verified your email address. Unless email is verified you won't be able to send,credit money."
+        android:textColor="#ccb83c" />
+
+    <Button
+        android:id="@+id/verifyEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/disclaimer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        android:background="@drawable/corner"
+        android:fontFamily="@font/overpass_semibold"
+        android:text="Send Verification Email"
+        android:textColor="#ffffff"
+        app:backgroundTint="@color/colorPrimary" />
 
     <ImageView
         android:id="@+id/verified"

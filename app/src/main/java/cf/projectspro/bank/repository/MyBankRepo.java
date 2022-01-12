@@ -414,6 +414,20 @@ public class MyBankRepo {
     }
 
     /**
+     * function to send verification email
+     * @param loadData to return status of verification email sent
+     */
+    public void verifyUserEmail(LoadData<Boolean> loadData){
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        if (mAuth.getCurrentUser() == null){
+            loadData.onDataLoaded(false);
+        }else{
+            mAuth.getCurrentUser().sendEmailVerification();
+            loadData.onDataLoaded(true);
+        }
+    }
+
+    /**
      * function to login user
      * @param email email of the user
      * @param password password of the user
@@ -680,11 +694,18 @@ public class MyBankRepo {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         if (mAuth.getCurrentUser()!= null){
 
-            if (mAuth.getCurrentUser().isEmailVerified()){
-                loadData.onDataLoaded(true);
-            }else{
-                loadData.onDataLoaded(false);
-            }
+            mAuth.getCurrentUser().reload().addOnCompleteListener(task->{
+                if (task.isSuccessful()){
+
+                    if (mAuth.getCurrentUser().isEmailVerified()){
+                        loadData.onDataLoaded(true);
+                    }else{
+                        loadData.onDataLoaded(false);
+                    }
+                }else{
+                    Log.e(TAG, "isUserVerified:reload failed:"+task.getException());
+                }
+            });
 
         }else{
             loadData.onDataLoaded(false);
