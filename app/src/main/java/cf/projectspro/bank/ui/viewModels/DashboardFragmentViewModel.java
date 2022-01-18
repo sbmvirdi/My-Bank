@@ -12,6 +12,7 @@ import cf.projectspro.bank.interfaces.LoadData;
 import cf.projectspro.bank.repository.MyBankRepo;
 import cf.projectspro.bank.ui.modelClasses.Promotion;
 import cf.projectspro.bank.ui.modelClasses.SlideModel;
+import cf.projectspro.bank.ui.modelClasses.Transaction;
 import cf.projectspro.bank.ui.modelClasses.User;
 
 public class DashboardFragmentViewModel extends ViewModel {
@@ -21,6 +22,7 @@ public class DashboardFragmentViewModel extends ViewModel {
     private MutableLiveData<Boolean> userVerified = new MutableLiveData<>();
     private MutableLiveData<List<SlideModel>> slideModels = new MutableLiveData<>();
     private MutableLiveData<Promotion> promotionalData = new MutableLiveData<>();
+    private MutableLiveData<List<Transaction>> recentTransactions = new MutableLiveData<>();
 
     public DashboardFragmentViewModel(){
         mRepo = MyBankRepo.getInstance();
@@ -29,6 +31,12 @@ public class DashboardFragmentViewModel extends ViewModel {
     public void loadUserByUid(String uid){
         mRepo.getUserByUid(uid,user->{
             this.user.setValue(user);
+        });
+    }
+
+    public void loadRecentTransactions(String uid,int limit){
+        mRepo.getRecentTransactionsOfUser(uid,limit,recentTransactions->{
+            this.recentTransactions.setValue(recentTransactions);
         });
     }
 
@@ -64,5 +72,9 @@ public class DashboardFragmentViewModel extends ViewModel {
 
     public LiveData<Promotion> getPromotionalData() {
         return promotionalData;
+    }
+
+    public LiveData<List<Transaction>> getRecentTransactions() {
+        return recentTransactions;
     }
 }

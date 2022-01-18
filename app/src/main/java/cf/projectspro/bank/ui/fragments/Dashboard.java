@@ -9,13 +9,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,18 +16,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.google.firebase.auth.FirebaseAuth;
-import com.smarteist.autoimageslider.IndicatorAnimations;
-import com.smarteist.autoimageslider.SliderAnimations;
 import com.squareup.picasso.Picasso;
 
 import cf.projectspro.bank.R;
 import cf.projectspro.bank.databinding.FragmentDashboardBinding;
-import cf.projectspro.bank.ui.activities.SendMoney;
-import cf.projectspro.bank.ui.adapters.SliderIntroAdapter;
 import cf.projectspro.bank.ui.activities.Login;
 import cf.projectspro.bank.ui.activities.MainActivity;
 import cf.projectspro.bank.ui.activities.SelfCreditMoney;
+import cf.projectspro.bank.ui.activities.SendMoney;
+import cf.projectspro.bank.ui.modelClasses.Transaction;
 import cf.projectspro.bank.ui.viewModels.DashboardFragmentViewModel;
 
 
@@ -135,15 +132,24 @@ public class Dashboard extends Fragment {
             }
         });
 
+        viewModel.loadRecentTransactions(uid,10);
+        viewModel.getRecentTransactions().observe(getViewLifecycleOwner(),recentTransactions->{
+            if (!recentTransactions.isEmpty()){
+                for (Transaction transaction:recentTransactions){
+                    Log.e(TAG, "getRecentTransactions: Transaction:"+transaction.trans_id);
+                }
+            }
+        });
+
         viewModel.loadSlides();
         viewModel.getSlideModels().observe(getViewLifecycleOwner(),slides ->{
             if (slides!=null && !slides.isEmpty()){
-                SliderIntroAdapter sliderIntroAdapter = new SliderIntroAdapter(getContext(), slides);
-                binding.imageSlider.setSliderAdapter(sliderIntroAdapter);
-                binding.imageSlider.startAutoCycle();
-                binding.imageSlider.setIndicatorAnimation(IndicatorAnimations.WORM);
-                binding.imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-                binding.imageSlider.setScrollTimeInSec(2);
+//                SliderIntroAdapter sliderIntroAdapter = new SliderIntroAdapter(getContext(), slides);
+//                binding.imageSlider.setSliderAdapter(sliderIntroAdapter);
+//                binding.imageSlider.startAutoCycle();
+//                binding.imageSlider.setIndicatorAnimation(IndicatorAnimations.WORM);
+//                binding.imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+//                binding.imageSlider.setScrollTimeInSec(2);
             }
         });
     }

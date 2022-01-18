@@ -1,22 +1,17 @@
 package cf.projectspro.bank.repository;
 
 import android.util.Log;
-import android.util.StateSet;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.smarteist.autoimageslider.IndicatorAnimations;
-import com.smarteist.autoimageslider.SliderAnimations;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,11 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import cf.projectspro.bank.R;
 import cf.projectspro.bank.interfaces.LoadData;
-import cf.projectspro.bank.ui.activities.SendMoney;
-import cf.projectspro.bank.ui.adapters.SliderIntroAdapter;
-import cf.projectspro.bank.ui.adapters.UserAdapter;
 import cf.projectspro.bank.ui.modelClasses.Promotion;
 import cf.projectspro.bank.ui.modelClasses.SlideModel;
 import cf.projectspro.bank.ui.modelClasses.Transaction;
@@ -711,6 +702,34 @@ public class MyBankRepo {
             loadData.onDataLoaded(false);
         }
 
+    }
+
+
+    public void getRecentTransactionsOfUser(String uid,int limit,LoadData<List<Transaction>> loadData){
+        FirebaseDatabase.getInstance().getReference().child("transactions").child(uid).orderByChild("code").limitToFirst(limit).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getChildrenCount()!=0){
+                    List<Transaction> recentTransactions = new ArrayList<>();
+                    for (DataSnapshot dataSnapshot: snapshot.getChildren()){
+                        Transaction transaction = dataSnapshot.getValue(Transaction.class);
+                        if (transaction!=null){
+                            recentTransactions.add(transaction);
+                        }
+                    }
+
+                    loadData.onDataLoaded(recentTransactions);
+
+                }else{
+                    loadData.onDataLoaded(null);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                loadData.onDataLoaded(null);
+            }
+        });
     }
 
     private String failed() {

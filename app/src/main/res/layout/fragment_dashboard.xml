@@ -21,11 +21,11 @@
     android:layout_height="730dp"
     >
 
-    <com.smarteist.autoimageslider.SliderView
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
+<!--    <com.smarteist.autoimageslider.SliderView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="180dp"-->
 
-        android:id="@+id/imageSlider"/>
+<!--        android:id="@+id/imageSlider"/>-->
 
     <RelativeLayout
         android:layout_width="340dp"
