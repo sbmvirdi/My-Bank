@@ -6,8 +6,7 @@ name: Android Gradle Build
 on:
   push:
     branches:
-      - '*'
-      - '!master'
+      - 'features'
 
 jobs:
   build:
