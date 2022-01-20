@@ -1,13 +1,11 @@
 package cf.projectspro.bank.repository;
 
 import android.util.Log;
-import android.util.StateSet;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,8 +20,8 @@ import java.util.Map;
 import java.util.UUID;
 
 import cf.projectspro.bank.interfaces.LoadData;
-import cf.projectspro.bank.ui.activities.SendMoney;
-import cf.projectspro.bank.ui.adapters.UserAdapter;
+import cf.projectspro.bank.ui.modelClasses.Promotion;
+import cf.projectspro.bank.ui.modelClasses.SlideModel;
 import cf.projectspro.bank.ui.modelClasses.Transaction;
 import cf.projectspro.bank.ui.modelClasses.User;
 
@@ -407,6 +405,20 @@ public class MyBankRepo {
     }
 
     /**
+     * function to send verification email
+     * @param loadData to return status of verification email sent
+     */
+    public void verifyUserEmail(LoadData<Boolean> loadData){
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        if (mAuth.getCurrentUser() == null){
+            loadData.onDataLoaded(false);
+        }else{
+            mAuth.getCurrentUser().sendEmailVerification();
+            loadData.onDataLoaded(true);
+        }
+    }
+
+    /**
      * function to login user
      * @param email email of the user
      * @param password password of the user
@@ -538,6 +550,106 @@ public class MyBankRepo {
             }
         });
     }
+
+
+    /**
+     * function to get the user name by uid
+     * @param uid uid of the user
+     * @param loadData to return name of the user
+     */
+    public void getUserNameByUid(String uid, LoadData<String> loadData){
+        FirebaseDatabase.getInstance().getReference().child("Users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String name = (String) snapshot.child("name").getValue();
+                Log.e(TAG, "onDataChange: getUserNameByUid:Name:"+name);
+                loadData.onDataLoaded(name);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, "onCancelled: error fetching user name:"+error.getMessage());
+                loadData.onDataLoaded(null);
+            }
+        });
+    }
+
+
+    /**
+     * function to get promotional data
+     * @param loadData to return promotional data
+     */
+    public void getPromotionData(LoadData<Promotion> loadData){
+        FirebaseDatabase.getInstance().getReference().child("Advert").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Promotion promotion = dataSnapshot.getValue(Promotion.class);
+                if (promotion!=null){
+                    loadData.onDataLoaded(promotion);
+                }else{
+                    loadData.onDataLoaded(null);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled: getPromotionData:"+databaseError.getMessage());
+                loadData.onDataLoaded(null);
+            }
+        });
+    }
+
+
+    /**
+     * function to get slides for dashboard
+     * @param loadData to return back slides
+     */
+    public void getSliderData(LoadData<List<SlideModel>> loadData){
+        FirebaseDatabase.getInstance().getReference().child("Slides").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<SlideModel> slideModelList = new ArrayList<>();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    SlideModel obj = postSnapshot.getValue(SlideModel.class);
+                    slideModelList.add(obj);
+                }
+                loadData.onDataLoaded(slideModelList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                loadData.onDataLoaded(null);
+                Log.e(TAG, "onCancelled:Error Fetching Slides:"+databaseError.getMessage());
+            }
+        });
+
+    }
+
+
+    /**
+     * function to get the user by uid
+     * @param uid uid of the user
+     * @param loadData to return back the user
+     */
+    public void getUserByUid(String uid, LoadData<User> loadData){
+        FirebaseDatabase.getInstance().getReference().child("Users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+                Log.e(TAG, "onDataChange: getUserByUid:user:"+user);
+                loadData.onDataLoaded(user);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, "onCancelled: error fetching user:"+error.getMessage());
+                loadData.onDataLoaded(null);
+            }
+        });
+    }
+
+
+
     /**
      * function to get transactions of the user
      * @param uid uid of the user
@@ -573,16 +685,51 @@ public class MyBankRepo {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         if (mAuth.getCurrentUser()!= null){
 
-            if (mAuth.getCurrentUser().isEmailVerified()){
-                loadData.onDataLoaded(true);
-            }else{
-                loadData.onDataLoaded(false);
-            }
+            mAuth.getCurrentUser().reload().addOnCompleteListener(task->{
+                if (task.isSuccessful()){
+
+                    if (mAuth.getCurrentUser().isEmailVerified()){
+                        loadData.onDataLoaded(true);
+                    }else{
+                        loadData.onDataLoaded(false);
+                    }
+                }else{
+                    Log.e(TAG, "isUserVerified:reload failed:"+task.getException());
+                }
+            });
 
         }else{
             loadData.onDataLoaded(false);
         }
 
+    }
+
+
+    public void getRecentTransactionsOfUser(String uid,int limit,LoadData<List<Transaction>> loadData){
+        FirebaseDatabase.getInstance().getReference().child("transactions").child(uid).orderByChild("code").limitToFirst(limit).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getChildrenCount()!=0){
+                    List<Transaction> recentTransactions = new ArrayList<>();
+                    for (DataSnapshot dataSnapshot: snapshot.getChildren()){
+                        Transaction transaction = dataSnapshot.getValue(Transaction.class);
+                        if (transaction!=null){
+                            recentTransactions.add(transaction);
+                        }
+                    }
+
+                    loadData.onDataLoaded(recentTransactions);
+
+                }else{
+                    loadData.onDataLoaded(null);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                loadData.onDataLoaded(null);
+            }
+        });
     }
 
     private String failed() {

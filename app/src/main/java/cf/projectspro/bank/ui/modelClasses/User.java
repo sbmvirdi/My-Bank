@@ -27,4 +27,13 @@ public class User {
     public long getamount() {
         return amount;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", uid='" + uid + '\'' +
+                ", amount=" + amount +
+                '}';
+    }
 }

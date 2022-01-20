@@ -3,47 +3,39 @@ package cf.projectspro.bank.ui.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.smarteist.autoimageslider.IndicatorAnimations;
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
-import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cf.projectspro.bank.R;
-import cf.projectspro.bank.ui.activities.SendMoney;
-import cf.projectspro.bank.ui.modelClasses.SlideModel;
-import cf.projectspro.bank.ui.adapters.SliderIntroAdapter;
+import cf.projectspro.bank.databinding.FragmentDashboardBinding;
 import cf.projectspro.bank.ui.activities.Login;
 import cf.projectspro.bank.ui.activities.MainActivity;
 import cf.projectspro.bank.ui.activities.SelfCreditMoney;
+import cf.projectspro.bank.ui.activities.SendMoney;
+import cf.projectspro.bank.ui.adapters.SliderIntroAdapter;
+import cf.projectspro.bank.ui.modelClasses.Transaction;
+import cf.projectspro.bank.ui.viewModels.DashboardFragmentViewModel;
 
 
 /**
@@ -51,18 +43,13 @@ import cf.projectspro.bank.ui.activities.SelfCreditMoney;
  * sbmvirdi
  */
 public class Dashboard extends Fragment {
-    private static final String TAG = MainActivity.class.getSimpleName();
-    View layout;
-    private TextView name, amount, LoadingText;
-    private ImageView Ad, ads_image;
-    private DatabaseReference ref, advertisements;
-    private Button addmoney, send;
+
     private FirebaseAuth mAuth;
-    private SliderView sliderLayout;
     private String uid;
-    private AdView mAdView;
-    private List<SlideModel> SlideList;
-    public static char first_letter;
+    public static char firstLetter;
+    private FragmentDashboardBinding binding;
+    private DashboardFragmentViewModel viewModel;
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     public Dashboard() {
         // Required empty public constructor
@@ -70,15 +57,21 @@ public class Dashboard extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        binding = FragmentDashboardBinding.inflate(LayoutInflater.from(requireContext()),container,false);
+        return binding.getRoot();
+    }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        viewModel = new ViewModelProvider(this).get(DashboardFragmentViewModel.class);
 
         // Inflate the layout for this fragment
         mAuth = FirebaseAuth.getInstance();
-        advertisements = FirebaseDatabase.getInstance().getReference().child("Advert");
-        advertisements.keepSynced(true);
-
 
         // checking authentication of the user
         if (mAuth.getCurrentUser() == null) {
@@ -91,168 +84,99 @@ public class Dashboard extends Fragment {
             uid = mAuth.getCurrentUser().getUid();
         }
 
-        // defining id's
-
-        layout = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        name = layout.findViewById(R.id.name);
-        send = layout.findViewById(R.id.sendmoneynow);
-        amount = layout.findViewById(R.id.Amount);
-        LoadingText = layout.findViewById(R.id.loadingText);
-        Ad = layout.findViewById(R.id.dashboard_ad);
-        ads_image = layout.findViewById(R.id.ads_image);
-        sliderLayout = layout.findViewById(R.id.imageSlider);
-        mAdView = layout.findViewById(R.id.adview);
-
-
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-
-        ref = database.getReference().child("Users").child(uid);
-        ref.keepSynced(true);
-        addmoney = layout.findViewById(R.id.add_money);
-
-
-        // Value Event Listeners
-
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String Name = (String) dataSnapshot.child("name").getValue();
-                long Amount = (long) dataSnapshot.child("amount").getValue();
-
-                first_letter = Name.toLowerCase().charAt(0);
-                name.setText(Name);
-                amount.setText(Amount + "");
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+        viewModel.loadUserByUid(uid);
+        viewModel.getUser().observe(getViewLifecycleOwner(),user -> {
+            if (user!=null){
+                binding.name.setText(user.name);
+                binding.Amount.setText(String.valueOf(user.amount));
+                firstLetter = user.name.toLowerCase().charAt(0);
             }
         });
 
+        viewModel.loadPromotionalData();
+        viewModel.getPromotionalData().observe(getViewLifecycleOwner(),promotion->{
+            binding.loadingText.setText(promotion.ad_text);
+            Picasso.get().load(promotion.ad_url).into(binding.dashboardAd);
+            binding.adsImage.setImageResource(R.drawable.ads);
+            binding.loadingText.setBackgroundResource(R.color.colorPrimaryDark);
 
-        advertisements.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                String ad_url = (String) dataSnapshot.child("ad_url").getValue();
-                String ad_text = (String) dataSnapshot.child("ad_text").getValue();
+        });
 
 
-                Picasso.get().load(ad_url).into(Ad);
-                LoadingText.setText(ad_text);
-                LoadingText.setBackgroundResource(R.color.colorPrimaryDark);
-                ads_image.setImageResource(R.drawable.ads);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+        viewModel.loadUserVerified();
+        viewModel.getUserVerified().observe(getViewLifecycleOwner(),verified->{
+            Log.e(TAG, "onViewCreated: isUserVerified:"+verified);
+            if (verified){
+                changeButtonBackground(binding.sendmoneynow,true);
+                changeButtonBackground(binding.addMoney,true);
+            }else{
+                changeButtonBackground(binding.sendmoneynow,false);
+                changeButtonBackground(binding.addMoney,false);
             }
         });
 
 
         // Click Listeners
+        binding.addMoney.setOnClickListener(view1 -> {
+            if (hasConnection()) {
+                navigateToSelfCreditActivity();
+            } else {
+                Toast.makeText(getContext(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-        addmoney.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (hasConnection()) {
 
+        binding.sendmoneynow.setOnClickListener(view12 -> {
+            if (hasConnection()) {
+                Intent intent = new Intent(getContext(), SendMoney.class);
+                startActivity(intent);
+            } else {
+                Toast.makeText(getContext(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-                    add_money_clicked();
-                } else {
-                    Toast.makeText(getContext(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
+        viewModel.loadRecentTransactions(uid,10);
+        viewModel.getRecentTransactions().observe(getViewLifecycleOwner(),recentTransactions->{
+            if (!recentTransactions.isEmpty()){
+                for (Transaction transaction:recentTransactions){
+                    Log.e(TAG, "getRecentTransactions: Transaction:"+transaction.trans_id);
                 }
             }
         });
 
-
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (hasConnection()) {
-                    Intent intent = new Intent(getContext(), SendMoney.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(getContext(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
-                }
+        viewModel.loadSlides();
+        viewModel.getSlideModels().observe(getViewLifecycleOwner(),slides ->{
+            if (slides!=null && !slides.isEmpty()){
+                SliderIntroAdapter sliderIntroAdapter = new SliderIntroAdapter(getContext(), slides);
+                binding.imageSlider.setSliderAdapter(sliderIntroAdapter);
+                binding.imageSlider.startAutoCycle();
+                binding.imageSlider.setIndicatorAnimation(IndicatorAnimationType.WORM);
+                binding.imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+                binding.imageSlider.setScrollTimeInMillis(2000);
             }
         });
-
-        // Sliding View Animation
-
-        // Fetching all the slide images from Slides child
-        DatabaseReference SlideRef = database.getReference("Slides");
-        SlideList = new ArrayList<>();
-        SlideRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    SlideModel obj = postSnapshot.getValue(SlideModel.class);
-                    SlideList.add(obj);
-                }
-
-                SliderIntroAdapter adapterDemo = new SliderIntroAdapter(getContext(), SlideList);
-                sliderLayout.setSliderAdapter(adapterDemo);
-                sliderLayout.startAutoCycle();
-                sliderLayout.setIndicatorAnimation(IndicatorAnimations.WORM);
-                sliderLayout.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-                sliderLayout.setScrollTimeInSec(2);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e(TAG + "::", "Error Fetching Slides!");
-            }
-        });
-
-
-        //AdMob Implementation
-
-        MobileAds.initialize(getContext());
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-
-
-        mAdView.setAdListener(new AdListener() {
-
-
-            @Override
-            public void onAdLoaded() {
-                // Code to be executed when an ad finishes loading.
-            }
-
-
-            @Override
-            public void onAdOpened() {
-                // Code to be executed when an ad opens an overlay that
-                // covers the screen.
-            }
-
-            @Override
-            public void onAdClicked() {
-                // Code to be executed when the user clicks on an ad.
-            }
-
-
-            @Override
-            public void onAdClosed() {
-                // Code to be executed when the user is about to return
-                // to the app after tapping on an ad.
-            }
-        });
-
-
-        return layout;
     }
 
-    private void add_money_clicked() {
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void changeButtonBackground(Button button, boolean state){
+
+        GradientDrawable background = (GradientDrawable) button.getBackground();
+        button.setEnabled(state);
+
+        if (state){
+            background.setColor(Color.parseColor("#6561f6"));
+            background.setTint(Color.parseColor("#6561f6"));
+
+        }else{
+            background.setColor(Color.parseColor("#d3d3d3"));
+            background.setTint(Color.parseColor("#d3d3d3"));
+
+
+        }
+    }
+
+    private void navigateToSelfCreditActivity() {
+
         Intent intent = new Intent(getActivity(), SelfCreditMoney.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
@@ -275,11 +199,7 @@ public class Dashboard extends Fragment {
         }
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        if (activeNetwork != null && activeNetwork.isConnected()) {
-            return true;
-        }
-
-        return false;
+        return activeNetwork != null && activeNetwork.isConnected();
     }
 
 

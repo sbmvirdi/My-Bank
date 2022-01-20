@@ -5,7 +5,7 @@ apply plugin: 'com.google.firebase.crashlytics'
 
 android {
 
-    compileSdkVersion 31
+    compileSdkVersion 32
 
     def versionProp = file('version.properties')
     if (versionProp.canRead()) {
@@ -17,17 +17,37 @@ android {
         // Increase versionCode
         def code = versionProps['VERSION_CODE'].toInteger() + 1
 
+        def major = versionProps['MAJOR'].toInteger()
+        def minor = versionProps['MINOR'].toInteger()
+        def patch = versionProps['PATCH'].toInteger() + 1
+
+        if (minor == 9 && patch == 100){
+            // if minor has reached 9 and patch is less than 99 increment the major
+            major += 1
+            minor = 0
+            patch = 0
+        }else if (patch == 100){
+            // if patch reaches 99 and about to be 100
+            // reset the patch and increment the minor
+            minor += 1
+            patch = 0
+        }
+
+
         // Write new versionCode to version.properties
         versionProps['VERSION_CODE'] = code.toString()
+        versionProps['MAJOR'] = major.toString()
+        versionProps['MINOR'] = minor.toString()
+        versionProps['PATCH'] = patch.toString()
         versionProps.store(versionProp.newWriter(), null)
 
         defaultConfig {
             multiDexEnabled true
             applicationId "cf.projectspro.bank"
             minSdkVersion 19
-            targetSdkVersion 31
+            targetSdkVersion 32
             versionCode code
-            versionName "4.2.0." + code
+            versionName major + "." + minor + "." + patch
             testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         }
     } else {
@@ -61,23 +81,22 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.4.0'
-    implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.google.firebase:firebase-storage:20.0.0'
     implementation 'com.google.firebase:firebase-auth:21.0.1'
-    implementation 'com.github.smarteist:autoimageslider:1.3.2'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'com.github.smarteist:Android-Image-Slider:1.4.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.google.android.gms:play-services-ads:20.5.0'
     implementation 'com.google.android.gms:play-services-auth:20.0.1'
     implementation 'com.google.firebase:firebase-database:20.0.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'com.github.florent37:materialtextfield:1.0.7'
     implementation 'com.google.firebase:firebase-core:20.0.2'
-    implementation 'com.ethanhua:skeleton:1.1.1'
     implementation 'io.supercharge:shimmerlayout:2.1.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
@@ -86,7 +105,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:23.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.balysv:material-ripple:1.0.2'
-    implementation 'com.wang.avi:library:2.1.3'
 
     //Lifecycle Components
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'

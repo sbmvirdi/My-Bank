@@ -23,7 +23,7 @@
             android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_loginbg" />
+            android:src="@drawable/ic_loginbg" />
 
     </androidx.cardview.widget.CardView>
 
@@ -73,7 +73,7 @@
             android:layout_centerInParent="true"
             android:id="@+id/email_layout_signup"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="110dp"
             android:layout_marginRight="5dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:hint="Enter your Email Address">
@@ -94,7 +94,7 @@
             android:id="@+id/pass_layout_signup"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="160dp"
+            android:layout_marginTop="180dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:hint="Enter your Password">
 

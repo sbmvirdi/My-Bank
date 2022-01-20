@@ -14,7 +14,9 @@ import java.util.List;
 import cf.projectspro.bank.R;
 import cf.projectspro.bank.ui.modelClasses.SlideModel;
 
-public class SliderIntroAdapter extends SliderViewAdapter<SliderIntroAdapter.SliderVH> {
+public class SliderIntroAdapter
+        extends SliderViewAdapter<SliderIntroAdapter.SliderVH>
+{
 
 
     private Context context;
