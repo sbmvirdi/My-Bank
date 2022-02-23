@@ -721,13 +721,13 @@ public class MyBankRepo {
                     loadData.onDataLoaded(recentTransactions);
 
                 }else{
-                    loadData.onDataLoaded(null);
+                    loadData.onDataLoaded(new ArrayList<>());
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                loadData.onDataLoaded(null);
+                loadData.onDataLoaded(new ArrayList<>());
             }
         });
     }
