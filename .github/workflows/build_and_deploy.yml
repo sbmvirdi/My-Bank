@@ -4,8 +4,7 @@
 name: Android Play Store Deploy
 
 on:
-  push:
-    branches: [ master ]
+  workflow_dispatch:
 
 jobs:
   build:
