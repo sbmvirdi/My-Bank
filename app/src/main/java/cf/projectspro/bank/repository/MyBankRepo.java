@@ -584,11 +584,7 @@ public class MyBankRepo {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Promotion promotion = dataSnapshot.getValue(Promotion.class);
-                if (promotion!=null){
-                    loadData.onDataLoaded(promotion);
-                }else{
-                    loadData.onDataLoaded(null);
-                }
+                loadData.onDataLoaded(promotion);
             }
 
             @Override
