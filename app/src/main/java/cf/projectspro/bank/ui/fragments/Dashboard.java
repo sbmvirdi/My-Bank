@@ -27,6 +27,8 @@ import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnima
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.squareup.picasso.Picasso;
 
+import java.util.Objects;
+
 import cf.projectspro.bank.R;
 import cf.projectspro.bank.databinding.FragmentDashboardBinding;
 import cf.projectspro.bank.ui.activities.Login;
@@ -95,11 +97,12 @@ public class Dashboard extends Fragment {
 
         viewModel.loadPromotionalData();
         viewModel.getPromotionalData().observe(getViewLifecycleOwner(),promotion->{
-            binding.loadingText.setText(promotion.ad_text);
-            Picasso.get().load(promotion.ad_url).into(binding.dashboardAd);
-            binding.adsImage.setImageResource(R.drawable.ads);
-            binding.loadingText.setBackgroundResource(R.color.colorPrimaryDark);
-
+            if (Objects.nonNull(promotion)) {
+                binding.loadingText.setText(promotion.ad_text);
+                Picasso.get().load(promotion.ad_url).into(binding.dashboardAd);
+                binding.adsImage.setImageResource(R.drawable.ads);
+                binding.loadingText.setBackgroundResource(R.color.colorPrimaryDark);
+            }
         });
 
 
