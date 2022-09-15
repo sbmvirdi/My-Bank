@@ -5,6 +5,16 @@ name: Android Play Store Deploy
 
 on:
   workflow_dispatch:
+    inputs:
+      track:
+        type: choice
+        description: 'track'
+        required: true
+        options:
+        -- production
+        -- beta
+        -- alpha
+        
 
 jobs:
   build:
@@ -43,6 +53,6 @@ jobs:
        serviceAccountJson: service_account.json
        packageName: cf.projectspro.bank
        releaseFile: app/build/outputs/apk/release/app-release-unsigned-signed.apk
-       track: production
+       track: ${{ github.event.inputs.track }}
        whatsNewDirectory: whatsNewDirectory/
 
