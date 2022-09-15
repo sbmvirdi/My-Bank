@@ -26,6 +26,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import cf.projectspro.bank.R;
 import cf.projectspro.bank.ui.adapters.ViewPagerAdapter;
+import cf.projectspro.bank.ui.compose.AboutUsCompose;
+import cf.projectspro.bank.ui.compose.AboutUsComposeKt;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -118,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.aboutus) {
-            Intent i = new Intent(MainActivity.this, AboutUs.class);
+            Intent i = new Intent(MainActivity.this, AboutUsCompose.class);
             startActivity(i);
         }
 

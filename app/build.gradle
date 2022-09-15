@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 
 android {
@@ -44,7 +45,7 @@ android {
         defaultConfig {
             multiDexEnabled true
             applicationId "cf.projectspro.bank"
-            minSdkVersion 19
+            minSdkVersion 21
             targetSdkVersion 33
             versionCode code
             versionName major + "." + minor + "." + patch
@@ -76,6 +77,23 @@ android {
 
     buildFeatures {
         viewBinding true
+        compose true
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+    }
+    defaultConfig {
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
     }
 }
 
@@ -119,9 +137,17 @@ dependencies {
 
     //Step View
     implementation 'com.shuhart.stepview:stepview:1.5.1'
+    implementation "androidx.compose.ui:ui:$compose_version"
+    implementation 'androidx.compose.material3:material3:1.0.0-alpha01'
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
+    implementation 'androidx.activity:activity-compose:1.5.1'
 
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
 }
