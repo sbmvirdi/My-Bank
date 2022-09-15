@@ -11,9 +11,9 @@ on:
         description: 'track'
         required: true
         options:
-        -- production
-        -- beta
-        -- alpha
+        - production
+        - beta
+        - alpha
         
 
 jobs:
