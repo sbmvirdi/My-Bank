@@ -91,7 +91,6 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'com.github.smarteist:Android-Image-Slider:1.4.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-    implementation 'com.google.android.gms:play-services-ads:21.2.0'
     implementation 'com.google.android.gms:play-services-auth:20.3.0'
     implementation 'com.google.firebase:firebase-database:20.0.6'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
