@@ -97,7 +97,7 @@ public class Dashboard extends Fragment {
 
         viewModel.loadPromotionalData();
         viewModel.getPromotionalData().observe(getViewLifecycleOwner(),promotion->{
-            if (Objects.nonNull(promotion)) {
+            if (promotion!=null) {
                 binding.loadingText.setText(promotion.ad_text);
                 Picasso.get().load(promotion.ad_url).into(binding.dashboardAd);
                 binding.adsImage.setImageResource(R.drawable.ads);
