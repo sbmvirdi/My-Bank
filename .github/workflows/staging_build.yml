@@ -1,12 +1,12 @@
 # This workflow will build a Java project with Gradle
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
 
-name: My Bank Testing
+name: Staging Build
 
 on:
   push:
     branches:
-      - 'testing'
+      - 'Staging'
 
 jobs:
   build:
@@ -22,5 +22,7 @@ jobs:
           distribution: 'adopt'
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - name: Testing With Gradle
+      - name: Build
+        run: ./gradlew clean build
+      - name: Test
         run: ./gradlew test
